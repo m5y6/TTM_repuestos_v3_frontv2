@@ -1,0 +1,368 @@
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { CartContext } from '../context/CartContext';
+import { AuthContext } from '../context/AuthContext'; // Importar AuthContext
+import ProductoService from '../services/ProductoService';
+import '../styles/Catalogo.css';
+import Footer from '../organisms/Footer';
+import Header from '../organisms/Header';
+
+const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = false }) => {
+    const { addToCart } = useContext(CartContext);
+    const { user, showNotification } = useContext(AuthContext); // Obtener user y showNotification
+    const [productos, setProductos] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        if (productosActualesProp) {
+            setProductos(productosActualesProp);
+            setLoading(false);
+        } else {
+            ProductoService.getAllProductos()
+                .then(response => {
+                    const productosApi = response.data.map(p => ({
+                        ...p,
+                        imagen: p.imagen_url || '/img/placeholder.jpg'
+                    }));
+                    setProductos(productosApi);
+                    setLoading(false);
+                })
+                .catch(err => {
+                    console.error("Error al cargar productos:", err);
+                    setError("No se pudieron cargar los productos. Intente nuevamente más tarde.");
+                    setLoading(false);
+                });
+        }
+    }, [productosActualesProp]);
+    
+    const [productosFiltrados, setProductosFiltrados] = useState([]);
+    const [filtros, setFiltros] = useState({
+        categorias: [],
+        precioMin: '',
+        precioMax: '',
+        orden: 'relevancia',
+        busqueda: ''
+    });
+    const [paginaActual, setPaginaActual] = useState(1);
+    const [notificacion, setNotificacion] = useState('');
+    const productosPorPagina = 15;
+    const catalogoContentRef = useRef(null);
+
+    const formatearPrecio = (precio) => {
+        return '$' + (precio ? precio.toLocaleString('es-CL') : '0');
+    };
+
+    const aplicarFiltros = () => {
+        let resultado = [...productos];
+        if (filtros.busqueda.trim() !== '') {
+            const termino = filtros.busqueda.toLowerCase().trim();
+            resultado = resultado.filter(producto =>
+                producto.nombre.toLowerCase().includes(termino) ||
+                (producto.descripcion && producto.descripcion.toLowerCase().includes(termino)) ||
+                producto.categoria.toLowerCase().includes(termino)
+            );
+        }
+        if (filtros.categorias.length > 0) {
+            resultado = resultado.filter(p => filtros.categorias.includes(p.categoria));
+        }
+        const min = parseInt(filtros.precioMin) || 0;
+        const max = parseInt(filtros.precioMax) || Infinity;
+        resultado = resultado.filter(p => p.precio >= min && p.precio <= max);
+        switch (filtros.orden) {
+            case 'precio-asc':
+                resultado.sort((a, b) => a.precio - b.precio);
+                break;
+            case 'precio-desc':
+                resultado.sort((a, b) => b.precio - a.precio);
+                break;
+            case 'nombre-asc':
+                resultado.sort((a, b) => a.nombre.localeCompare(b.nombre));
+                break;
+            case 'nombre-desc':
+                resultado.sort((a, b) => b.nombre.localeCompare(a.nombre));
+                break;
+            default:
+                break;
+        }
+        setProductosFiltrados(resultado);
+        setPaginaActual(1);
+    };
+
+    const limpiarFiltros = () => {
+        setFiltros({
+            categorias: [],
+            precioMin: '',
+            precioMax: '',
+            orden: 'relevancia',
+            busqueda: ''
+        });
+        setProductosFiltrados([...productos]);
+        setPaginaActual(1);
+    };
+
+    const handleCategoriaChange = (categoria) => {
+        setFiltros(prev => ({
+            ...prev,
+            categorias: prev.categorias.includes(categoria)
+                ? prev.categorias.filter(c => c !== categoria)
+                : [...prev.categorias, categoria]
+        }));
+    };
+
+    const handleBusquedaChange = (e) => {
+        setFiltros(prev => ({
+            ...prev,
+            busqueda: e.target.value
+        }));
+    };
+
+    useEffect(() => {
+        aplicarFiltros();
+    }, [productos, filtros.categorias, filtros.precioMin, filtros.precioMax, filtros.orden]);
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            aplicarFiltros();
+        }, 300);
+        return () => clearTimeout(timeoutId);
+    }, [productos, filtros.busqueda]);
+
+    const handleAddToCart = (producto) => {
+        if (user) {
+            addToCart(producto);
+            mostrarNotificacion(`✅ ${producto.nombre} agregado al carrito`);
+        } else {
+            showNotification('Debes iniciar sesión para agregar productos');
+        }
+    };
+
+    const mostrarNotificacion = (mensaje) => {
+        setNotificacion(mensaje);
+        setTimeout(() => {
+            setNotificacion('');
+        }, 3000);
+    };
+
+    const productosActuales = productosFiltrados.slice(
+        (paginaActual - 1) * productosPorPagina,
+        paginaActual * productosPorPagina
+    );
+
+    const totalPaginas = Math.ceil(productosFiltrados.length / productosPorPagina);
+
+    const irAPagina = (pagina) => {
+        setPaginaActual(pagina);
+        if (catalogoContentRef.current) {
+            catalogoContentRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    };
+
+    const paginaAnterior = () => {
+        if (paginaActual > 1) {
+            irAPagina(paginaActual - 1);
+        }
+    };
+
+    const paginaSiguiente = () => {
+        if (paginaActual < totalPaginas) {
+            irAPagina(paginaActual + 1);
+        }
+    };
+
+    const generarNumerosPaginas = () => {
+        const maxPaginasVisibles = 5;
+        let inicio = Math.max(1, paginaActual - 2);
+        let fin = Math.min(totalPaginas, inicio + maxPaginasVisibles - 1);
+        
+        if (fin - inicio < maxPaginasVisibles - 1) {
+            inicio = Math.max(1, fin - maxPaginasVisibles + 1);
+        }
+        
+        const paginas = [];
+        for (let i = inicio; i <= fin; i++) {
+            paginas.push(i);
+        }
+        return paginas;
+    };
+
+    return (
+        <>
+        {!sinHeaderFooter && <Header/>}
+        <div>
+            <main>
+                <div className="catalogo-hero">
+                    <h1>Catálogo de Repuestos</h1>
+                    <p>Encuentra los mejores repuestos para tu vehículo de carga</p>
+                </div>
+
+                <div className="buscador-container">
+                    <div className="buscador-wrapper">
+                         <div className="buscador-input-container">
+                            <svg className="buscador-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
+                            </svg>
+                            <input 
+                                type="text" 
+                                className="buscador-input" 
+                                placeholder="Buscar repuestos (nombre, descripción, categoría)..."
+                                autoComplete="off"
+                                value={filtros.busqueda}
+                                onChange={handleBusquedaChange}
+                            />
+                            {filtros.busqueda && (
+                                <button 
+                                    type="button" 
+                                    className="limpiar-buscador" 
+                                    onClick={() => setFiltros(prev => ({ ...prev, busqueda: '' }))}
+                                >
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                                    </svg>
+                                </button>
+                            )}
+                        </div>
+                    </div>
+                </div>
+
+                <div className="catalogo-container">
+                    <aside className="filtros-sidebar">
+                        {/* ... El JSX de los filtros se mantiene igual ... */}
+                        <div className="filtros-header">
+                            <h3>Filtrar Productos</h3>
+                            <button className="btn-limpiar" onClick={limpiarFiltros}>
+                                Limpiar Filtros
+                            </button>
+                        </div>
+
+                        <div className="filtro-grupo">
+                            <h4>Categoría</h4>
+                            <div className="filtro-opciones">
+                                {['motor', 'frenos', 'suspension', 'electrico', 'neumaticos', 'filtros', 'otro'].map(categoria => (
+                                    <label key={categoria} className="filtro-checkbox">
+                                        <input 
+                                            type="checkbox" 
+                                            checked={filtros.categorias.includes(categoria)}
+                                            onChange={() => handleCategoriaChange(categoria)}
+                                        />
+                                        <span>
+                                            {categoria.charAt(0).toUpperCase() + categoria.slice(1)}
+                                        </span>
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="filtro-grupo">
+                            <h4>Rango de Precio</h4>
+                            <div className="filtro-precio">
+                                <div className="precio-inputs">
+                                    <div className="precio-input">
+                                        <label>Mínimo</label>
+                                        <input type="number" placeholder="$0" min="0" step="1000" value={filtros.precioMin} onChange={(e) => setFiltros(prev => ({ ...prev, precioMin: e.target.value }))} />
+                                    </div>
+                                    <div className="precio-input">
+                                        <label>Máximo</label>
+                                        <input type="number" placeholder="$1000000" min="0" step="1000" value={filtros.precioMax} onChange={(e) => setFiltros(prev => ({ ...prev, precioMax: e.target.value }))} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="filtro-grupo">
+                            <h4>Ordenar por</h4>
+                            <select className="select-ordenar" value={filtros.orden} onChange={(e) => setFiltros(prev => ({ ...prev, orden: e.target.value }))}>
+                                <option value="relevancia">Relevancia</option>
+                                <option value="precio-asc">Precio: Menor a Mayor</option>
+                                <option value="precio-desc">Precio: Mayor a Menor</option>
+                                <option value="nombre-asc">Nombre: A-Z</option>
+                                <option value="nombre-desc">Nombre: Z-A</option>
+                            </select>
+                        </div>
+                    </aside>
+
+                    <div ref={catalogoContentRef} className="catalogo-content">
+                        {/* 4. MANEJAR ESTADOS DE CARGA Y ERROR */}
+                        {loading ? (
+                            <p>Cargando productos...</p>
+                        ) : error ? (
+                            <p className="error-mensaje">{error}</p>
+                        ) : (
+                            <>
+                                <div className="catalogo-header">
+                                    <div className="resultados-info">
+                                        <span>
+                                            Mostrando <strong>{productosFiltrados.length > 0 ? (paginaActual - 1) * productosPorPagina + 1 : 0}-{Math.min(paginaActual * productosPorPagina, productosFiltrados.length)}</strong> de <strong>{productosFiltrados.length}</strong> productos
+                                        </span>
+                                    </div>
+                                </div>
+
+                                {productosFiltrados.length > 0 ? (
+                                    <div className="productos-grid">
+                                        {productosActuales.map(producto => (
+                                            <div key={producto.id} className="producto-card">
+                                                <div className="producto-imagen">
+                                                    <img 
+                                                        src={producto.imagen} 
+                                                        alt={producto.nombre} 
+                                                        onError={(e) => { e.target.src = '/img/placeholder.jpg'; }}
+                                                    />
+                                                </div>
+                                                <div className="producto-info">
+                                                    <h3 className="producto-nombre">{producto.nombre}</h3>
+                                                    <p className="producto-descripcion">{producto.descripcion}</p>
+                                                    <div className="producto-precio">{formatearPrecio(producto.precio)}</div>
+                                                    <div className="producto-acciones">
+                                                        <button 
+                                                            className="btn-carrito" 
+                                                            onClick={() => handleAddToCart(producto)}
+                                                        >Agregar al Carrito</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <p>No se encontraron productos que coincidan con los filtros.</p>
+                                )}
+
+                                {totalPaginas > 1 && (
+                                    <div className="paginacion">
+                                        <button className="btn-pag" onClick={paginaAnterior} disabled={paginaActual === 1}>
+                                            Anterior
+                                        </button>
+                                        <div className="numeros-pag">
+                                            {generarNumerosPaginas().map(pagina => (
+                                                <button
+                                                    key={pagina}
+                                                    className={`btn-pag ${pagina === paginaActual ? 'active' : ''}`}
+                                                    onClick={() => irAPagina(pagina)}
+                                                >
+                                                    {pagina}
+                                                </button>
+                                            ))}
+                                        </div>
+                                        <button className="btn-pag" onClick={paginaSiguiente} disabled={paginaActual === totalPaginas || totalPaginas === 0}>
+                                            Siguiente
+                                        </button>
+                                    </div>
+                                )}
+                            </>
+                        )}
+                    </div>
+                </div>
+            </main>
+
+            {notificacion && (
+                <div className="notificacion-carrito">
+                    {notificacion}
+                </div>
+            )}
+        </div>
+        {!sinHeaderFooter && <Footer/>}
+        </>
+    );
+};
+
+export default Catalogo;

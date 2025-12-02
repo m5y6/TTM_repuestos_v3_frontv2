@@ -1,0 +1,605 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Envio page matches snapshot 1`] = `
+<DocumentFragment>
+  <header
+    class="primera"
+  >
+    <div
+      id="logo"
+    >
+      <img
+        alt="logo"
+        src="img/logo3.png"
+      />
+    </div>
+    <nav
+      class="opciones"
+    >
+      <a
+        data-discover="true"
+        href="/"
+      >
+        Inicio
+      </a>
+      <a
+        data-discover="true"
+        href="/catalogo"
+      >
+        Catálogo
+      </a>
+      <a
+        data-discover="true"
+        href="/carrito"
+      >
+        Carrito
+      </a>
+      <a
+        data-discover="true"
+        href="/pedido"
+      >
+        Pedido
+      </a>
+      <a
+        data-discover="true"
+        href="/envio"
+      >
+        Envio
+      </a>
+    </nav>
+    <div
+      class="botones-auth"
+    >
+      <a
+        class="boton-inicio"
+        data-discover="true"
+        href="/login"
+      >
+        Iniciar Sesión
+      </a>
+      <a
+        class="boton-registro"
+        data-discover="true"
+        href="/registro"
+      >
+        Registrarse
+      </a>
+    </div>
+  </header>
+  <div
+    class="envio-page"
+  >
+    <main
+      class="envio-main"
+    >
+      <div
+        class="envio-container"
+      >
+        <div
+          class="envio-header"
+        >
+          <h1>
+            Seguimiento de Envío
+          </h1>
+          <p>
+            Rastrea el proceso completo de tu pedido en tiempo real
+          </p>
+        </div>
+        <div
+          class="tracking-search"
+        >
+          <div
+            class="search-form"
+          >
+            <div
+              class="search-group"
+            >
+              <label
+                for="numero-pedido"
+              >
+                Número de Pedido
+              </label>
+              <input
+                class=""
+                id="numero-pedido"
+                placeholder="Ej: TT-2025-001234"
+                type="text"
+                value="TT-2025-001234"
+              />
+            </div>
+            <div
+              class="search-group"
+            >
+              <label
+                for="email-tracking"
+              >
+                Email de Confirmación
+              </label>
+              <input
+                class=""
+                id="email-tracking"
+                placeholder="tu@email.com"
+                type="email"
+                value="cliente@email.com"
+              />
+            </div>
+            <button
+              class="search-btn"
+              type="button"
+            >
+              Buscar
+            </button>
+          </div>
+        </div>
+        <div
+          class="envio-content"
+          id="tracking-results"
+          style="display: block;"
+        >
+          <div
+            class="proceso-tracking"
+          >
+            <div
+              class="pedido-info"
+            >
+              <h3>
+                Información del Pedido
+              </h3>
+              <div
+                class="info-row"
+              >
+                <div
+                  class="info-item"
+                >
+                  <strong>
+                    Número de Pedido:
+                  </strong>
+                  <span>
+                    TT-2025-001234
+                  </span>
+                </div>
+                <div
+                  class="info-item"
+                >
+                  <strong>
+                    Fecha de Pedido:
+                  </strong>
+                  <span>
+                    03 de Septiembre, 2025
+                  </span>
+                </div>
+                <div
+                  class="info-item"
+                >
+                  <strong>
+                    Estado Actual:
+                  </strong>
+                  <span
+                    class="status-badge status-current"
+                  >
+                    En Preparación
+                  </span>
+                </div>
+                <div
+                  class="info-item"
+                >
+                  <strong>
+                    Tiempo Estimado:
+                  </strong>
+                  <span>
+                    2-3 días restantes
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="proceso-timeline"
+            >
+              <div
+                class="timeline-item completed"
+              >
+                <div
+                  class="timeline-content"
+                >
+                  <h4>
+                    Pedido Confirmado
+                  </h4>
+                  <p>
+                    Tu pedido ha sido recibido y confirmado. Los productos han sido verificados y el pago procesado exitosamente.
+                  </p>
+                  <div
+                    class="timeline-meta"
+                  >
+                    <span>
+                      03 Sep 2025, 14:30
+                    </span>
+                    <span
+                      class="status-badge status-completed"
+                    >
+                      Completado
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="timeline-item completed"
+              >
+                <div
+                  class="timeline-content"
+                >
+                  <h4>
+                    Procesamiento Iniciado
+                  </h4>
+                  <p>
+                    El pedido ha pasado al área de preparación. Nuestro equipo ha comenzado a recopilar y verificar los productos solicitados.
+                  </p>
+                  <div
+                    class="timeline-meta"
+                  >
+                    <span>
+                      04 Sep 2025, 09:15
+                    </span>
+                    <span
+                      class="status-badge status-completed"
+                    >
+                      Completado
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="timeline-item current"
+              >
+                <div
+                  class="timeline-content"
+                >
+                  <h4>
+                    En Preparación
+                  </h4>
+                  <p>
+                    Los productos están siendo preparados y empaquetados cuidadosamente. Se están realizando las verificaciones finales de calidad.
+                  </p>
+                  <div
+                    class="timeline-meta"
+                  >
+                    <span>
+                      05 Sep 2025, 11:45
+                    </span>
+                    <span
+                      class="status-badge status-current"
+                    >
+                      En Proceso
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="timeline-item pending"
+              >
+                <div
+                  class="timeline-content"
+                >
+                  <h4>
+                    Listo para Envío
+                  </h4>
+                  <p>
+                    El pedido estará completamente preparado y listo para ser enviado a la dirección especificada.
+                  </p>
+                  <div
+                    class="timeline-meta"
+                  >
+                    <span>
+                      Estimado: 06 Sep 2025
+                    </span>
+                    <span
+                      class="status-badge status-pending"
+                    >
+                      Pendiente
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="timeline-item pending"
+              >
+                <div
+                  class="timeline-content"
+                >
+                  <h4>
+                    En Tránsito
+                  </h4>
+                  <p>
+                    El pedido ha sido enviado y se encuentra en camino hacia su destino. Recibirás actualizaciones del transportista.
+                  </p>
+                  <div
+                    class="timeline-meta"
+                  >
+                    <span>
+                      Estimado: 07 Sep 2025
+                    </span>
+                    <span
+                      class="status-badge status-pending"
+                    >
+                      Pendiente
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="timeline-item pending"
+              >
+                <div
+                  class="timeline-content"
+                >
+                  <h4>
+                    Entregado
+                  </h4>
+                  <p>
+                    El pedido ha sido entregado exitosamente en la dirección especificada. ¡Disfruta tus productos!
+                  </p>
+                  <div
+                    class="timeline-meta"
+                  >
+                    <span>
+                      Estimado: 08 Sep 2025
+                    </span>
+                    <span
+                      class="status-badge status-pending"
+                    >
+                      Pendiente
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="info-adicional"
+          >
+            <div
+              class="info-card"
+            >
+              <h3>
+                Información de Contacto
+              </h3>
+              <div
+                class="contact-info"
+              >
+                <p>
+                  <strong>
+                    Servicio al Cliente:
+                  </strong>
+                  <br />
+                  +56 9 123123
+                </p>
+                <p>
+                  <strong>
+                    Email de Soporte:
+                  </strong>
+                  <br />
+                  truck&trailer.melipilla@gmail.com
+                </p>
+                <p>
+                  <strong>
+                    Horarios de Atención:
+                  </strong>
+                  <br />
+                  Lunes a Viernes: 8:30 - 18:00
+                  <br />
+                  Sábados: 8:30 - 13:00
+                </p>
+                <p>
+                  <strong>
+                    ¿Preguntas sobre tu envío?
+                  </strong>
+                  <br />
+                  No dudes en contactarnos para cualquier consulta sobre el estado de tu pedido.
+                </p>
+              </div>
+            </div>
+            <div
+              class="info-card"
+            >
+              <h3>
+                Detalles del Envío
+              </h3>
+              <div
+                class="delivery-details"
+              >
+                <div
+                  class="detail-item"
+                >
+                  <span>
+                    <strong>
+                      Método de Envío:
+                    </strong>
+                  </span>
+                  <span>
+                    Envío Estándar
+                  </span>
+                </div>
+                <div
+                  class="detail-item"
+                >
+                  <span>
+                    <strong>
+                      Dirección:
+                    </strong>
+                  </span>
+                  <span>
+                    Av. Principal 123, Melipilla
+                  </span>
+                </div>
+                <div
+                  class="detail-item"
+                >
+                  <span>
+                    <strong>
+                      Peso Total:
+                    </strong>
+                  </span>
+                  <span>
+                    15.5 kg
+                  </span>
+                </div>
+                <div
+                  class="detail-item"
+                >
+                  <span>
+                    <strong>
+                      Número de Seguimiento:
+                    </strong>
+                  </span>
+                  <span>
+                    ENV-789456123
+                  </span>
+                </div>
+                <div
+                  class="detail-item"
+                >
+                  <span>
+                    <strong>
+                      Transportista:
+                    </strong>
+                  </span>
+                  <span>
+                    Transporte Regional
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <footer
+    class="footer"
+  >
+    <div
+      class="footer-content"
+    >
+      <div
+        class="footer-section"
+      >
+        <h3>
+          Síguenos
+        </h3>
+        <div
+          class="social-links"
+        >
+          <a
+            class="social-link"
+            href="https://facebook.com/truckantrailermelipilla"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <svg
+              fill="currentColor"
+              height="20"
+              viewBox="0 0 24 24"
+              width="20"
+            >
+              <path
+                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+              />
+            </svg>
+            Facebook
+          </a>
+          <a
+            class="social-link"
+            href="https://instagram.com/truckantrailermelipilla"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <svg
+              fill="currentColor"
+              height="20"
+              viewBox="0 0 24 24"
+              width="20"
+            >
+              <path
+                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+              />
+            </svg>
+            Instagram
+          </a>
+        </div>
+      </div>
+      <div
+        class="footer-section"
+      >
+        <h3>
+          Horarios
+        </h3>
+        <div
+          class="horarios"
+        >
+          <p>
+            <strong>
+              Lunes a Viernes:
+            </strong>
+            <br />
+            8:30 - 18:00
+          </p>
+          <p>
+            <strong>
+              Sábados:
+            </strong>
+            <br />
+            8:30 - 13:00
+          </p>
+          <p>
+            <strong>
+              Domingos:
+            </strong>
+            <br />
+            Cerrado
+          </p>
+        </div>
+      </div>
+      <div
+        class="footer-section"
+      >
+        <h3>
+          Sucursal
+        </h3>
+        <div
+          class="sucursal"
+        >
+          <p>
+            <strong>
+              Dirección:
+            </strong>
+            <br />
+            Av. Vicuña Mackenna 1234
+            <br />
+            Melipilla, Región Metropolitana
+          </p>
+          <p>
+            <strong>
+              Teléfono:
+            </strong>
+            <br />
+            +56 9 123123
+          </p>
+          <p>
+            <strong>
+              Email:
+            </strong>
+            <br />
+            truck&trailer.melipilla@gmail.com
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      class="footer-bottom"
+    >
+      <p>
+        © 2025 Truck & Trailer Melipilla. Todos los derechos reservados.
+      </p>
+    </div>
+  </footer>
+</DocumentFragment>
+`;

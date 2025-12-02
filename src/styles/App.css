@@ -1,0 +1,1069 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* === ESTILOS GLOBALES === */
+* {
+    margin: 0;
+    font-family: "Roboto", sans-serif;
+    box-sizing: border-box;
+}
+
+/* === ESTILOS PARA LA PÁGINA PRINCIPAL (INDEX.HTML) === */
+.home-page {
+    min-height: 100vh;
+}
+
+/* Header de la página principal */
+.primera {
+    height: 150px;
+    width: 100%;
+    display: flex;
+    column-gap: 0.2rem; /* Further reduced gap */
+    justify-content: space-evenly; /* Changed to space-evenly for better distribution */
+    align-items: center;
+    background-color: #000000;
+    padding: 1px 0.5rem; /* Reduced padding to give more space */
+}
+
+nav.opciones {
+    /* Removed padding-left: 10px; */
+    display: flex;
+    column-gap: 0.5rem; /* Adjusted gap between nav links */
+}
+
+.opciones > a {
+    color: #5a8756;
+    font-family: "Oswald", sans-serif;
+    font-weight: 1000;
+    font-size: 2rem; /* Drastically reduced font size */
+    display: flex;
+    justify-content: center; /* Changed to center for individual links */
+    padding: 0.5rem 0.8rem; /* Drastically reduced padding */
+    text-decoration: none;
+}
+
+#logo {
+    display: flex;
+    align-content: center;
+    height: 5rem; /* Reduced height */
+    width: 10rem;
+    padding: 5px 5px;
+}
+
+#logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Contenedor de botones de autenticación */
+
+.botones-auth {
+    display: flex;
+    gap: 5px; /* Reduced gap between auth buttons */
+    align-items: center;
+}
+
+.botones-auth .boton-inicio,
+.botones-auth .boton-registro {
+    font-family: "Oswald", sans-serif;
+    display: flex;
+    padding: 8px 12px; /* Reduced padding */
+    align-items: center;
+    background-color: #5a8756;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    /* min-width: 120px; Removed min-width */
+    height: 40px; /* Reduced height */
+    text-decoration: none;
+    justify-content: center;
+    font-size: 0.8rem; /* Reduced font size */
+    font-weight: 600;
+    white-space: nowrap;
+}
+.botones-auth .boton-inicio:hover,
+.botones-auth .boton-registro:hover {
+    background-color: #4a7349;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(90, 135, 86, 0.3);
+}
+
+/* Sección de galería (segunda) */
+/* Sección de galería (segunda) - CORREGIDA */
+.segunda {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+#galeria {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0; /* Cambiado de 20px a 0 */
+    margin: 0; /* Cambiado de 20px a 0 */
+}
+
+.contenedor-imagen {
+    width: 100%;
+    height: 600px;
+    overflow: hidden;
+    border-radius: 0; /* Eliminado el border-radius */
+    box-shadow: none; /* Eliminada la sombra */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    border: none; /* Asegurar que no hay borde */
+    margin: 0; /* Asegurar que no hay márgenes */
+    padding: 0; /* Asegurar que no hay padding */
+}
+
+.contenedor-imagen .imagen {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block; /* Eliminar espacios en blanco debajo de la imagen */
+    border: none; /* Asegurar que no hay borde en la imagen */
+    margin: 0;
+    padding: 0;
+}
+
+.contenedor-imagen .texto {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 30px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 80%;
+    z-index: 3;
+}
+
+.contenedor-imagen .titulo {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-family: "Oswald", sans-serif;
+    font-size: 48px;
+    font-weight: bold;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 15px 30px;
+    border-radius: 10px;
+    max-width: 90%;
+    z-index: 3;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Sección de productos (tercera) */
+.tercera {
+    padding: 60px 100px;
+    background-color: #000000;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.top_ventas > h2 {
+    text-align: center;
+    font-family: "Oswald", sans-serif;
+    font-size: 2.5rem;
+    color: #5a8756;
+    margin-bottom: 40px;
+    font-weight: bold;
+    height: 80px;
+}
+
+.productos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 40px;
+    margin-bottom: 50px;
+}
+
+.home-page .producto {
+    background: rgb(255, 255, 255);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.home-page .producto:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.home-page .producto img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.home-page .producto h3 {
+    font-family: "Oswald", sans-serif;
+    font-size: 1.5rem;
+    color: #5a8756;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.home-page .producto p {
+    color: #666;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.home-page .precio {
+    font-family: "Oswald", sans-serif;
+    font-size: 1.8rem;
+    color: #00bd65;
+    font-weight: bold;
+    margin: 15px 0 !important;
+}
+
+.home-page .producto button {
+    background-color: #00bd65;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-family: "Oswald", sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: auto;
+    width: 50%;
+    align-self: center;
+}
+
+.home-page .producto button:hover {
+    background-color: #009954;
+    transform: scale(1.05);
+}
+
+.home-page #vercatalogo {
+    display: block;
+    margin: 0 auto;
+    background-color: #5a8756;
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 30px;
+    font-family: "Oswald", sans-serif;
+    font-size: 1.3rem;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(90, 135, 86, 0.3);
+    transition: all 0.3s ease;
+}
+
+.home-page #vercatalogo:hover {
+    background-color: #4a7349;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(90, 135, 86, 0.4);
+}
+
+/* Footer de la página principal */
+.home-page .footer {
+    width: 100%;
+    background-color: #000000;
+    padding: 40px 2rem 20px;
+    color: white;
+}
+
+.home-page .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+.home-page .footer-section h3 {
+    font-family: "Oswald", sans-serif;
+    font-size: 1.3rem;
+    color: #5a8756;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Enlaces sociales */
+.home-page .social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.home-page .social-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #e0e0e0;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.home-page .social-link:hover {
+    background: rgba(90, 135, 86, 0.2);
+    border-color: #5a8756;
+    transform: translateY(-2px);
+    color: #5a8756;
+}
+
+.home-page .social-link svg {
+    flex-shrink: 0;
+}
+
+/* Horarios */
+.home-page .horarios p {
+    margin-bottom: 15px;
+    color: #e0e0e0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    padding: 8px 0;
+}
+
+.home-page .horarios strong {
+    color: #5a8756;
+    font-weight: 600;
+}
+
+/* Sucursal */
+.home-page .sucursal p {
+    margin-bottom: 15px;
+    color: #e0e0e0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    padding: 8px 0;
+}
+
+.home-page .sucursal strong {
+    color: #5a8756;
+    font-weight: 600;
+}
+
+/* Footer bottom */
+.home-page .footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 20px;
+    text-align: center;
+}
+
+.home-page .footer-bottom p {
+    color: #999;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Campo con error */
+.error {
+    outline: 2px solid red !important;
+    background-color: #ffe6e6 !important;
+}
+
+/* Mensaje de error simple */
+.error-text {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+    display: block;
+}
+
+.registro-body {
+    min-height: 100vh;
+    background-image: url(/img/volvo.png);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    gap: 40px;
+}
+
+/* Sección de contacto */
+.registro-body .contacto-section {
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.registro-body .contacto-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #5a8756, #00bd65, #d4e35d);
+}
+
+.registro-body .contacto-section .logo-contacto {
+    width: 120px;
+    height: auto;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    border-radius: 10px;
+}
+
+.registro-body .contacto-section h3 {
+    font-family: "Oswald", sans-serif;
+    font-size: 2.2rem;
+    color: #ffffff;
+    margin-bottom: 25px;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    letter-spacing: 2px;
+}
+
+.registro-body .contacto-section p {
+    color: #e0e0e0;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    padding: 12px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.registro-body .contacto-section p:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(0, 189, 101, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 189, 101, 0.2);
+}
+
+.registro-body .contacto-section p::before {
+    font-size: 1.3rem;
+    color: #00bd65;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+}
+
+/* Formulario de registro */
+.registro-container {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+    overflow: hidden;
+    height: auto;
+    min-height: 800px;
+}
+
+.registro-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #5a8756, #00bd65, #d4e35d);
+}
+
+.logo-section {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo-section h1 {
+    font-family: "Oswald", sans-serif;
+    font-size: 2.5rem;
+    color: #5a8756;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.logo-section p {
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: #f9f9f9;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #5a8756;
+    background: white;
+    box-shadow: 0 0 10px rgba(90, 135, 86, 0.1);
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 25px;
+    gap: 10px;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+    transform: scale(1.2);
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.checkbox-group label {
+    margin-bottom: 0;
+    cursor: pointer;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.checkbox-group a {
+    color: #5a8756;
+    text-decoration: none;
+}
+
+.checkbox-group a:hover {
+    text-decoration: underline;
+}
+
+.btn-registro {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #5a8756, #00bd65);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-family: "Oswald", sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-registro:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(90, 135, 86, 0.3);
+    background: linear-gradient(135deg, #4a7349, #009954);
+}
+
+.btn-index {
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(135deg, #5a8756, #00bd65);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-family: "Oswald", sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    
+}
+
+.btn-index:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(90, 135, 86, 0.3);
+    background: linear-gradient(135deg, #4a7349, #009954);
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.login-link p {
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.login-link a {
+    color: #5a8756;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+/* === ESTILOS PARA LA PÁGINA DE INICIO DE SESIÓN (LOGIN.HTML) === */
+.login-body {
+    min-height: 100vh;
+    background-image: url(/img/volvo.png);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    gap: 40px;
+}
+
+/* Sección de contacto para login */
+.login-body .contacto-section {
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.login-body .contacto-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #5a8756, #00bd65, #d4e35d);
+}
+
+.login-body .contacto-section .logo-contacto {
+    width: 120px;
+    height: auto;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    border-radius: 10px;
+}
+
+.login-body .contacto-section h3 {
+    font-family: "Oswald", sans-serif;
+    font-size: 2.2rem;
+    color: #ffffff;
+    margin-bottom: 25px;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    letter-spacing: 2px;
+}
+
+.login-body .contacto-section p {
+    color: #e0e0e0;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    padding: 12px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.login-body .contacto-section p:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(0, 189, 101, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 189, 101, 0.2);
+}
+
+/* Formulario de login */
+.login-container {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 450px;
+    position: relative;
+    overflow: hidden;
+    height: auto;
+    min-height: 500px;
+}
+
+.login-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #5a8756, #00bd65, #d4e35d);
+}
+
+.login-logo-section {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.login-logo-section h1 {
+    font-family: "Oswald", sans-serif;
+    font-size: 2.5rem;
+    color: #5a8756;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.login-logo-section p {
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+}
+
+.login-form-group {
+    margin-bottom: 25px;
+}
+
+.login-form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.login-form-group input {
+    width: 100%;
+    padding: 15px 18px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: #f9f9f9;
+}
+
+.login-form-group input:focus {
+    outline: none;
+    border-color: #5a8756;
+    background: white;
+    box-shadow: 0 0 10px rgba(90, 135, 86, 0.1);
+}
+
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.remember-me input[type="checkbox"] {
+    transform: scale(1.1);
+}
+
+.remember-me label {
+    font-size: 0.9rem;
+    color: #666;
+    cursor: pointer;
+    margin: 0;
+}
+
+.forgot-password {
+    color: #5a8756;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+.btn-login {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #5a8756, #00bd65);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-family: "Oswald", sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 25px;
+}
+
+.btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(90, 135, 86, 0.3);
+    background: linear-gradient(135deg, #4a7349, #009954);
+}
+
+.register-link {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.register-link p {
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.register-link a {
+    color: #5a8756;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+/* === MEDIA QUERIES === */
+
+/* === Pantallas Grandes (Tablets en vertical) === */
+@media (max-width: 1200px) {
+    /* Registro */
+    .registro-body {
+        flex-direction: column;
+        gap: 30px;
+    }
+    .registro-body .contacto-section {
+        max-width: 500px;
+    }
+
+    /* Login */
+    .login-body {
+        flex-direction: column;
+        gap: 30px;
+    }
+    .login-body .contacto-section {
+        max-width: 450px;
+    }
+
+    .opciones > a {
+        font-size: 1.5rem;
+        padding: 1rem;
+        justify-content: center;
+        display: flex;
+    }
+}
+
+/* === Pantallas Medianas (Tablets) === */
+@media (max-width: 768px) {
+    /* --- HEADER (Global) --- */
+    .primera {
+        flex-direction: column;
+        height: auto;
+        padding: 1rem;
+        gap: 0.5rem; /* Reduced gap */
+    }
+    nav.opciones {
+        padding-left: 0;
+        justify-content: center;
+    }
+
+    /* Página principal (Home) */
+    .home-page .opciones > a {
+        font-size: 1.2rem;
+        padding: 0.5rem 0.8rem; /* Aligned padding */
+        display: flex;
+        justify-content: center;
+    }
+    
+    .home-page .productos {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 20px;
+    }
+    
+    /* Galería (Home) */
+    .contenedor-imagen {
+        height: 450px; /* Reducido de 600px */
+    }
+    .contenedor-imagen .titulo {
+        font-size: 36px;
+    }
+    .contenedor-imagen .texto {
+        font-size: 24px;
+    }
+
+    /* --- FOOTER (Global) --- */
+    .home-page .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    .home-page .footer-section {
+        text-align: center;
+    }
+    
+    /* Página de registro */
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .registro-body {
+        padding: 10px;
+    }
+    
+    .registro-container {
+        padding: 30px;
+        min-height: auto;
+    }
+
+    /* Página de login */
+    .login-body {
+        padding: 10px;
+    }
+    
+    .login-container {
+        padding: 30px;
+        min-height: auto;
+    }
+    
+    .login-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+}
+
+/* === Pantallas Pequeñas (Móviles) === */
+@media (max-width: 480px) {
+    /* --- HEADER (Global) --- */
+    nav.opciones {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    .home-page .opciones > a {
+        font-size: 1.2rem;
+        padding: 0.5rem 0.8rem; /* Aligned padding for consistency */
+    }
+    .botones-auth {
+        flex-direction: column;
+        width: 80%; /* Hacer botones anchos */
+        gap: 10px;
+    }
+    .botones-auth a.boton-inicio,
+    .botones-auth a.boton-registro {
+        min-width: 100%;
+    }
+    
+    /* Página principal (Home) */
+    .home-page .productos {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(6, 1fr);
+    }
+    
+    .home-page .top_ventas > h2 {
+        font-size: 2rem;
+    }
+    
+    /* Galería (Home) */
+    .contenedor-imagen {
+        height: 350px; /* Reducido aún más */
+    }
+    .contenedor-imagen .titulo {
+        font-size: 28px;
+    }
+    .contenedor-imagen .texto {
+        font-size: 20px;
+    }
+    
+    /* Página de registro */
+    .logo-section h1 {
+        font-size: 2rem;
+    }
+    .registro-body .contacto-section h3 {
+        font-size: 1.8rem;
+    }
+    .registro-body .contacto-section p {
+        font-size: 1rem;
+    }
+
+    /* Página de login */
+    .login-logo-section h1 {
+        font-size: 2rem;
+    }
+    .login-body .contacto-section h3 {
+        font-size: 1.8rem;
+    }
+    .login-body .contacto-section p {
+        font-size: 1rem;
+    }
+}

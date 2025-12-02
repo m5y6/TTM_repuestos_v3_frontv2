@@ -1,0 +1,250 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* === ESTILOS GLOBALES === */
+* {
+    margin: 0;
+    font-family: "Roboto", sans-serif;
+    box-sizing: border-box;
+}
+
+/* === ESTILOS PARA LA PÁGINA PRINCIPAL (INDEX.HTML) === */
+.home-page {
+    min-height: 100vh;
+}
+
+/* Sección de galería (segunda) */
+.segunda {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+#galeria {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0; 
+    margin: 0; 
+}
+
+.contenedor-imagen {
+    width: 100%;
+    height: 600px;
+    overflow: hidden;
+    border-radius: 0; 
+    box-shadow: none; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    border: none; 
+    margin: 0; 
+    padding: 0; 
+}
+
+.contenedor-imagen .imagen {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block; 
+    border: none; 
+    margin: 0;
+    padding: 0;
+}
+
+.contenedor-imagen .texto {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 30px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 80%;
+    z-index: 3;
+}
+
+.contenedor-imagen .titulo {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-family: "Oswald", sans-serif;
+    font-size: 48px;
+    font-weight: bold;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 15px 30px;
+    border-radius: 10px;
+    max-width: 90%;
+    z-index: 3;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Sección de productos (tercera) */
+.tercera {
+    padding: 60px 100px;
+    background-color: #000000;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.top_ventas > h2 {
+    text-align: center;
+    font-family: "Oswald", sans-serif;
+    font-size: 2.5rem;
+    color: #5a8756;
+    margin-bottom: 40px;
+    font-weight: bold;
+    height: 80px;
+}
+
+.productos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 40px;
+    margin-bottom: 50px;
+}
+
+.home-page .producto {
+    background: rgb(255, 255, 255);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.home-page .producto:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.home-page .producto img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.home-page .producto h3 {
+    font-family: "Oswald", sans-serif;
+    font-size: 1.5rem;
+    color: #5a8756;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.home-page .producto p {
+    color: #666;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.home-page .precio {
+    font-family: "Oswald", sans-serif;
+    font-size: 1.8rem;
+    color: #00bd65;
+    font-weight: bold;
+    margin: 15px 0 !important;
+}
+
+.home-page .producto button {
+    background-color: #00bd65;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-family: "Oswald", sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: auto;
+    width: 50%;
+    align-self: center;
+}
+
+.home-page .producto button:hover {
+    background-color: #009954;
+    transform: scale(1.05);
+}
+
+.home-page #vercatalogo {
+    display: block;
+    margin: 0 auto;
+    background-color: #5a8756;
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 30px;
+    font-family: "Oswald", sans-serif;
+    font-size: 1.3rem;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(90, 135, 86, 0.3);
+    transition: all 0.3s ease;
+}
+
+.home-page #vercatalogo:hover {
+    background-color: #4a7349;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(90, 135, 86, 0.4);
+}
+
+/* === MEDIA QUERIES === */
+@media (max-width: 768px) {
+    /* Página principal */
+    .home-page .productos {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 20px;
+    }
+    
+    .contenedor-imagen {
+        height: 450px;
+    }
+
+    .home-page .contenedor-imagen .titulo {
+        font-size: 36px;
+    }
+    
+    .home-page .contenedor-imagen .texto {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Página principal */
+    .tercera {
+        padding: 40px 20px; /* Reducir padding en móvil */
+    }
+
+    .home-page .productos {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(6, 1fr);
+    }
+    
+    .home-page .top_ventas > h2 {
+        font-size: 2rem;
+    }
+
+    .contenedor-imagen {
+        height: 350px;
+    }
+    
+    .home-page .contenedor-imagen .titulo {
+        font-size: 28px;
+    }
+    
+    .home-page .contenedor-imagen .texto {
+        font-size: 20px;
+    }
+}

@@ -1,0 +1,822 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+
+
+#logo {
+    display: flex;
+    align-content: center;
+    height: 10rem;
+    width: 10rem;
+    padding: 5px 5px;
+}
+
+#logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+nav.opciones {
+    padding-left: 10px;
+    display: flex;
+    column-gap: .1rem;
+}
+
+
+
+.botones-auth {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.botones-auth a {
+    font-family: "Oswald", sans-serif;
+    display: flex;
+    padding: 10px 20px;
+    align-items: center;
+    background-color: #5a8756;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 120px;
+    height: 50px;
+    text-decoration: none;
+    justify-content: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.botones-auth a:hover {
+    background-color: #4a7349;
+    transform: translateY(-2px);
+}
+
+/* Hero del catálogo */
+.catalogo-hero {
+    background: linear-gradient(135deg, #5a8756 0%, #00bd65 100%);
+    color: white;
+    text-align: center;
+    padding: 80px 20px;
+    border-bottom: 40px solid black;
+    
+}
+
+.catalogo-hero h1 {
+    font-family: "Oswald", sans-serif;
+    font-size: 3.5rem;
+    font-weight: bold;
+    margin-bottom: 20px ;
+}
+
+.catalogo-hero p {
+    font-size: 1.3rem;
+    opacity: 0.9;
+}
+
+/* Contenedor principal simplificado */
+.catalogo-container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 40px;
+    margin-bottom: 0px; /* Ajuste: removido el 'solid black' para evitar error de sintaxis */
+    background-color: black ;
+}
+
+/* Sidebar de filtros simplificado */
+.filtros-sidebar {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    height: fit-content;
+    position: sticky;
+    top: 20px;
+}
+
+.filtros-header {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.filtros-header h3 {
+    font-family: "Oswald", sans-serif;
+    font-size: 1.5rem;
+    color: #5a8756;
+    font-weight: bold;
+}
+
+.btn-limpiar {
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn-limpiar:hover {
+    background: #ff5252;
+}
+
+.filtro-grupo {
+    margin-bottom: 30px;
+}
+
+.filtro-grupo h4 {
+    font-family: "Oswald", sans-serif;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.filtro-opciones {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.filtro-checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.filtro-checkbox:hover {
+    background: #f8f9fa;
+}
+
+.filtro-checkbox input[type="checkbox"] {
+    margin-right: 12px;
+    transform: scale(1.2);
+    accent-color: #5a8756;
+}
+
+.filtro-checkbox span {
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.filtro-precio {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.precio-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.precio-input label {
+    font-size: 0.85rem;
+    color: #666;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.precio-input input {
+    padding: 10px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    width: 100%;
+}
+
+.precio-input input:focus {
+    outline: none;
+    border-color: #5a8756;
+}
+
+.btn-aplicar-precio {
+    background: #5a8756;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-aplicar-precio:hover {
+    background: #4a7349;
+}
+
+.select-ordenar {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    background: white;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+.select-ordenar:focus {
+    outline: none;
+    border-color: #5a8756;
+}
+
+/* Contenido principal */
+.catalogo-content {
+    min-height: 600px;
+}
+
+.catalogo-header {
+    background: white;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.resultados-info {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.resultados-info strong {
+    color: #5a8756;
+    font-weight: 600;
+}
+
+/* Grid de productos - solo vista grid */
+.productos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.producto-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    display: flex;
+    flex-direction: column;
+}
+
+.producto-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    border-color: #5a8756;
+}
+
+.producto-imagen {
+    height: 220px;
+    overflow: hidden;
+}
+
+.producto-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.producto-card:hover .producto-imagen img {
+    transform: scale(1.1);
+}
+
+.producto-info {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-grow: 1;
+}
+
+.producto-nombre {
+    font-family: "Oswald", sans-serif;
+    font-size: 1.3rem;
+    color: #5a8756;
+    margin: 0;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.producto-descripcion {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.producto-precio {
+    font-family: "Oswald", sans-serif;
+    font-size: 1.6rem;
+    color: #00bd65;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.producto-acciones {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: auto;
+}
+
+.btn-carrito {
+    background: linear-gradient(135deg, #00bd65, #5a8756);
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    justify-content: center;
+}
+
+.btn-carrito:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 189, 101, 0.4);
+}
+
+/* Paginación */
+.paginacion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-pag {
+    background: #f8f9fa;
+    color: #666;
+    border: 2px solid #e0e0e0;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.btn-pag:hover:not(:disabled) {
+    background: #5a8756;
+    color: white;
+    border-color: #5a8756;
+}
+
+.btn-pag.active {
+    background: #5a8756;
+    color: white;
+    border-color: #5a8756;
+}
+
+.btn-pag:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.numeros-pag {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+/* Footer */
+/* Footer - REEMPLAZAR la sección footer existente con esta */
+.footer {
+    width: 100%;
+    background-color: #000000;
+    padding: 40px 2rem 20px;
+    color: white;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+.footer-section h3 {
+    font-family: "Oswald", sans-serif;
+    font-size: 1.3rem;
+    color: #5a8756;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Enlaces sociales */
+.social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #e0e0e0;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.social-link:hover {
+    background: rgba(90, 135, 86, 0.2);
+    border-color: #5a8756;
+    transform: translateY(-2px);
+    color: #5a8756;
+}
+
+.social-link svg {
+    flex-shrink: 0;
+}
+
+/* Horarios */
+.horarios p {
+    margin-bottom: 15px;
+    color: #e0e0e0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    padding: 8px 0;
+}
+
+.horarios strong {
+    color: #5a8756;
+    font-weight: 600;
+}
+
+/* Sucursal */
+.sucursal p {
+    margin-bottom: 15px;
+    color: #e0e0e0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    padding: 8px 0;
+}
+
+.sucursal strong {
+    color: #5a8756;
+    font-weight: 600;
+}
+
+/* Footer bottom */
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 20px;
+    text-align: center;
+}
+
+.footer-bottom p {
+    color: #999;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Media queries para el footer */
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .footer {
+        padding: 30px 1rem 15px;
+    }
+    
+    .footer-section { /* Añadido para centrar secciones en móvil */
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-section h3 {
+        font-size: 1.1rem;
+    }
+    
+    .social-link {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+    }
+    
+    .horarios p, .sucursal p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Estilos para el buscador - AGREGAR AL FINAL DEL CSS */
+
+/* Contenedor del buscador */
+.buscador-container {
+    background: rgb(0, 0, 0);
+    padding: 30px 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-bottom: 0px solid #e0e0e0;
+}
+
+.buscador-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.buscador-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: #f8f9fa;
+    border: 2px solid #e0e0e0;
+    border-radius: 25px;
+    padding: 12px 20px;
+    transition: all 0.3s ease;
+}
+
+.buscador-input-container:focus-within {
+    border-color: #5a8756;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(90, 135, 86, 0.1);
+}
+
+.buscador-icon {
+    color: #999;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.buscador-input {
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+    color: #333;
+    flex: 1;
+    outline: none;
+    padding: 0;
+}
+
+.buscador-input::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+.limpiar-buscador {
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+    flex-shrink: 0;
+}
+
+.limpiar-buscador:hover {
+    background: #ff5252;
+    transform: scale(1.1);
+}
+
+/* Mostrar botón limpiar cuando hay texto */
+.buscador-input:not([value=""]) + .limpiar-buscador,
+.buscador-input:focus + .limpiar-buscador {
+    display: flex;
+}
+
+/* Mejoras en la paginación para que funcione mejor */
+.paginacion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    padding: 25px 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+}
+
+.btn-pag {
+    background: #f8f9fa;
+    color: #666;
+    border: 2px solid #e0e0e0;
+    padding: 12px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 0.95rem;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-pag:hover:not(:disabled) {
+    background: #5a8756;
+    color: white;
+    border-color: #5a8756;
+    transform: translateY(-2px);
+}
+
+.btn-pag.active {
+    background: #5a8756;
+    color: white;
+    border-color: #5a8756;
+    box-shadow: 0 4px 15px rgba(90, 135, 86, 0.3);
+}
+
+.btn-pag:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.numeros-pag {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin: 0 15px;
+}
+
+/* Notificación personalizada */
+.notificacion-carrito {
+    /* Posicionamiento fijo para que sea visible en cualquier parte de la pantalla */
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #5a8756; /* Fondo del color primario */
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.5s ease-in-out;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* Clase para mostrar la notificación (se maneja con estado en React) */
+.notificacion-carrito:not(:empty) {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+
+/* Responsive */
+@media (max-width: 968px) {
+    .catalogo-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 0 15px; /* Reducir padding horizontal */
+    }
+    
+    .filtros-sidebar {
+        position: static;
+        order: 2;
+        margin: 0 0; /* Asegurar que no tenga margen extra */
+        padding: 20px; /* Reducir padding interno */
+    }
+    
+    .catalogo-content {
+        order: 1;
+    }
+    
+    .productos-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+    
+
+
+    .catalogo-header {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .productos-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 15px;
+    }
+    
+    .catalogo-hero h1 {
+        font-size: 2rem;
+    }
+
+    
+    /* Notificación en móvil */
+    .notificacion-carrito {
+        bottom: 15px;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%) translateY(20px);
+        width: 90%;
+        max-width: 400px;
+        text-align: center;
+        padding: 12px 20px;
+    }
+    
+    .notificacion-carrito:not(:empty) {
+        transform: translateX(-50%) translateY(0);
+    }
+    
+}
+
+@media (max-width: 480px) {
+    .productos-grid {
+        /* En pantallas muy pequeñas, forzar una sola columna */
+        grid-template-columns: 1fr;
+    }
+    
+    .catalogo-hero {
+        padding: 40px 15px;
+    }
+    
+    .catalogo-hero h1 {
+        font-size: 1.8rem;
+    }
+
+    /* Paginación compacta en móvil */
+    .paginacion {
+        padding: 15px 10px;
+        gap: 5px;
+        flex-wrap: wrap; /* Permite que los elementos salten de línea si no caben */
+    }
+    
+    .btn-pag {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+        min-width: 35px;
+    }
+    
+    .numeros-pag {
+        margin: 0 5px;
+        gap: 4px;
+    }
+    
+    .filtros-sidebar {
+        padding: 15px;
+    }
+    
+    .filtros-header h3 {
+        font-size: 1.3rem;
+    }
+    
+    .filtro-grupo h4 {
+        font-size: 1rem;
+    }
+    
+    .precio-input label, .filtro-checkbox span {
+        font-size: 0.85rem;
+    }
+}

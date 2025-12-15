@@ -1,11 +1,8 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import Login from '../pages/Login.jsx';
 import React from 'react';
-
-// **1. Mock de dependencias mínimas (SOLO Link)**
-jest.mock('react-router-dom', () => ({
-    Link: ({ to, children }) => <a href={to}>{children}</a>,
-}));
+import { AuthProvider } from '../context/AuthContext';
+import { MemoryRouter } from 'react-router-dom';
 
 // **2. Mockear ALERT y Funciones de Entorno (sin interacciones complejas con JSDOM)**
 window.alert = jest.fn();
@@ -21,8 +18,8 @@ const mockStorage = {
 };
 
 // Reemplazar la implementación de localStorage y sessionStorage
-Object.defineProperty(window, 'localStorage', { value: mockStorage });
-Object.defineProperty(window, 'sessionStorage', { value: mockStorage });
+Object.defineProperty(window, 'localStorage', { value: mockStorage, configurable: true });
+Object.defineProperty(window, 'sessionStorage', { value: mockStorage, configurable: true });
 
 // **Reiniciar el mock de getItem antes de cada prueba**
 beforeEach(() => {
@@ -46,7 +43,13 @@ describe('Login Component (BASIC TEST)', () => {
 
     // --- PRUEBA 1: RENDERIZADO BÁSICO ---
     it('should render the login form elements', () => {
-        render(<Login />);
+        render(
+            <MemoryRouter>
+                <AuthProvider>
+                    <Login />
+                </AuthProvider>
+            </MemoryRouter>
+        );
 
         expect(screen.getByRole('heading', { name: /Bienvenido de Vuelta/i })).toBeInTheDocument();
         expect(getInputs().email).toBeInTheDocument();
@@ -57,7 +60,13 @@ describe('Login Component (BASIC TEST)', () => {
 
   // --- PRUEBA 2: VALIDACIÓN DE CAMPOS VACÍOS ---
     it('should show "obligatorio" errors when submitting empty fields', async () => {
-        render(<Login />);
+        render(
+            <MemoryRouter>
+                <AuthProvider>
+                    <Login />
+                </AuthProvider>
+            </MemoryRouter>
+        );
         const { email, password, submitButton } = getInputs();
 
         // 1. Asegurar que los campos están vacíos
@@ -73,7 +82,7 @@ describe('Login Component (BASIC TEST)', () => {
         fireEvent.submit(form); 
         // **[FIN DE LA CORRECCIÓN]**
 
-        // 3. Esperar que los mensajes de error se muestren
+        // 3. Esperar que los mensajes de error se muestre
         await waitFor(() => {
             // Se espera que los mensajes de error se muestren
             expect(screen.getByText(/El email es obligatorio/i)).toBeInTheDocument();
@@ -86,7 +95,13 @@ describe('Login Component (BASIC TEST)', () => {
     
     // --- PRUEBA 3: VALIDACIÓN DE FORMATO DE EMAIL (onBlur) ---
     it('should show email format error on blur when @ is missing', async () => {
-        render(<Login />);
+        render(
+            <MemoryRouter>
+                <AuthProvider>
+                    <Login />
+                </AuthProvider>
+            </MemoryRouter>
+        );
         const { email } = getInputs();
 
         // 1. Escribir email no válido

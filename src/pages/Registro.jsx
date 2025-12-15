@@ -156,7 +156,7 @@ const Registro = () => {
             <div className="registro-container">
                 <div className="logo-section">
                     <h1>Truck & Trailer Melipilla</h1>
-                    <p>Crea tu cuenta para acceder a repuestos de calidad</p>
+                    <h2>Crea tu cuenta para acceder a repuestos de calidad</h2>
                 </div>
 
                 <form ref={formRef} id="registroForm" onSubmit={handleSubmit}>

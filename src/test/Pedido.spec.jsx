@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor, act } from '@testing-library/react';
 import Pedido from '../pages/Pedido.jsx';
 import React from 'react';
 
@@ -145,7 +145,9 @@ describe('Pedido Component (Formulario de Envío)', () => {
         expect(inputs.submitButton).toBeDisabled();
 
         // 4. Avanzar el tiempo para simular la respuesta de la API (2000ms)
-        jest.advanceTimersByTime(2000);
+        act(() => {
+            jest.advanceTimersByTime(2000);
+        });
 
         // 5. Verificar mensaje de éxito y reseteo de formulario
         await waitFor(() => {
@@ -161,7 +163,9 @@ describe('Pedido Component (Formulario de Envío)', () => {
         });
         
         // 6. Avanzar el tiempo para que el mensaje de éxito se oculte (5000ms adicionales)
-        jest.advanceTimersByTime(5000);
+        act(() => {
+            jest.advanceTimersByTime(5000);
+        });
         
         await waitFor(() => {
             expect(screen.queryByText(/Pedido aceptado/i)).not.toBeInTheDocument();

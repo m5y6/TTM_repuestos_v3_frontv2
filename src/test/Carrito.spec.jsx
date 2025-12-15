@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
+import { AuthProvider } from '../context/AuthContext';
 import Carrito from '../pages/Carrito';
 import CartService from '../services/CartService';
 
@@ -15,6 +16,28 @@ jest.mock('react-router-dom', () => ({
 }));
 
 describe('Carrito', () => {
+  const mockStorage = {
+    getItem: jest.fn(),
+    setItem: jest.fn(),
+    clear: jest.fn(),
+    removeItem: jest.fn(),
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    Object.defineProperty(window, 'localStorage', {
+      value: mockStorage,
+      configurable: true,
+    });
+    Object.defineProperty(window, 'sessionStorage', {
+      value: mockStorage,
+      configurable: true,
+    });
+    mockStorage.getItem.mockImplementation((key) => {
+      if (key === 'token') return 'fake token';
+      return null;
+    });
+  });
   const cartItems = [
     {
       id: 1,
@@ -40,9 +63,11 @@ describe('Carrito', () => {
 
     render(
       <Router>
-        <CartContext.Provider value={cartContextValue}>
-          <Carrito />
-        </CartContext.Provider>
+        <AuthProvider>
+          <CartContext.Provider value={cartContextValue}>
+            <Carrito />
+          </CartContext.Provider>
+        </AuthProvider>
       </Router>
     );
 
@@ -69,9 +94,11 @@ describe('Carrito', () => {
 
     render(
       <Router>
-        <CartContext.Provider value={cartContextValue}>
-          <Carrito />
-        </CartContext.Provider>
+        <AuthProvider>
+          <CartContext.Provider value={cartContextValue}>
+            <Carrito />
+          </CartContext.Provider>
+        </AuthProvider>
       </Router>
     );
 
@@ -86,5 +113,7 @@ describe('Carrito', () => {
         'Hubo un error al procesar la compra. Por favor, inténtalo de nuevo.'
       );
     });
+
+    expect(window.alert).toHaveBeenCalledTimes(1);
   });
 });

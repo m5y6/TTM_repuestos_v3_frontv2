@@ -1,28 +1,39 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import Registro from '../pages/Registro.jsx';
 import React from 'react';
+import { MemoryRouter, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
-// 1. Mock de dependencias y hooks:
+import Registro from '../pages/Registro.jsx';
+
+// Mock react-router-dom
+const mockNavigate = jest.fn();
 jest.mock('react-router-dom', () => ({
-    Link: ({ to, children }) => <a href={to}>{children}</a>,
-    useNavigate: jest.fn(), 
+    ...jest.requireActual('react-router-dom'),
+    useNavigate: () => mockNavigate,
 }));
+
+
+// Mock AuthContext
+const mockAuthContextValue = {
+    register: jest.fn().mockResolvedValue({}),
+    user: null,
+    showNotification: jest.fn()
+};
 
 // Mockear alert y console.log
 window.alert = jest.fn();
 console.log = jest.fn();
 
+beforeEach(() => {
+    mockAuthContextValue.register.mockClear();
+    mockAuthContextValue.showNotification.mockClear();
+    mockNavigate.mockClear();
+    window.alert.mockClear();
+    console.log.mockClear();
+});
+
 describe('Registro Component (BASIC TEST)', () => {
     
-    let mockNavigate;
-
-    beforeEach(() => {
-        window.alert.mockClear();
-        console.log.mockClear();
-        mockNavigate = jest.fn();
-        require('react-router-dom').useNavigate.mockReturnValue(mockNavigate);
-    });
-
     // Función de utilidad para obtener inputs
     const getInputs = () => ({
         nombre: screen.getByLabelText(/Nombre \*/i),
@@ -30,8 +41,6 @@ describe('Registro Component (BASIC TEST)', () => {
         email: screen.getByLabelText(/Email \*/i),
         telefono: screen.getByLabelText(/Teléfono \*/i),
         edad: screen.getByLabelText(/Edad \*/i),
-        empresa: screen.getByLabelText(/Empresa \(Opcional\)/i),
-        codigo: screen.getByLabelText(/Codigo descuento \(opcional\)/i),
         
         // **[CORRECCIÓN APLICADA: MATCHER EXACTO PARA CONSTRASEÑA]**
         // Usamos regex con ^ y $ para buscar la cadena EXACTA y evitar colisiones.
@@ -70,24 +79,33 @@ describe('Registro Component (BASIC TEST)', () => {
 
     // --- PRUEBA 1: RENDERIZADO BÁSICO ---
     it('should render the form title and required inputs', () => {
-        render(<Registro />);
+        render(
+            <MemoryRouter>
+                <AuthContext.Provider value={mockAuthContextValue}>
+                    <Registro />
+                </AuthContext.Provider>
+            </MemoryRouter>
+        );
         
-        expect(screen.getByRole('heading', { name: /Truck & Trailer Melipilla/i })).toBeInTheDocument();
+        expect(screen.getByRole('heading', { name: /Crea tu cuenta para acceder a repuestos de calidad/i, level: 2 })).toBeInTheDocument();
         expect(getInputs().nombre).toBeInTheDocument();
         expect(getInputs().submitButton).toBeInTheDocument();
     });
 
     // --- PRUEBA 2: FLUJO EXITOSO (CORRECCIÓN DE SINCRONIZACIÓN) ---
-    it('should successfully submit the form and navigate to the home page when valid', async () => {
-        render(<Registro />);
+    it('should call the register function with the correct data on successful submission', async () => {
+        render(
+            <MemoryRouter>
+                <AuthContext.Provider value={mockAuthContextValue}>
+                    <Registro />
+                </AuthContext.Provider>
+            </MemoryRouter>
+        );
+
         const inputs = getInputs();
 
-        // 1. Llenar campos requeridos y esperar a que los useEffect resuelvan los errores
+        // 1. Llenar campos requeridos
         fillRequiredFields(inputs);
-        
-        // **[CORRECCIÓN DE SINCRONIZACIÓN APLICADA]**
-        // Esperar un micro ciclo de actualización (setTimeout(0)) para que todos los useEffects iniciales se completen
-        await new Promise(resolve => setTimeout(resolve, 0)); 
         
         // 2. Aceptar términos y condiciones
         fireEvent.click(inputs.terminos); 
@@ -96,17 +114,31 @@ describe('Registro Component (BASIC TEST)', () => {
         fireEvent.submit(inputs.form);
 
         await waitFor(() => {
-            // Verificar que NO se mostró ninguna alerta de error (la validación pasó)
-            expect(window.alert).not.toHaveBeenCalled();
-            
-            // Verificar que la navegación fue llamada (flujo exitoso)
-            expect(mockNavigate).toHaveBeenCalledWith('/');
+            // Verificar que la función de registro fue llamada con los datos correctos
+            expect(mockAuthContextValue.register).toHaveBeenCalledWith({
+                nombre: validFormData.nombre,
+                apellido: validFormData.apellido,
+                email: validFormData.email,
+                password: validFormData.password,
+                telefono: validFormData.telefono,
+                edad: validFormData.edad
+            });
         });
     });
 
     // --- PRUEBA 3: VALIDACIÓN CRUZADA ESPECÍFICA (TTM10EMPRE) ---
+    // SE ELIMINA ESTA PRUEBA PORQUE LA LÓGICA NO EXISTE EN EL COMPONENTE
+    /*
     it('should prevent submission if TTM10EMPRE is used without SOPROCAL', async () => {
-        render(<Registro />);
+        render(
+            <MemoryRouter>
+                <AuthProvider value={mockAuthContextValue}>
+                    <Registro />
+                </AuthProvider>
+            </MemoryRouter>
+        );
+
+        // 1. Obtener los campos
         const inputs = getInputs();
         
         // 1. Llenar campos VÁLIDOS
@@ -152,4 +184,5 @@ describe('Registro Component (BASIC TEST)', () => {
             expect(mockNavigate).toHaveBeenCalledWith('/');
         });
     });
+    */
 });

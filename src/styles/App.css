@@ -227,9 +227,135 @@ nav.opciones {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
+/* Sección de categorías (cuarta) */
+.cuarta {
+    padding: 20px 0;
+    background-color: #f5f5f5;
+    max-width: 100%;
+    margin: 0 auto;
+    border-bottom: 1px solid #ddd;
+}
+
+.categorias-linea {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.categorias-linea a {
+    color: #5a8756;
+    font-family: "Oswald", sans-serif;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.categorias-linea a:hover {
+    color: #4a7349;
+}
+
+.categorias-linea span {
+    color: #999;
+    font-size: 1.2rem;
+}
+
 /* Sección de productos (tercera) */
-.tercera {
+
+/* === ESTILOS PARA SECCIÓN DE CATEGORÍAS === */
+.categorias-section {
     padding: 60px 100px;
+    background: black;
+    margin-bottom: 0;
+}
+
+.categorias-container h2 {
+    text-align: center;
+    font-family: "Oswald", sans-serif;
+    font-size: 2.5rem;
+    color: #5a8756;
+    margin-bottom: 50px;
+    font-weight: bold;
+}
+
+.categorias-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.categoria-card {
+    background: white;
+    border-radius: 20px;
+    padding: 30px 25px;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 3px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.categoria-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(90, 135, 86, 0.1), transparent);
+    transition: left 0.5s;
+}
+
+.categoria-card:hover::before {
+    left: 100%;
+}
+
+.categoria-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(90, 135, 86, 0.2);
+    border-color: #5a8756;
+}
+
+.categoria-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #5a8756, #00bd65);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    color: white;
+    transition: transform 0.3s ease;
+}
+
+.categoria-card:hover .categoria-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.categoria-card h3 {
+    font-family: "Oswald", sans-serif;
+    font-size: 1.4rem;
+    color: #333;
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.categoria-card p {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin: 0;
+}
+
+/* === SECCIÓN DE PRODUCTOS (TERCERA) === */
+.tercera {
+    padding: 60px 50px;
     background-color: #000000;
     max-width: 100%;
     margin: 0 auto;
@@ -240,106 +366,401 @@ nav.opciones {
     font-family: "Oswald", sans-serif;
     font-size: 2.5rem;
     color: #5a8756;
-    margin-bottom: 40px;
-    font-weight: bold;
-    height: 80px;
-}
-
-.productos {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 40px;
     margin-bottom: 50px;
+    font-weight: bold;
 }
 
-.home-page .producto {
-    background: rgb(255, 255, 255);
+/* Contenedor del carrusel */
+.productos-carousel-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 1400px;
+    margin: 0 auto 40px;
+}
+
+/* Viewport del carrusel */
+.productos-viewport {
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 100%;
+    padding: 20px 10px;
+    scroll-behavior: smooth;
+    /* Ocultar scrollbar */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.productos-viewport::-webkit-scrollbar {
+    display: none;
+}
+
+/* Contenedor de productos */
+.productos {
+    display: flex;
+    gap: 25px;
+    padding: 0;
+    min-width: min-content;
+}
+
+/* Tarjeta de producto */
+.producto {
+    background: white;
     border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    text-align: center;
+    overflow: hidden;
+    flex: 0 0 280px;
+    width: 280px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    position: relative;
 }
 
-.home-page .producto:hover {
+.producto:hover {
     transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
 }
 
-.home-page .producto img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 15px;
+/* Link del producto */
+.producto > a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
-.home-page .producto h3 {
-    font-family: "Oswald", sans-serif;
-    font-size: 1.5rem;
-    color: #5a8756;
-    margin-bottom: 10px;
+/* Badge de descuento */
+.producto-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: linear-gradient(135deg, #ff6b6b, #ff5252);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
     font-weight: bold;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.2;
+    box-shadow: 0 4px 10px rgba(255, 82, 82, 0.4);
 }
 
-.home-page .producto p {
-    color: #666;
-    margin-bottom: 10px;
-    font-size: 0.95rem;
-    line-height: 1.4;
+.producto-badge .discount-value {
+    font-size: 1.5rem;
+    font-family: "Oswald", sans-serif;
 }
 
-.home-page .precio {
+.producto-badge .discount-text {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Contenedor de imagen */
+.producto-imagen-container {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: #f9f9f9;
+    border-bottom: 1px solid #eee;
+}
+
+.producto-imagen {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.producto:hover .producto-imagen {
+    transform: scale(1.05);
+}
+
+/* Información del producto */
+.producto-info {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+}
+
+.producto-details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.producto-code {
+    font-size: 0.75rem;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.producto-title {
+    font-family: "Oswald", sans-serif;
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+/* Precio y acciones */
+.producto-price-actions {
+    padding: 0 20px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    margin-right: 10px;
+}
+
+.producto-price-actions .precio {
     font-family: "Oswald", sans-serif;
     font-size: 1.8rem;
     color: #00bd65;
     font-weight: bold;
-    margin: 15px 0 !important;
+    margin: 0;
 }
 
-.home-page .producto button {
-    background-color: #00bd65;
-    color: white;
+.producto-icons {
+    display: flex;
+    gap: 10px;
+}
+
+.details-btn {
+    background: none;
     border: none;
-    padding: 12px 20px;
-    border-radius: 25px;
-    font-family: "Oswald", sans-serif;
+    cursor: pointer;
+    padding: 8px;
+    color: #5a8756;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+}
+
+.details-btn:hover {
+    background: rgba(90, 135, 86, 0.1);
+    transform: scale(1.1);
+}
+
+.details-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Footer del producto */
+.producto-footer {
+    padding: 15px 20px;
+    display: flex;
+    flex-direction: column; /* Apilar elementos verticalmente */
+    align-items: center;   /* Centrar horizontalmente */
+    gap: 15px;             /* Espacio entre elementos */
+    background: #f9f9f9;
+}
+
+/* Selector de cantidad */
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+
+.quantity-selector button {
+    background: white;
+    border: none;
+    padding: 8px 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: #5a8756;
+    transition: all 0.3s ease;
+}
+
+.quantity-selector button:hover {
+    background: #5a8756;
+    color: white;
+}
+
+.quantity-selector input {
+    width: 100px;
+    border: none;
+    text-align: center;
+    font-weight: bold;
     font-size: 1rem;
+    padding: 8px 0;
+    background: white;
+}
+
+.quantity-selector input:focus {
+    outline: none;
+}
+
+/* Botón de carrito */
+.cart-btn {
+    background: linear-gradient(135deg, #00bd65, #5a8756);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin-top: auto;
-    width: 50%;
-    align-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 189, 101, 0.3);
 }
 
-.home-page .producto button:hover {
-    background-color: #009954;
-    transform: scale(1.05);
+.cart-btn:hover {
+    background: linear-gradient(135deg, #009954, #4a7349);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 189, 101, 0.4);
 }
 
-.home-page #vercatalogo {
+.cart-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: white;
+}
+
+/* Flechas del carrusel */
+.carousel-arrow {
+    background: linear-gradient(135deg, #5a8756, #00bd65);
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 15px 20px;
+    border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(90, 135, 86, 0.4);
+}
+
+.carousel-arrow:hover {
+    background: linear-gradient(135deg, #4a7349, #009954);
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 6px 20px rgba(90, 135, 86, 0.5);
+}
+
+.carousel-arrow.prev {
+    left: 0;
+}
+
+.carousel-arrow.next {
+    right: 0;
+}
+
+/* Botón ver catálogo */
+#vercatalogo {
     display: block;
     margin: 0 auto;
-    background-color: #5a8756;
+    background: linear-gradient(135deg, #5a8756, #00bd65);
     color: white;
     border: none;
-    padding: 15px 40px;
-    border-radius: 30px;
+    padding: 18px 50px;
+    border-radius: 35px;
     font-family: "Oswald", sans-serif;
-    font-size: 1.3rem;
+    font-size: 1.4rem;
+    font-weight: 600;
     cursor: pointer;
-    box-shadow: 0 5px 15px rgba(90, 135, 86, 0.3);
+    box-shadow: 0 8px 30px rgba(90, 135, 86, 0.4);
     transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.home-page #vercatalogo:hover {
-    background-color: #4a7349;
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(90, 135, 86, 0.4);
+#vercatalogo:hover {
+    background: linear-gradient(135deg, #4a7349, #009954);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(90, 135, 86, 0.5);
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 1200px) {
+    .tercera {
+        padding: 50px 30px;
+    }
+    
+    .carousel-arrow {
+        padding: 12px 16px;
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .tercera {
+        padding: 40px 20px;
+    }
+    
+    .top_ventas > h2 {
+        font-size: 2rem;
+    }
+    
+    .producto {
+        flex: 0 0 240px;
+        width: 240px;
+    }
+    
+    .carousel-arrow {
+        padding: 10px 14px;
+        font-size: 1.2rem;
+    }
+    
+    .carousel-arrow.prev {
+        left: -5px;
+    }
+    
+    .carousel-arrow.next {
+        right: -5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .tercera {
+        padding: 30px 15px;
+    }
+    
+    .top_ventas > h2 {
+        font-size: 1.8rem;
+    }
+    
+    .producto {
+        flex: 0 0 220px;
+        width: 220px;
+    }
+    
+    .producto-imagen-container {
+        height: 160px;
+        padding: 15px;
+    }
+    
+    .producto-price-actions .precio {
+        font-size: 1.5rem;
+    }
+    
+    #vercatalogo {
+        padding: 15px 40px;
+        font-size: 1.2rem;
+    }
+    
+    .carousel-arrow {
+        display: none;
+    }
 }
 
 /* Footer de la página principal */

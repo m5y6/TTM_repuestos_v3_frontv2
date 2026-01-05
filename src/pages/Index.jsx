@@ -13,16 +13,9 @@ export default function Index() {
         <section className="segunda">
           <div id="galeria">
             <div className="contenedor-imagen">
-              <img className="imagen" src="/img/volvo.png" alt="Camión Volvo en carretera" />
+              <img className="imagen" src="/img/camiones.jpg" alt="Camión Volvo en carretera" />
               <h2 className="titulo">Truck & Trailer Melipilla</h2>
-              <div className="texto">
-                <p>
-                  Ofrecemos repuestos de alta calidad y servicio técnico especializado para mantener en óptimo funcionamiento
-                  los vehículos de carga de nuestros clientes, asegurando confianza, seguridad y eficiencia en cada entrega.  
-                  Convertirnos en la tienda online líder de repuestos para camiones en Chile, reconocidos por nuestra rapidez 
-                  en despacho, asesoría técnica y compromiso con el desarrollo del transporte.
-                </p>
-              </div>
+              
             </div>
           </div>
         </section>

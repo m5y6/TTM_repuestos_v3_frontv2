@@ -23,11 +23,7 @@ body {
     padding: 5px 5px;
 }
 
-#logo img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
+
 
 nav.opciones {
     padding-left: 10px;

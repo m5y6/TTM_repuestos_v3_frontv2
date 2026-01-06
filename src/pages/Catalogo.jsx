@@ -121,13 +121,16 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
     };
 
     const aplicarFiltros = () => {
+        const normalizeString = (str) => 
+            str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+
         let resultado = [...productos];
         if (filtros.busqueda.trim() !== '') {
-            const termino = filtros.busqueda.toLowerCase().trim();
+            const termino = normalizeString(filtros.busqueda);
             resultado = resultado.filter(producto =>
-                producto.nombre.toLowerCase().includes(termino) ||
-                (producto.descripcion && producto.descripcion.toLowerCase().includes(termino)) ||
-                producto.categoria.toLowerCase().includes(termino)
+                normalizeString(producto.nombre).includes(termino) ||
+                (producto.descripcion && normalizeString(producto.descripcion).includes(termino)) ||
+                normalizeString(producto.categoria).includes(termino)
             );
         }
         if (filtros.categorias.length > 0) {

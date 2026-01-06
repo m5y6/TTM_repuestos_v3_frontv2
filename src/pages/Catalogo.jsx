@@ -1,4 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
+import Slider from 'react-slick';
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
 import { CartContext } from '../context/CartContext';
 import { AuthContext } from '../context/AuthContext'; // Importar AuthContext
 import ProductoService from '../services/ProductoService';
@@ -12,6 +15,60 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
     const [productos, setProductos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    const heroImages = [
+        '/img/carousel/1.png',
+        '/img/carousel/2.png',
+        '/img/carousel/3.png',
+        '/img/carousel/4.png',
+        '/img/carousel/5.png',
+        '/img/carousel/6.png',
+        '/img/carousel/7.png',
+        '/img/carousel/8.png',
+        '/img/carousel/9.png',
+        '/img/carousel/10.png',
+        '/img/carousel/11.png',
+        '/img/carousel/12.png',
+        '/img/carousel/13.png',
+        '/img/carousel/14.png',
+        '/img/carousel/15.png',
+        '/img/carousel/16.png',
+        '/img/carousel/17.png',
+        '/img/carousel/18.png',
+        '/img/carousel/19.png',
+        '/img/carousel/20.png',
+        '/img/carousel/21.png',
+        '/img/carousel/22.png',
+        '/img/carousel/23.png',
+        '/img/carousel/24.png',
+        
+    ];
+
+    const sliderSettings = {
+        dots: false,
+        infinite: true,
+        speed: 5000, // Aumenta la duración para un desplazamiento más lento y continuo
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 0, // Esencial para el movimiento continuo
+        cssEase: 'linear', // Asegura una velocidad constante
+        pauseOnHover: true, // Pausa el carrusel al pasar el mouse por encima
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 2,
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                }
+            }
+        ]
+    };
 
     useEffect(() => {
         if (productosActualesProp) {
@@ -191,8 +248,16 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
         <div>
             <main>
                 <div className="catalogo-hero">
-                    <h1>Catálogo de Repuestos</h1>
-                    <p>Encuentra los mejores repuestos para tu vehículo de carga</p>
+                    <Slider {...sliderSettings}>
+                        {heroImages.map((img, index) => (
+                            <div key={index} className="hero-slide">
+                                <img src={img} alt={`Carousel image ${index + 1}`} className="hero-image" />
+                            </div>
+                        ))}
+                    </Slider>
+                    <div className="hero-content">
+                        <h1>Catálogo de Repuestos</h1>
+                    </div>
                 </div>
 
                 <div className="buscador-container">
@@ -231,15 +296,12 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
                         {/* ... El JSX de los filtros se mantiene igual ... */}
                         <div className="filtros-header">
                             <h3>Filtrar Productos</h3>
-                            <button className="btn-limpiar" onClick={limpiarFiltros}>
-                                Limpiar Filtros
-                            </button>
                         </div>
 
                         <div className="filtro-grupo">
                             <h4>Categoría</h4>
                             <div className="filtro-opciones">
-                                {['motor', 'frenos', 'suspension', 'electrico', 'neumaticos', 'filtros', 'otro'].map(categoria => (
+                                {['Motor', 'Frenos', 'Suspensión', 'Neumáticos', 'Eléctrica', 'Filtros', 'Artículos de seguridad', 'Insumos agrícolas', 'Servicios mecánicos', 'Herramientas', 'Lubricantes', 'Válvulas', 'Correas','Baterias'].map(categoria => (
                                     <label key={categoria} className="filtro-checkbox">
                                         <input 
                                             type="checkbox" 
@@ -247,7 +309,7 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
                                             onChange={() => handleCategoriaChange(categoria)}
                                         />
                                         <span>
-                                            {categoria.charAt(0).toUpperCase() + categoria.slice(1)}
+                                            {categoria}
                                         </span>
                                     </label>
                                 ))}
@@ -280,6 +342,9 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
                                 <option value="nombre-desc">Nombre: Z-A</option>
                             </select>
                         </div>
+                        <button className="btn-limpiar" onClick={limpiarFiltros}>
+                            Limpiar Filtros
+                        </button>
                     </aside>
 
                     <div ref={catalogoContentRef} className="catalogo-content">

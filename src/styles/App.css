@@ -229,7 +229,7 @@ nav.opciones {
 
 /* Sección de categorías (cuarta) */
 .cuarta {
-    padding: 20px 0;
+    padding: 20px 0 20px 2rem;
     background-color: #f5f5f5;
     max-width: 100%;
     margin: 0 auto;
@@ -238,7 +238,7 @@ nav.opciones {
 
 .categorias-linea {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 10px;
 }
@@ -290,7 +290,7 @@ nav.opciones {
 .categoria-card {
     background: white;
     border-radius: 20px;
-    padding: 30px 25px;
+    padding: 10px 10px;
     text-align: center;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
@@ -382,14 +382,9 @@ nav.opciones {
 
 /* Viewport del carrusel */
 .productos-viewport {
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow-x: hidden; /* Ocultar el desbordamiento en lugar de permitir el scroll */
     width: 100%;
     padding: 20px 10px;
-    scroll-behavior: smooth;
-    /* Ocultar scrollbar */
-    scrollbar-width: none;
-    -ms-overflow-style: none;
 }
 
 .productos-viewport::-webkit-scrollbar {
@@ -402,10 +397,11 @@ nav.opciones {
     gap: 25px;
     padding: 0;
     min-width: min-content;
+    transition: transform 0.5s ease-in-out; /* Animación para el deslizamiento */
 }
 
 /* Tarjeta de producto */
-.producto {
+.productos .producto {
     background: white;
     border-radius: 15px;
     overflow: hidden;
@@ -414,11 +410,18 @@ nav.opciones {
     display: flex;
     flex-direction: column;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-    transition: all 0.3s ease;
+    transition: all 0.5s ease-in-out; /* Aumentada la duración para la animación */
     position: relative;
+    opacity: 0; /* Inicialmente invisible */
+    transform: translateY(20px); /* Inicialmente desplazado */
 }
 
-.producto:hover {
+.productos .producto.is-visible {
+    opacity: 1; /* Se hace visible */
+    transform: translateY(0); /* Vuelve a su posición original */
+}
+
+.productos .producto:hover {
     transform: translateY(-10px);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
 }
@@ -518,10 +521,10 @@ nav.opciones {
 .producto-price-actions {
     padding: 0 20px 15px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     border-bottom: 1px solid #eee;
-    margin-right: 10px;
+
 }
 
 .producto-price-actions .precio {
@@ -538,18 +541,22 @@ nav.opciones {
 }
 
 .details-btn {
-    background: none;
+    background-color: #00bd65;
+    color: white;
     border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-family: "Oswald", sans-serif;
+    font-size: 1rem;
     cursor: pointer;
-    padding: 8px;
-    color: #5a8756;
     transition: all 0.3s ease;
-    border-radius: 5px;
+    width: auto;
+    align-self: center;
 }
 
 .details-btn:hover {
-    background: rgba(90, 135, 86, 0.1);
-    transform: scale(1.1);
+    background-color: #009954;
+    transform: scale(1.05);
 }
 
 .details-btn svg {
@@ -595,13 +602,18 @@ nav.opciones {
 }
 
 .quantity-selector input {
-    width: 100px;
+    width: 60px; /* Reducir ancho para mejor apariencia */
     border: none;
     text-align: center;
     font-weight: bold;
     font-size: 1rem;
-    padding: 8px 0;
+    padding: 8px 0; /* Restaurar padding vertical para alineación */
     background: white;
+    /* Ocultar flechas de input numérico */
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+    appearance: none;
+    margin: 0;
 }
 
 .quantity-selector input:focus {
@@ -610,22 +622,26 @@ nav.opciones {
 
 /* Botón de carrito */
 .cart-btn {
-    background: linear-gradient(135deg, #00bd65, #5a8756);
+    background-color: #00bd65;
+    color: white;
     border: none;
-    border-radius: 8px;
-    padding: 10px 15px;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-family: "Oswald", sans-serif;
+    font-size: 1rem;
     cursor: pointer;
     transition: all 0.3s ease;
+    margin-top: auto;
+    width: 700%;
+    align-self: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 10px rgba(0, 189, 101, 0.3);
 }
 
 .cart-btn:hover {
-    background: linear-gradient(135deg, #009954, #4a7349);
+    background-color: #00a354;
     transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(0, 189, 101, 0.4);
 }
 
 .cart-btn svg {

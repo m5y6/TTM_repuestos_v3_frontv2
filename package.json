@@ -12,7 +12,9 @@
   },
   "dependencies": {
     "react-router-dom": "^7.9.6",
-    "react-router-hash-link": "^2.4.3"
+    "react-router-hash-link": "^2.4.3",
+    "react-slick": "^0.31.0",
+    "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.28.5",

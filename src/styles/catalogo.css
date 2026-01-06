@@ -66,24 +66,76 @@ nav.opciones {
 
 /* Hero del catálogo */
 .catalogo-hero {
-    background: linear-gradient(135deg, #5a8756 0%, #00bd65 100%);
-    color: white;
+    position: relative;
+    width: 100%;
+    height: 300px; /* Ajusta la altura según necesites */
+    overflow: hidden;
+    color: #333; /* Cambiado a color oscuro para fondo blanco */
+    background-color: #ffffff; /* Fondo blanco */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    padding: 80px 20px;
     border-bottom: 40px solid black;
-    
+}
+
+.hero-slide {
+    position: relative;
+    width: 100%;
+    height: 300px; /* Igualar a la altura del hero-container */
+    padding: 10px; /* Agrega un poco de espacio alrededor de las imágenes */
+    box-sizing: border-box;
+}
+
+.hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Mantenido para que la imagen completa se vea */
+    /* Se elimina el filtro de brillo, ya no es necesario */
+}
+
+.hero-content {
+    position: absolute;
+    z-index: 2;
+    max-width: 800px;
+    padding: 20px;
 }
 
 .catalogo-hero h1 {
     font-family: "Oswald", sans-serif;
     font-size: 3.5rem;
     font-weight: bold;
-    margin-bottom: 20px ;
+    margin-bottom: 12rem;
 }
 
 .catalogo-hero p {
     font-size: 1.3rem;
     opacity: 0.9;
+    /* Se elimina la sombra de texto */
+}
+
+/* Slick Carousel Styles */
+.slick-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.slick-dots {
+    bottom: 25px;
+}
+
+.slick-dots li button:before {
+    color: white;
+    font-size: 12px;
+}
+
+.slick-dots li.slick-active button:before {
+    color: white;
+    opacity: 1;
 }
 
 /* Contenedor principal simplificado */
@@ -110,74 +162,126 @@ nav.opciones {
 }
 
 .filtros-header {
-    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
     padding-bottom: 20px;
-    border-bottom: 2px solid #f0f0f0;
+    border-bottom: 1px solid #e0e0e0;
 }
 
 .filtros-header h3 {
     font-family: "Oswald", sans-serif;
     font-size: 1.5rem;
-    color: #5a8756;
+    color: #333;
     font-weight: bold;
+    margin: 0;
 }
 
 .btn-limpiar {
-    background: #ff6b6b;
+    width: 100%;
+    padding: 12px;
+    background: #e74c3c;
     color: white;
     border: none;
-    padding: 8px 15px;
-    border-radius: 20px;
-    font-size: 0.8rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
     margin-top: 10px;
 }
 
 .btn-limpiar:hover {
-    background: #ff5252;
+    background: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
 }
 
 .filtro-grupo {
-    margin-bottom: 30px;
+    margin-bottom: 25px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.filtro-grupo:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
 }
 
 .filtro-grupo h4 {
     font-family: "Oswald", sans-serif;
     font-size: 1.1rem;
     color: #333;
-    margin-bottom: 15px;
+    margin-bottom: 18px;
     font-weight: 600;
 }
 
 .filtro-opciones {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 15px;
 }
 
 .filtro-checkbox {
     display: flex;
     align-items: center;
     cursor: pointer;
-    padding: 8px 12px;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-}
-
-.filtro-checkbox:hover {
-    background: #f8f9fa;
+    position: relative;
 }
 
 .filtro-checkbox input[type="checkbox"] {
-    margin-right: 12px;
-    transform: scale(1.2);
-    accent-color: #5a8756;
+    opacity: 0;
+    position: absolute;
+    width: 20px;
+    height: 20px;
 }
 
 .filtro-checkbox span {
     font-size: 0.95rem;
     color: #555;
+    padding-left: 30px;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.filtro-checkbox span::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background: white;
+    transition: all 0.3s ease;
+}
+
+.filtro-checkbox span::after {
+    content: '✔';
+    position: absolute;
+    left: 4px;
+    top: 50%;
+    transform: translateY(-50%) scale(0);
+    font-size: 16px;
+    color: white;
+    transition: transform 0.2s ease;
+}
+
+.filtro-checkbox input[type="checkbox"]:checked + span::before {
+    background: #5a8756;
+    border-color: #5a8756;
+}
+
+.filtro-checkbox input[type="checkbox"]:checked + span::after {
+    transform: translateY(-50%) scale(1);
+}
+
+.filtro-checkbox:hover span {
+    color: #5a8756;
 }
 
 .filtro-precio {
@@ -187,8 +291,8 @@ nav.opciones {
 }
 
 .precio-inputs {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
 }
 
@@ -197,14 +301,16 @@ nav.opciones {
     color: #666;
     font-weight: 500;
     margin-bottom: 5px;
+    display: block;
 }
 
 .precio-input input {
-    padding: 10px;
-    border: 2px solid #e0e0e0;
+    padding: 10px 12px;
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
     font-size: 0.9rem;
     width: 100%;
+    transition: border-color 0.3s ease;
 }
 
 .precio-input input:focus {
@@ -212,34 +318,29 @@ nav.opciones {
     border-color: #5a8756;
 }
 
-.btn-aplicar-precio {
-    background: #5a8756;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.btn-aplicar-precio:hover {
-    background: #4a7349;
-}
-
 .select-ordenar {
     width: 100%;
     padding: 12px 15px;
-    border: 2px solid #e0e0e0;
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
     background: white;
     font-size: 0.95rem;
     cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 16px;
+    transition: border-color 0.3s ease;
 }
 
 .select-ordenar:focus {
     outline: none;
     border-color: #5a8756;
 }
+
 
 /* Contenido principal */
 .catalogo-content {

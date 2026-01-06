@@ -158,25 +158,7 @@
     margin: 15px 0 !important;
 }
 
-.home-page .producto button {
-    background-color: #00bd65;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 25px;
-    font-family: "Oswald", sans-serif;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: auto;
-    width: 50%;
-    align-self: center;
-}
 
-.home-page .producto button:hover {
-    background-color: #009954;
-    transform: scale(1.05);
-}
 
 .home-page #vercatalogo {
     display: block;

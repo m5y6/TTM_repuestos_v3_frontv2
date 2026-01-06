@@ -4,7 +4,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { CartContext } from '../context/CartContext';
 import { AuthContext } from '../context/AuthContext'; // Importar AuthContext
-import ProductoService from '../services/ProductoService';
+// import ProductoService from '../services/ProductoService';
+import productosData from '../productos.json'; // Importar el JSON local
 import '../styles/Catalogo.css';
 import Footer from '../organisms/Footer';
 import Header from '../organisms/Header';
@@ -40,7 +41,7 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
         '/img/carousel/21.png',
         '/img/carousel/22.png',
         '/img/carousel/23.png',
-        '/img/carousel/24.png',
+
         
     ];
 
@@ -75,31 +76,41 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
             setProductos(productosActualesProp);
             setLoading(false);
         } else {
-            ProductoService.getAllProductos()
-                .then(response => {
-                    const productosApi = response.data.map(p => ({
-                        ...p,
-                        imagen: p.imagen_url || '/img/placeholder.jpg'
-                    }));
-                    setProductos(productosApi);
-                    setLoading(false);
-                })
-                .catch(err => {
-                    console.error("Error al cargar productos:", err);
-                    setError("No se pudieron cargar los productos. Intente nuevamente más tarde.");
-                    setLoading(false);
-                });
+            // Cargar productos desde el JSON local en lugar del servicio
+            const productosApi = productosData.map(p => ({
+                ...p,
+                imagen: p.imagen_url || '/img/placeholder.jpg'
+            }));
+            setProductos(productosApi);
+            setLoading(false);
+            // ProductoService.getAllProductos()
+            //     .then(response => {
+            //         const productosApi = response.data.map(p => ({
+            //             ...p,
+            //             imagen: p.imagen_url || '/img/placeholder.jpg'
+            //         }));
+            //         setProductos(productosApi);
+            //         setLoading(false);
+            //     })
+            //     .catch(err => {
+            //         console.error("Error al cargar productos:", err);
+            //         setError("No se pudieron cargar los productos. Intente nuevamente más tarde.");
+            //         setLoading(false);
+            //     });
         }
     }, [productosActualesProp]);
     
     const [productosFiltrados, setProductosFiltrados] = useState([]);
     const [filtros, setFiltros] = useState({
         categorias: [],
+        marcas: [], // Estado para las marcas
         precioMin: '',
         precioMax: '',
         orden: 'relevancia',
         busqueda: ''
     });
+    const [isMarcaExpanded, setIsMarcaExpanded] = useState(false); // Estado para el expansible
+
     const [paginaActual, setPaginaActual] = useState(1);
     const [notificacion, setNotificacion] = useState('');
     const productosPorPagina = 15;
@@ -121,6 +132,9 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
         }
         if (filtros.categorias.length > 0) {
             resultado = resultado.filter(p => filtros.categorias.includes(p.categoria));
+        }
+        if (filtros.marcas.length > 0) {
+            resultado = resultado.filter(p => filtros.marcas.includes(p.marca));
         }
         const min = parseInt(filtros.precioMin) || 0;
         const max = parseInt(filtros.precioMax) || Infinity;
@@ -148,6 +162,7 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
     const limpiarFiltros = () => {
         setFiltros({
             categorias: [],
+            marcas: [],
             precioMin: '',
             precioMax: '',
             orden: 'relevancia',
@@ -166,6 +181,15 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
         }));
     };
 
+    const handleMarcaChange = (marca) => {
+        setFiltros(prev => ({
+            ...prev,
+            marcas: prev.marcas.includes(marca)
+                ? prev.marcas.filter(m => m !== marca)
+                : [...prev.marcas, marca]
+        }));
+    };
+
     const handleBusquedaChange = (e) => {
         setFiltros(prev => ({
             ...prev,
@@ -175,7 +199,7 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
 
     useEffect(() => {
         aplicarFiltros();
-    }, [productos, filtros.categorias, filtros.precioMin, filtros.precioMax, filtros.orden]);
+    }, [productos, filtros.categorias, filtros.marcas, filtros.precioMin, filtros.precioMax, filtros.orden]);
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
@@ -317,6 +341,27 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
                         </div>
 
                         <div className="filtro-grupo">
+                            <div className="filtro-expansible-header" onClick={() => setIsMarcaExpanded(!isMarcaExpanded)}>
+                                <h4>Marca</h4>
+                                <span className={`expansible-icono ${isMarcaExpanded ? 'expandido' : ''}`}>▼</span>
+                            </div>
+                            {isMarcaExpanded && (
+                                <div className="filtro-opciones">
+                                    {['Force', 'Smant tools', 'Cepsa', 'Valvoline', 'Liqui moly', 'Wurth', 'Diesel technich', 'Hella', 'Bosch', 'Dayco', 'Mitsuba', 'Just power', '3M', 'Mann fiter', 'Fleetguart', 'Tecfil', 'SKF', 'Mobil', 'Castrol', 'Cummins', 'Eaton', 'North sea lubricants', 'MWM'].map(marca => (
+                                        <label key={marca} className="filtro-checkbox">
+                                            <input
+                                                type="checkbox"
+                                                checked={filtros.marcas.includes(marca)}
+                                                onChange={() => handleMarcaChange(marca)}
+                                            />
+                                            <span>{marca}</span>
+                                        </label>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="filtro-grupo">
                             <h4>Rango de Precio</h4>
                             <div className="filtro-precio">
                                 <div className="precio-inputs">
@@ -376,6 +421,7 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
                                                 </div>
                                                 <div className="producto-info">
                                                     <h3 className="producto-nombre">{producto.nombre}</h3>
+                                                    <p className="producto-marca">{producto.marca}</p>
                                                     <p className="producto-descripcion">{producto.descripcion}</p>
                                                     <div className="producto-precio">{formatearPrecio(producto.precio)}</div>
                                                     <div className="producto-acciones">

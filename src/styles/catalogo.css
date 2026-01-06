@@ -157,6 +157,8 @@ nav.opciones {
     padding: 30px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     height: fit-content;
+    max-height: calc(100vh - 40px); /* Altura máxima para que no ocupe toda la pantalla */
+    overflow-y: auto; /* Scroll vertical cuando el contenido es más largo */
     position: sticky;
     top: 20px;
 }
@@ -218,10 +220,30 @@ nav.opciones {
     font-weight: 600;
 }
 
+.filtro-expansible-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.filtro-expansible-header h4 {
+    margin-bottom: 0;
+}
+
+.expansible-icono {
+    transition: transform 0.3s ease;
+}
+
+.expansible-icono.expandido {
+    transform: rotate(180deg);
+}
+
 .filtro-opciones {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    margin-top: 15px;
 }
 
 .filtro-checkbox {
@@ -421,6 +443,14 @@ nav.opciones {
     margin: 0;
     font-weight: 600;
     line-height: 1.2;
+}
+
+.producto-marca {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .producto-descripcion {

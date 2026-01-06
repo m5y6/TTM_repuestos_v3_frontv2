@@ -1,0 +1,227 @@
+[
+    {
+        "id": 1,
+        "nombre": "Filtro de Aceite",
+        "descripcion": "Filtro de aceite de alto rendimiento para motores diésel.",
+        "precio": 15000,
+        "categoria": "Filtros",
+        "marca": "mannfiter",
+        "imagen_url": "/img/placeholder.jpg"
+    },
+    {
+        "id": 2,
+        "nombre": "Pastillas de Freno",
+        "descripcion": "Juego de pastillas de freno cerámicas para camión.",
+        "precio": 45000,
+        "categoria": "Frenos",
+        "marca": "bosch",
+        "imagen_url": "/img/placeholder.jpg"
+    },
+    {
+        "id": 3,
+        "nombre": "Aceite de Motor 15W-40",
+        "descripcion": "Aceite sintético para motor, garrafa de 5 litros.",
+        "precio": 35000,
+        "categoria": "Lubricantes",
+        "marca": "mobil",
+        "imagen_url": "/img/placeholder.jpg"
+    },
+    {
+        "id": 4,
+        "nombre": "Batería de 12V",
+        "descripcion": "Batería de alta duración para vehículos de carga.",
+        "precio": 120000,
+        "categoria": "Baterias",
+        "marca": "hella",
+        "imagen_url": "/img/placeholder.jpg"
+    },
+    {
+        "id": 5,
+        "nombre": "Correa de Distribución",
+        "descripcion": "Correa de distribución reforzada.",
+        "precio": 25000,
+        "categoria": "Correa",
+        "marca": "dayco",
+        "imagen_url": "/img/placeholder.jpg"
+    },
+    {
+        "id": 6,
+        "nombre": "Amortiguador de Suspensión",
+        "descripcion": "Amortiguador hidráulico para eje delantero.",
+        "precio": 75000,
+        "categoria": "Suspensión",
+        "marca": "SKF",
+        "imagen_url": "/img/placeholder.jpg"
+    },
+    {
+        "id": 7,
+        "nombre": "Kit de Herramientas",
+        "descripcion": "Juego de llaves y dados profesional.",
+        "precio": 95000,
+        "categoria": "Herramientas",
+        "marca": "force",
+        "imagen_url": "/img/placeholder.jpg"
+    },
+    {
+        "id": 8,
+        "nombre": "Limpia Inyectores Diésel",
+        "descripcion": "Aditivo para limpieza de sistema de inyección.",
+        "precio": 12000,
+        "categoria": "Lubricantes",
+        "marca": "liqui moly",
+        "imagen_url": "/img/placeholder.jpg"
+    },
+    {
+        "id": 9,
+        "nombre": "Faro Delantero LED",
+        "descripcion": "Faro de alta potencia con tecnología LED.",
+        "precio": 60000,
+        "categoria": "Eléctrica",
+        "marca": "hella",
+        "imagen_url": "/img/placeholder.jpg"
+    },
+    {
+        "id": 10,
+        "nombre": "Neumático para Camión",
+        "descripcion": "Neumático de carga pesada, alta durabilidad.",
+        "precio": 250000,
+        "categoria": "Neumáticos",
+        "marca": "cummins",
+        "imagen_url": "/img/placeholder.jpg"
+    },
+    {
+        "id": 11,
+        "nombre": "Filtro de Aire",
+        "descripcion": "Filtro de aire para cabina.",
+        "precio": 18000,
+        "categoria": "Filtros",
+        "marca": "fleetguart",
+        "imagen_url": "/img/placeholder.jpg"
+    },
+    {
+        "id": 12,
+        "nombre": "Grasa para Rodamientos",
+        "descripcion": "Grasa de litio para altas temperaturas.",
+        "precio": 8000,
+        "categoria": "Lubricantes",
+        "marca": "castrol",
+        "imagen_url": "/img/placeholder.jpg"
+    },
+    {
+        "id": 13,
+        "nombre": "Juego de Juntas de Motor",
+        "descripcion": "Kit completo de juntas para motor.",
+        "precio": 55000,
+        "categoria": "Motor",
+        "marca": "MWM",
+        "imagen_url": "/img/placeholder.jpg"
+    },
+    {
+        "id": 14,
+        "nombre": "Válvula EGR",
+        "descripcion": "Válvula de recirculación de gases de escape.",
+        "precio": 85000,
+        "categoria": "Válvulas",
+        "marca": "diesel technich",
+        "imagen_url": "/img/placeholder.jpg"
+    },
+    {
+        "id": 15,
+        "nombre": "Cinta Adhesiva Industrial",
+        "descripcion": "Cinta adhesiva de alta resistencia.",
+        "precio": 5000,
+        "categoria": "Herramientas",
+        "marca": "3M",
+        "imagen_url": "/img/placeholder.jpg"
+    },
+    {
+        "id": 16,
+        "nombre": "Aceite para Transmisión",
+        "descripcion": "Aceite sintético para cajas de cambio manuales.",
+        "precio": 22000,
+        "categoria": "Lubricantes",
+        "marca": "valvoline",
+        "imagen_url": "/img/placeholder.jpg"
+    },
+    {
+        "id": 17,
+        "nombre": "Bujía de Encendido",
+        "descripcion": "Bujía de iridio para un encendido eficiente.",
+        "precio": 9000,
+        "categoria": "Motor",
+        "marca": "bosch",
+        "imagen_url": "/img/placeholder.jpg"
+    },
+    {
+        "id": 18,
+        "nombre": "Disco de Freno",
+        "descripcion": "Disco de freno ventilado para eje trasero.",
+        "precio": 65000,
+        "categoria": "Frenos",
+        "marca": "SKF",
+        "imagen_url": "/img/placeholder.jpg"
+    },
+    {
+        "id": 19,
+        "nombre": "Gato Hidráulico",
+        "descripcion": "Gato hidráulico tipo botella, 20 toneladas.",
+        "precio": 150000,
+        "categoria": "Herramientas",
+        "marca": "smant tools",
+        "imagen_url": "/img/placeholder.jpg"
+    },
+    {
+        "id": 20,
+        "nombre": "Refrigerante de Motor",
+        "descripcion": "Líquido refrigerante orgánico, color rojo.",
+        "precio": 13000,
+        "categoria": "Lubricantes",
+        "marca": "cepsa",
+        "imagen_url": "/img/placeholder.jpg"
+    },
+    {
+        "id": 21,
+        "nombre": "Filtro de Combustible",
+        "descripcion": "Filtro separador de agua para combustible diésel.",
+        "precio": 28000,
+        "categoria": "Filtros",
+        "marca": "tecfil",
+        "imagen_url": "/img/placeholder.jpg"
+    },
+    {
+        "id": 22,
+        "nombre": "Alternador",
+        "descripcion": "Alternador de 12V y 150A.",
+        "precio": 180000,
+        "categoria": "Eléctrica",
+        "marca": "mitsuba",
+        "imagen_url": "/img/placeholder.jpg"
+    },
+    {
+        "id": 23,
+        "nombre": "Kit de Embrague",
+        "descripcion": "Kit completo de embrague para camión.",
+        "precio": 350000,
+        "categoria": "Motor",
+        "marca": "eaton",
+        "imagen_url": "/img/placeholder.jpg"
+    },
+    {
+        "id": 24,
+        "nombre": "Limpiaparabrisas",
+        "descripcion": "Juego de plumillas limpiaparabrisas de silicona.",
+        "precio": 12000,
+        "categoria": "Artículos de seguridad",
+        "marca": "bosch",
+        "imagen_url": "/img/placeholder.jpg"
+    },
+    {
+        "id": 25,
+        "nombre": "Spray Multiuso",
+        "descripcion": "Aflojatodo y lubricante en aerosol.",
+        "precio": 7000,
+        "categoria": "Herramientas",
+        "marca": "wurth",
+        "imagen_url": "/img/placeholder.jpg"
+    }
+]

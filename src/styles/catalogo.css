@@ -483,7 +483,7 @@ nav.opciones {
 }
 
 .producto-descripcion {
-    color: #666;
+  color: #666;
     font-size: 0.9rem;
     line-height: 1.4;
     margin: 0;
@@ -975,4 +975,48 @@ nav.opciones {
     .precio-input label, .filtro-checkbox span {
         font-size: 0.85rem;
     }
+}
+
+/* Selector de cantidad */
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.quantity-selector button {
+    background: white;
+    border: none;
+    padding: 8px 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: #5a8756;
+    transition: all 0.3s ease;
+}
+
+.quantity-selector button:hover {
+    background: #5a8756;
+    color: white;
+}
+
+.quantity-selector input {
+    width: 60px;
+    border: none;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 8px 0;
+    background: white;
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+    appearance: none;
+    margin: 0;
+}
+
+.quantity-selector input:focus {
+    outline: none;
 }

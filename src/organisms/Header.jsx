@@ -61,7 +61,7 @@ export default function Header() {
         <nav className={`opciones ${isMenuOpen ? 'open' : ''}`}>
           <Link to="/" onClick={toggleMenu}>Inicio</Link>
           <Link to="/catalogo" onClick={toggleMenu}>Catálogo</Link>
-          <Link to="/carrito" onClick={toggleMenu}>Cotizacion</Link>
+          <Link to="/cotizacion" onClick={toggleMenu}>Cotizacion</Link>
 
           {user && user.rol === 1 && (
             <Link to="/administrar" onClick={toggleMenu}>Administrar</Link>

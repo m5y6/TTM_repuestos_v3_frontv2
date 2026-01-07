@@ -1,13 +1,20 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
 // Asegúrate de que la ruta a tu archivo CSS sea correcta.
 import '../styles/App.css'; 
 import Header from '../organisms/Header';
 import Footer from '../organisms/Footer';
 import ShoppingCartIcon from '../assets/icons/ShoppingCartIcon';
 import SealIcon from '../assets/icons/SealIcon';
+import productosData from '../productos.json';
+import { CotizacionContext } from "../context/CotizacionContext";
 
 
-const ProductCard = React.forwardRef(({ imgSrc, title, price, code, discount }, ref) => {
+const ProductCard = React.forwardRef(({ producto, handleAddToCotizacion }, ref) => {
+  if (!producto) {
+    // Para evitar que la aplicación se rompa si no hay producto
+    return null;
+  }
   const [quantity, setQuantity] = useState(1);
 
   const increaseQuantity = () => setQuantity(prev => (prev === '' ? 1 : parseInt(prev, 10) + 1));
@@ -28,26 +35,35 @@ const ProductCard = React.forwardRef(({ imgSrc, title, price, code, discount }, 
     }
   };
 
+  const formatearPrecio = (precio) => {
+    return '$' + (precio ? precio.toLocaleString('es-CL') : '0');
+  };
+
   return (
     <div className="producto" ref={ref}>
       <a href="#">
-        {discount && (
-          <div className="producto-badge">
-            <span className="discount-value">{discount.value}</span>
-            <span className="discount-text">{discount.text}</span>
-          </div>
-        )}
         <div className="producto-imagen-container">
-          <img src={imgSrc} alt={title} className="producto-imagen" />
+          {producto.descuento && <div className="descuento-insignia">{producto.descuento}% OFF</div>}
+          <img src={producto.imagen_url} alt={producto.nombre} className="producto-imagen" />
         </div>
         <div className="producto-info">
           <div className="producto-details">
-            <span className="producto-code">ID TTM: {code}</span>
-            <span className="producto-title">{title}</span>
+            <span className="producto-code">ID TTM: {producto.id}</span>
+            <span className="producto-oem">OEM: {producto.oem}</span>
+            <span className="producto-title">{producto.nombre}</span>
           </div>
         </div>
         <div className="producto-price-actions">
-          <div className="precio">${price.toLocaleString('es-CL')}</div>
+            <div className="precio">
+                {producto.descuento ? (
+                    <>
+                        <span className="precio-original">{formatearPrecio(producto.precio)}</span>
+                        <span className="precio-descuento">{formatearPrecio(producto.precio * (1 - producto.descuento / 100))}</span>
+                    </>
+                ) : (
+                    formatearPrecio(producto.precio)
+                )}
+            </div>
           
         </div>
       </a>
@@ -63,22 +79,30 @@ const ProductCard = React.forwardRef(({ imgSrc, title, price, code, discount }, 
           />
           <button className="add" onClick={increaseQuantity}>+</button>
         </div>
-        <button className="cart-btn"><ShoppingCartIcon /></button>
+        <button className="cart-btn" onClick={() => handleAddToCotizacion(producto)}><ShoppingCartIcon /></button>
       </div>
     </div>
   );
 });
 
-const productos = [
-  { imgSrc: "/img/bateria.png", title: "Batería", price: 100000, code: "300277" },
-  { imgSrc: "/img/amortiguador.png", title: "Amortiguador", price: 80000, code: "300278" },
-  { imgSrc: "/img/filtro2.png", title: "Filtro de Aceite", price: 20000, code: "300279" },
-  { imgSrc: "/img/pastilla2.png", title: "Pastillas de Freno", price: 50000, code: "300280" },
-  { imgSrc: "/img/aceite2.png", title: "Aceite de Motor", price: 30000, code: "300281" },
-  { imgSrc: "/img/neumatico2.png", title: "Neumático", price: 200000, code: "300282" },
-];
+const productos = productosData.slice(0, 6);
 
 export default function Index() {
+  const { addToCart } = useContext(CotizacionContext);
+  const [notificacion, setNotificacion] = useState('');
+
+  const mostrarNotificacion = (mensaje) => {
+    setNotificacion(mensaje);
+    setTimeout(() => {
+        setNotificacion('');
+    }, 3000);
+  };
+
+  const handleAddToCotizacion = (producto) => {
+    addToCart(producto);
+    mostrarNotificacion(`✅ ${producto.nombre} agregado a la cotización`);
+  };
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const productRefs = useRef([]);
   productRefs.current = [];
@@ -291,17 +315,23 @@ export default function Index() {
                     <ProductCard
                       key={index}
                       ref={addToRefs}
-                      {...producto}
+                      producto={producto}
+                      handleAddToCotizacion={handleAddToCotizacion}
                     />
                   ))}
                 </div>
               </div>
               <button className="carousel-arrow next" onClick={nextSlide}>&#10095;</button>
             </div>
-            <button id="vercatalogo">Ver catálogo</button>
+            <Link to="/catalogo" id="vercatalogo">Ver catálogo</Link>
           </div>
         </section>
         
+        {notificacion && (
+            <div className="notificacion-carrito">
+                {notificacion}
+            </div>
+        )}
         <Footer/>
       </div>
     </>

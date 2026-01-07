@@ -198,6 +198,31 @@ nav.opciones {
     position: absolute;
     top: 60%;
     left: 50%;
+    
+.descuento-insignia {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #e74c3c;
+    color: white;
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.precio-original {
+    text-decoration: line-through;
+    color: #999;
+    margin-right: 10px;
+    font-size: 0.9rem;
+}
+
+.precio-descuento {
+    color: #e74c3c;
+    font-weight: bold;
+}
     transform: translate(-50%, -50%);
     color: white;
     font-size: 30px;
@@ -361,12 +386,16 @@ nav.opciones {
     margin: 0 auto;
 }
 
+.top_ventas {
+    text-align: center; /* Centra el botón 'Ver catálogo' */
+}
+
 .top_ventas > h2 {
     text-align: center;
     font-family: "Oswald", sans-serif;
     font-size: 2.5rem;
     color: #5a8756;
-    margin-bottom: 50px;
+    margin-bottom: 30px; /* Reducimos el margen */
     font-weight: bold;
 }
 
@@ -377,7 +406,7 @@ nav.opciones {
     align-items: center;
     justify-content: center;
     max-width: 1400px;
-    margin: 0 auto 40px;
+    margin: 0 auto 20px; /* Acercamos el botón */
 }
 
 /* Viewport del carrusel */
@@ -499,7 +528,13 @@ nav.opciones {
 .producto-details {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 8px;
+}
+
+.producto-oem {
+    font-size: 0.8rem;
+    color: #555;
+    font-weight: bold;
 }
 
 .producto-code {
@@ -620,7 +655,7 @@ nav.opciones {
     outline: none;
 }
 
-/* Botón de carrito */
+/* Botón de cotizacion */
 .cart-btn {
     background-color: #00bd65;
     color: white;
@@ -683,8 +718,9 @@ nav.opciones {
 
 /* Botón ver catálogo */
 #vercatalogo {
-    display: block;
-    margin: 0 auto;
+    display: block; /* Para que el centrado con margen funcione */
+    width: fit-content; /* Ancho se ajusta al contenido */
+    margin: 20px auto 0; /* Margen superior y centrado horizontal */
     background: linear-gradient(135deg, #5a8756, #00bd65);
     color: white;
     border: none;
@@ -698,6 +734,7 @@ nav.opciones {
     transition: all 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 1px;
+    text-decoration: none; /* Quita el subrayado */
 }
 
 #vercatalogo:hover {

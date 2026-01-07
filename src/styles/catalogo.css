@@ -395,6 +395,35 @@ nav.opciones {
     margin-bottom: 40px;
 }
 
+.producto-imagen {
+    position: relative;
+    /* ... otros estilos ... */
+}
+
+.descuento-insignia {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #e74c3c;
+    color: white;
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.precio-original {
+    text-decoration: line-through;
+    color: #999;
+    margin-right: 10px;
+    font-size: 0.9rem;
+}
+
+.precio-descuento {
+    color: #e74c3c;
+    font-weight: bold;
+}
 .producto-card {
     background: white;
     border-radius: 15px;

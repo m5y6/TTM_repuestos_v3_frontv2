@@ -108,7 +108,7 @@ describe('Catalogo Page', ()=>{
                 </AuthContext.Provider>
             </MemoryRouter>
         )
-        const button = screen.getAllByText("Agregar al Carrito")[0]
+        const button = screen.getAllByText("Agregar a Cotizacion")[0]
 
         fireEvent.click(button)
         expect(cartContextValue.addToCart).toHaveBeenCalledWith(productosMock[0])

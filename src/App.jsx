@@ -3,29 +3,36 @@ import Index from './pages/Index'
 import Registro from './pages/Registro'
 import Login from './pages/Login'
 import Catalogo from './pages/Catalogo'
-import Carrito from './pages/Carrito'
+import Cotizacion from './pages/Cotizacion'
 import Administrar from './pages/Administrar'
+import { AuthProvider } from './context/AuthContext.jsx'
+import { CotizacionProvider } from './context/CotizacionContext.jsx'
+import ProtectedRoute from './components/ProtectedRoute.jsx'
+import AdminRoute from './components/AdminRoute.jsx'
+import GlobalNotification from './components/GlobalNotification.jsx'
 
-import GlobalNotification from './components/GlobalNotification'
-import ProtectedRoute from './components/ProtectedRoute'
-import AdminRoute from './components/AdminRoute'
-import './styles/App.css'
-
-function App() {
+function App () {
   return (
-    <>
-      <Routes>
-        <Route path='/' element={<Index />}/>
-        <Route path='/registro' element={<Registro />}/>
-        <Route path='/login' element={<Login />}/>
-        <Route path='/catalogo' element={<Catalogo />}/>
-        <Route path='/carrito' element={<Carrito />}/>
-        <Route element={<AdminRoute />}>
-          <Route path='/administrar' element={<Administrar />}/>
-        </Route>
-      </Routes>
-      <GlobalNotification />
-    </>
+    <AuthProvider>
+      <CotizacionProvider>
+          <GlobalNotification />
+          <Routes>
+            <Route path='/' element={<Index />} />
+            <Route path='/catalogo' element={<Catalogo />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/registro' element={<Registro />} />
+            <Route path='/cotizacion' element={<Cotizacion />}/>
+            <Route
+              path='/administrar'
+              element={
+                <AdminRoute>
+                  <Administrar />
+                </AdminRoute>
+              }
+            />
+          </Routes>
+      </CotizacionProvider>
+    </AuthProvider>
   )
 }
 

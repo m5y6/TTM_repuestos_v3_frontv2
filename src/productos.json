@@ -5,8 +5,10 @@
         "descripcion": "Filtro de aceite de alto rendimiento para motores diésel.",
         "precio": 15000,
         "categoria": "Filtros",
-        "marca": "mannfiter",
-        "imagen_url": "/img/placeholder.jpg"
+        "marca": "mann fiter",
+        "imagen_url": "/img/placeholder.jpg",
+        "descuento": 10,
+        "oem": "OEM12345"
     },
     {
         "id": 2,
@@ -15,7 +17,8 @@
         "precio": 45000,
         "categoria": "Frenos",
         "marca": "bosch",
-        "imagen_url": "/img/placeholder.jpg"
+        "imagen_url": "/img/placeholder.jpg",
+        "oem": "OEM67890"
     },
     {
         "id": 3,
@@ -24,7 +27,9 @@
         "precio": 35000,
         "categoria": "Lubricantes",
         "marca": "mobil",
-        "imagen_url": "/img/placeholder.jpg"
+        "imagen_url": "/img/placeholder.jpg",
+        "descuento": 15,
+        "oem": "OEM10111"
     },
     {
         "id": 4,
@@ -33,7 +38,8 @@
         "precio": 120000,
         "categoria": "Baterias",
         "marca": "hella",
-        "imagen_url": "/img/placeholder.jpg"
+        "imagen_url": "/img/placeholder.jpg",
+        "oem": "OEM12131"
     },
     {
         "id": 5,
@@ -42,7 +48,8 @@
         "precio": 25000,
         "categoria": "Correa",
         "marca": "dayco",
-        "imagen_url": "/img/placeholder.jpg"
+        "imagen_url": "/img/placeholder.jpg",
+        "oem": "OEM14151"
     },
     {
         "id": 6,
@@ -60,7 +67,8 @@
         "precio": 95000,
         "categoria": "Herramientas",
         "marca": "force",
-        "imagen_url": "/img/placeholder.jpg"
+        "imagen_url": "/img/placeholder.jpg",
+        "descuento": 20
     },
     {
         "id": 8,

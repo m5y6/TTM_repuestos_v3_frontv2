@@ -1,8 +1,9 @@
+import { useLocation } from 'react-router-dom';
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
-import { CartContext } from '../context/CartContext';
+import { CotizacionContext } from "../context/CotizacionContext";
 import { AuthContext } from '../context/AuthContext'; // Importar AuthContext
 // import ProductoService from '../services/ProductoService';
 import productosData from '../productos.json'; // Importar el JSON local
@@ -11,7 +12,7 @@ import Footer from '../organisms/Footer';
 import Header from '../organisms/Header';
 
 const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = false }) => {
-    const { addToCart } = useContext(CartContext);
+    const { addToCart } = useContext(CotizacionContext);
     const { user, showNotification } = useContext(AuthContext); // Obtener user y showNotification
     const [productos, setProductos] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -130,7 +131,8 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
             resultado = resultado.filter(producto =>
                 normalizeString(producto.nombre).includes(termino) ||
                 (producto.descripcion && normalizeString(producto.descripcion).includes(termino)) ||
-                normalizeString(producto.categoria).includes(termino)
+                normalizeString(producto.categoria).includes(termino) ||
+                (producto.oem && normalizeString(producto.oem).includes(termino))
             );
         }
         if (filtros.categorias.length > 0) {
@@ -200,6 +202,19 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
         }));
     };
 
+    const location = useLocation();
+
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const busquedaUrl = params.get('buscar');
+        if (busquedaUrl) {
+            setFiltros(prev => ({
+                ...prev,
+                busqueda: busquedaUrl
+            }));
+        }
+    }, [location.search]);
+
     useEffect(() => {
         aplicarFiltros();
     }, [productos, filtros.categorias, filtros.marcas, filtros.precioMin, filtros.precioMax, filtros.orden]);
@@ -211,13 +226,9 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
         return () => clearTimeout(timeoutId);
     }, [productos, filtros.busqueda]);
 
-    const handleAddToCart = (producto) => {
-        if (user) {
-            addToCart(producto);
-            mostrarNotificacion(`✅ ${producto.nombre} agregado al carrito`);
-        } else {
-            showNotification('Debes iniciar sesión para agregar productos');
-        }
+    const handleAddToCotizacion = (producto) => {
+        addToCart(producto);
+        mostrarNotificacion(`✅ ${producto.nombre} agregado a la cotización`);
     };
 
     const mostrarNotificacion = (mensaje) => {
@@ -416,6 +427,7 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
                                         {productosActuales.map(producto => (
                                             <div key={producto.id} className="producto-card">
                                                 <div className="producto-imagen">
+                                                    {producto.descuento && <div className="descuento-insignia">{producto.descuento}% OFF</div>}
                                                     <img 
                                                         src={producto.imagen} 
                                                         alt={producto.nombre} 
@@ -426,12 +438,22 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
                                                     <h3 className="producto-nombre">{producto.nombre}</h3>
                                                     <p className="producto-marca">{producto.marca}</p>
                                                     <p className="producto-descripcion">{producto.descripcion}</p>
-                                                    <div className="producto-precio">{formatearPrecio(producto.precio)}</div>
+                                                    <span className="producto-oem">OEM: {producto.oem}</span>
+                                                    <div className="producto-precio">
+                                                        {producto.descuento ? (
+                                                            <>
+                                                                <span className="precio-original">{formatearPrecio(producto.precio)}</span>
+                                                                <span className="precio-descuento">{formatearPrecio(producto.precio * (1 - producto.descuento / 100))}</span>
+                                                            </>
+                                                        ) : (
+                                                            formatearPrecio(producto.precio)
+                                                        )}
+                                                    </div>
                                                     <div className="producto-acciones">
                                                         <button 
                                                             className="btn-carrito" 
-                                                            onClick={() => handleAddToCart(producto)}
-                                                        >Agregar al Carrito</button>
+                                                            onClick={() => handleAddToCotizacion(producto)}
+                                                        >Agregar Cotizacion</button>
                                                     </div>
                                                 </div>
                                             </div>

@@ -11,6 +11,72 @@ import '../styles/Catalogo.css';
 import Footer from '../organisms/Footer';
 import Header from '../organisms/Header';
 
+const ProductoCard = ({ producto, handleAddToCotizacion, formatearPrecio }) => {
+    const [quantity, setQuantity] = useState(1);
+
+    const increaseQuantity = () => setQuantity(prev => (prev === '' ? 1 : parseInt(prev, 10) + 1));
+    const decreaseQuantity = () => setQuantity(prev => (prev > 1 ? parseInt(prev, 10) - 1 : 1));
+
+    const handleQuantityChange = (e) => {
+        const value = e.target.value;
+        if (value === '' || (/^\d+$/.test(value) && parseInt(value, 10) > 0)) {
+            setQuantity(value);
+        }
+    };
+
+    const handleBlur = (e) => {
+        if (e.target.value === '') {
+            setQuantity(1);
+        }
+    };
+
+    return (
+        <div className="producto-card">
+            <div className="producto-imagen">
+                {producto.descuento && <div className="descuento-insignia">{producto.descuento}% OFF</div>}
+                <img 
+                    src={producto.imagen} 
+                    alt={producto.nombre} 
+                    onError={(e) => { e.target.src = '/img/placeholder.jpg'; }}
+                />
+            </div>
+            <div className="producto-info">
+                <h3 className="producto-nombre">{producto.nombre}</h3>
+                <p className="producto-marca">{producto.marca}</p>
+                <p className="producto-descripcion">{producto.descripcion}</p>
+                <span className="producto-oem">OEM: {producto.oem}</span>
+                <div className="producto-precio">
+                    {producto.descuento ? (
+                        <>
+                            <span className="precio-original">{formatearPrecio(producto.precio)}</span>
+                            <span className="precio-descuento">{formatearPrecio(producto.precio * (1 - producto.descuento / 100))}</span>
+                        </>
+                    ) : (
+                        formatearPrecio(producto.precio)
+                    )}
+                </div>
+                <div className="producto-acciones">
+                    <div className="quantity-selector">
+                        <button className="sub" onClick={decreaseQuantity}>-</button>
+                        <input
+                            type="number"
+                            value={quantity}
+                            onChange={handleQuantityChange}
+                            onBlur={handleBlur}
+                            min="1"
+                        />
+                        <button className="add" onClick={increaseQuantity}>+</button>
+                    </div>
+                    <button 
+                        className="btn-carrito" 
+                        onClick={() => handleAddToCotizacion(producto, quantity)}
+                    >Agregar Cotizacion</button>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = false }) => {
     const { addToCart } = useContext(CotizacionContext);
     const { user, showNotification } = useContext(AuthContext); // Obtener user y showNotification
@@ -226,8 +292,8 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
         return () => clearTimeout(timeoutId);
     }, [productos, filtros.busqueda]);
 
-    const handleAddToCotizacion = (producto) => {
-        addToCart(producto);
+const handleAddToCotizacion = (producto, quantity) => {
+    addToCart(producto, quantity);
         mostrarNotificacion(`✅ ${producto.nombre} agregado a la cotización`);
     };
 
@@ -424,41 +490,15 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
 
                                 {productosFiltrados.length > 0 ? (
                                     <div className="productos-grid">
-                                        {productosActuales.map(producto => (
-                                            <div key={producto.id} className="producto-card">
-                                                <div className="producto-imagen">
-                                                    {producto.descuento && <div className="descuento-insignia">{producto.descuento}% OFF</div>}
-                                                    <img 
-                                                        src={producto.imagen} 
-                                                        alt={producto.nombre} 
-                                                        onError={(e) => { e.target.src = '/img/placeholder.jpg'; }}
-                                                    />
-                                                </div>
-                                                <div className="producto-info">
-                                                    <h3 className="producto-nombre">{producto.nombre}</h3>
-                                                    <p className="producto-marca">{producto.marca}</p>
-                                                    <p className="producto-descripcion">{producto.descripcion}</p>
-                                                    <span className="producto-oem">OEM: {producto.oem}</span>
-                                                    <div className="producto-precio">
-                                                        {producto.descuento ? (
-                                                            <>
-                                                                <span className="precio-original">{formatearPrecio(producto.precio)}</span>
-                                                                <span className="precio-descuento">{formatearPrecio(producto.precio * (1 - producto.descuento / 100))}</span>
-                                                            </>
-                                                        ) : (
-                                                            formatearPrecio(producto.precio)
-                                                        )}
-                                                    </div>
-                                                    <div className="producto-acciones">
-                                                        <button 
-                                                            className="btn-carrito" 
-                                                            onClick={() => handleAddToCotizacion(producto)}
-                                                        >Agregar Cotizacion</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
+                                    {productosActuales.map(producto => (
+                                        <ProductoCard 
+                                            key={producto.id}
+                                            producto={producto}
+                                            handleAddToCotizacion={handleAddToCotizacion}
+                                            formatearPrecio={formatearPrecio}
+                                        />
+                                    ))}
+                                </div>
                                 ) : (
                                     <p>No se encontraron productos que coincidan con los filtros.</p>
                                 )}

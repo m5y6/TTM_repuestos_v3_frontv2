@@ -63,21 +63,21 @@ export const CotizacionProvider = ({ children }) => {
     }, [cartItems, user]);
 
 
-    const addToCart = async (product) => {
+    const addToCart = async (product, quantity = 1) => {
         if (!user) {
             setCartItems(prevItems => {
                 const existingItem = prevItems.find(item => item.producto.id === product.id);
                 if (existingItem) {
                     return prevItems.map(item =>
                         item.producto.id === product.id
-                            ? { ...item, cantidad: item.cantidad + 1 }
+                            ? { ...item, cantidad: item.cantidad + quantity }
                             : item
                     );
                 } else {
                     const newItem = {
                         id: product.id, // Using product id as cart item id for guest
                         producto: product,
-                        cantidad: 1
+                        cantidad: quantity
                     };
                     return [...prevItems, newItem];
                 }
@@ -89,9 +89,9 @@ export const CotizacionProvider = ({ children }) => {
 
         try {
             if (existingItem) {
-                await CartService.updateQuantity(existingItem.id, existingItem.cantidad + 1);
+                await CotizacionService.updateQuantity(existingItem.id, existingItem.cantidad + quantity);
             } else {
-                await CartService.addToCart({ productoId: product.id, cantidad: 1 });
+                await CotizacionService.addToCart({ productoId: product.id, cantidad: quantity });
             }
             loadCartFromServer();
         } catch (err) {

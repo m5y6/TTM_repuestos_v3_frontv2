@@ -79,7 +79,7 @@ const ProductCard = React.forwardRef(({ producto, handleAddToCotizacion }, ref) 
           />
           <button className="add" onClick={increaseQuantity}>+</button>
         </div>
-        <button className="cart-btn" onClick={() => handleAddToCotizacion(producto)}><ShoppingCartIcon /></button>
+        <button className="cart-btn" onClick={() => handleAddToCotizacion(producto, quantity)}><ShoppingCartIcon /></button>
       </div>
     </div>
   );
@@ -98,8 +98,8 @@ export default function Index() {
     }, 3000);
   };
 
-  const handleAddToCotizacion = (producto) => {
-    addToCart(producto);
+  const handleAddToCotizacion = (producto, quantity) => {
+    addToCart(producto, quantity);
     mostrarNotificacion(`✅ ${producto.nombre} agregado a la cotización`);
   };
 

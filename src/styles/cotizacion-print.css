@@ -1,0 +1,114 @@
+@media print {
+    /* Ocultar elementos no deseados como el header, footer y botones */
+    body * {
+        visibility: hidden;
+    }
+
+    .carrito-simple, .carrito-simple * {
+        visibility: visible;
+    }
+
+    .carrito-simple {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+
+    /* Ocultar botones y elementos interactivos */
+    .btn-cantidad,
+    .btn-eliminar,
+    .checkout-button,
+    .codigo-descuento,
+    .btn-imprimir-pdf,
+    .item-cantidad button {
+        display: none !important;
+    }
+
+    /* Estilos generales para el documento */
+    .carrito-simple {
+        margin: 20px;
+        font-family: Arial, sans-serif;
+        color: #333;
+    }
+
+    .carrito-titulo {
+        font-size: 24px;
+        text-align: center;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #ccc;
+        padding-bottom: 10px;
+    }
+
+    .carrito-grid {
+        display: block;
+    }
+
+    .carrito-items, .resumen-pedido {
+        width: 100%;
+        float: none;
+    }
+
+    .carrito-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+        page-break-inside: avoid;
+    }
+    
+    .item-imagen {
+        display: none; /* Ocultar imágenes para ahorrar espacio y tinta */
+    }
+
+    .item-info {
+        flex-grow: 1;
+    }
+
+    .item-info h3 {
+        margin: 0;
+        font-size: 16px;
+    }
+
+    .item-precio, .item-cantidad, .cantidad-numero {
+        font-size: 14px;
+        text-align: right;
+        min-width: 80px;
+    }
+
+    .item-cantidad {
+        text-align: center;
+    }
+    .cantidad-numero::before {
+        content: "Cant: ";
+        font-weight: bold;
+    }
+
+    /* Estilos para el resumen del pedido */
+    .resumen-pedido {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 2px solid #333;
+    }
+
+    .resumen-pedido h2 {
+        text-align: left;
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+
+    .linea-resumen, .linea-total {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        font-size: 16px;
+    }
+
+    .linea-total {
+        font-weight: bold;
+        font-size: 18px;
+        border-top: 1px solid #ccc;
+        margin-top: 10px;
+    }
+}

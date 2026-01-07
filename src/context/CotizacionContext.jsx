@@ -4,11 +4,21 @@ import { AuthContext } from './AuthContext'; // Assuming you have an AuthContext
 
 export const CotizacionContext = createContext();
 
+const getInitialCartFromLocalStorage = () => {
+    try {
+        const localData = localStorage.getItem('cart');
+        return localData ? JSON.parse(localData) : [];
+    } catch (error) {
+        console.error("Error parsing cart from localStorage", error);
+        return [];
+    }
+};
+
 export const CotizacionProvider = ({ children }) => {
-    const [cartItems, setCartItems] = useState([]);
+    const [cartItems, setCartItems] = useState(getInitialCartFromLocalStorage);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const { user } = useContext(AuthContext || {}); // Gracefully handle if no AuthContext
+    const { user } = useContext(AuthContext); // Gracefully handle if no AuthContext
 
     // Function to load cart from backend
     const loadCartFromServer = () => {
@@ -32,26 +42,12 @@ export const CotizacionProvider = ({ children }) => {
             });
     };
 
-    const loadCartFromLocalStorage = () => {
-        try {
-            const localData = localStorage.getItem('cart');
-            if (localData) {
-                setCartItems(JSON.parse(localData));
-            } else {
-                setCartItems([]);
-            }
-        } catch (error) {
-            console.error("Error parsing cart from localStorage", error);
-            setCartItems([]);
-        }
-    };
-
     // Load cart on initial mount or when user changes
     useEffect(() => {
         if (user) {
             loadCartFromServer();
         } else {
-            loadCartFromLocalStorage();
+            setCartItems(getInitialCartFromLocalStorage());
         }
     }, [user]);
 
@@ -107,7 +103,7 @@ export const CotizacionProvider = ({ children }) => {
         }
 
         try {
-            await CartService.removeFromCart(itemId);
+            await CotizacionService.removeFromCart(itemId);
             setCartItems(prevItems => prevItems.filter(item => item.id !== itemId));
         } catch (err) {
             setError('Failed to remove item from cart.');
@@ -136,7 +132,7 @@ export const CotizacionProvider = ({ children }) => {
             return;
         }
         try {
-            await CartService.updateQuantity(itemId, newQuantity);
+            await CotizacionService.updateQuantity(itemId, newQuantity);
             setCartItems(prevItems =>
                 prevItems.map(item =>
                     item.id === itemId ? { ...item, cantidad: newQuantity } : item
@@ -152,7 +148,7 @@ export const CotizacionProvider = ({ children }) => {
     const clearCart = async () => {
         if (user) {
             try {
-                await CartService.clearCart();
+                await CotizacionService.clearCart();
                 setCartItems([]);
             } catch (err) {
                 setError('Failed to clear cart.');

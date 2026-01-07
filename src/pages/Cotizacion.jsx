@@ -120,7 +120,7 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
     // Función para proceder al pago
     const procederAlPago = async () => {
         try {
-            const response = await CartService.checkout();
+            const response = await CotizacionService.checkout();
             if (response.status === 200) {
                 clearCart();
                 navigate('/compra-exitosa', { state: { order: response.data } });

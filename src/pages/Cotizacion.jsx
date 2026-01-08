@@ -15,7 +15,9 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
         subtotal: 0,
         descuentoProductos: 0,
         descuentoCodigo: 0,
-        total: 0
+        total: 0,
+        totalItems: 0, // Cantidad total de unidades
+        lineItemsCount: 0 // Cantidad de tipos de productos
     });
     const [codigoInput, setCodigoInput] = useState('');
     const [codigoAplicado, setCodigoAplicado] = useState(false);
@@ -38,9 +40,12 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
     const actualizarResumen = () => {
         let subtotal = 0;
         let descuentoProductos = 0;
+        let totalItems = 0;
+        const lineItemsCount = cartItems.length; // Número de tipos de producto
         cartItems.forEach(item => {
             const precioOriginal = item.producto.precio * item.cantidad;
             subtotal += precioOriginal;
+            totalItems += item.cantidad;
             if (item.producto.descuento) {
                 descuentoProductos += precioOriginal * (item.producto.descuento / 100);
             }
@@ -51,7 +56,7 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
             descuentoCodigo = Math.round(subtotalConDescuento * (porcentajeDescuento / 100));
         }
         const total = subtotalConDescuento - descuentoCodigo;
-        setResumen({ subtotal, descuentoProductos, descuentoCodigo, total });
+        setResumen({ subtotal, descuentoProductos, descuentoCodigo, total, totalItems, lineItemsCount });
     };
 
     // --- Start of PDF Generation Logic ---
@@ -64,19 +69,20 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
             const plantillaUrl = '/templates/plantilla_cotizacion.pdf';
             const plantillaBytes = await fetch(plantillaUrl).then(res => res.arrayBuffer());
             const pdfDoc = await PDFDocument.load(plantillaBytes);
-            const pages = pdfDoc.getPages();
-            const firstPage = pages[0];
+            
+            const firstPage = pdfDoc.getPages()[0];
             const { width, height } = firstPage.getSize();
             
-            // --- AJUSTA ESTAS COORDENADAS (EL ORIGEN 0,0 ES LA ESQUINA INFERIOR IZQUIERDA) ---
-            
-            // Coordenadas para la fecha
+            // --- Coordenadas y Constantes ---
+            const initialY = height - 305;
+            const bottomMargin = 100;
+            const lineHeight = 20;
+
+            // Coordenadas para la fecha (solo en la primera página)
             const dateX = width - 592;
             const dateY = height - 252; 
 
-            // Coordenadas y configuración para la tabla de items
-            let currentY = height - 305; // Posición Y inicial para el primer item
-            const lineHeight = 20;       // Espacio entre líneas
+            // Coordenadas para la tabla de items
             const idProductoX = 40;
             const quantityX = 122;
             const nameX = 159;
@@ -84,7 +90,7 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
             const discountX = 478;
             const totalPriceX = 510;
 
-            // Dibujar la fecha
+            // Dibujar la fecha (solo en la primera página)
             const fecha = new Date().toLocaleDateString('es-CL');
             firstPage.drawText(`${fecha}`, {
                 x: dateX,
@@ -93,11 +99,18 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
                 font: await pdfDoc.embedFont(StandardFonts.Helvetica),
                 color: rgb(0, 0, 0),
             });
+
+            let currentPage = firstPage;
+            let currentY = initialY;
             
-            // Dibujar los items de la cotización
+            // Dibujar los items de la cotización, creando páginas según sea necesario
             for (const item of cartItems) {
-                if (currentY < 100) { // Si el espacio se acaba (ajusta el 100 si es necesario)
-                    break; 
+                if (currentY < bottomMargin) {
+                    const plantillaDoc = await PDFDocument.load(plantillaBytes);
+                    const [newPageTemplate] = await pdfDoc.copyPages(plantillaDoc, [0]);
+                    pdfDoc.addPage(newPageTemplate);
+                    currentPage = newPageTemplate;
+                    currentY = initialY;
                 }
                 
                 const { producto, cantidad } = item;
@@ -105,34 +118,40 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
                 const precioTotalItem = precioUnitario * cantidad;
                 const descuentoStr = producto.descuento ? `${producto.descuento}%` : '0%';
 
-                firstPage.drawText(producto.id_producto || 'N/A', { x: idProductoX, y: currentY, size: 10 });
-                firstPage.drawText(String(cantidad), { x: quantityX, y: currentY, size: 10 });
-                firstPage.drawText(producto.nombre, { x: nameX, y: currentY, size: 10 });
-                firstPage.drawText(formatearPrecio(precioUnitario), { x: unitPriceX, y: currentY, size: 10 });
-                firstPage.drawText(descuentoStr, { x: discountX, y: currentY, size: 10 });
-                firstPage.drawText(formatearPrecio(precioTotalItem), { x: totalPriceX, y: currentY, size: 10 });
+                currentPage.drawText(producto.id_producto || 'N/A', { x: idProductoX, y: currentY, size: 10 });
+                currentPage.drawText(String(cantidad), { x: quantityX, y: currentY, size: 10 });
+                currentPage.drawText(producto.nombre, { x: nameX, y: currentY, size: 10 });
+                currentPage.drawText(formatearPrecio(precioUnitario), { x: unitPriceX, y: currentY, size: 10 });
+                currentPage.drawText(descuentoStr, { x: discountX, y: currentY, size: 10 });
+                currentPage.drawText(formatearPrecio(precioTotalItem), { x: totalPriceX, y: currentY, size: 10 });
 
-                currentY -= lineHeight; // Mover a la siguiente línea
+                currentY -= lineHeight;
             }
 
-            // Coordenadas para los totales (posiciones fijas para evitar que se muevan)
-            const totalValueX = 507;
+            // --- Dibujar Totales (SIEMPRE EN LA ÚLTIMA PÁGINA) ---
+            // Al final del bucle, 'currentPage' es la última página.
+            const totalValueX = 499;
             const subtotalY = height - 708;
             const descuentoTotalY = height - 725;
-            // Total va justo debajo del descuento, considerando un espacio de línea (20) y un pequeño ajuste (2).
             const totalY = descuentoTotalY - 22; 
+            const totalItemsY = subtotalY + 17;
+            const lineItemsY = totalItemsY + 12; // Posición para los tipos de producto
 
-            // Subtotal (solo valor)
-            firstPage.drawText(formatearPrecio(resumen.subtotal), { x: totalValueX, y: subtotalY, size: 12 });
+            // Tipos de Producto
+            currentPage.drawText(`Total de tipos de Producto: ${resumen.lineItemsCount}`, { x: 20, y: lineItemsY-30, size: 10 });
             
-            // Descuento total (suma de ambos, solo valor)
+            // Cantidad Total de Productos
+            currentPage.drawText(`Cantidad Total de Productos: ${resumen.totalItems}`, { x: 20, y: totalItemsY-30, size: 10 });
+            
+            currentPage.drawText(formatearPrecio(resumen.subtotal), { x: totalValueX, y: subtotalY, size: 12 });
+            
             const descuentoTotal = resumen.descuentoProductos + resumen.descuentoCodigo;
             if (descuentoTotal > 0) {
-                 firstPage.drawText(`-${formatearPrecio(descuentoTotal)}`, { x: totalValueX, y: descuentoTotalY, size: 12, color: rgb(0.8, 0, 0) });
+                 currentPage.drawText(`-${formatearPrecio(descuentoTotal)}`, { x: totalValueX, y: descuentoTotalY, size: 12, color: rgb(0.8, 0, 0) });
             }
 
             if (codigoAplicado && porcentajeDescuento > 0) {
-                firstPage.drawText(`Descuento Web Aplicado: ${porcentajeDescuento}%  + `, {
+                currentPage.drawText(`Descuento Web Aplicado: ${porcentajeDescuento}%  + `, {
                     x: 310,
                     y: descuentoTotalY - 1,
                     size: 8,
@@ -141,8 +160,7 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
                 });
             }
             
-            // Total (solo valor)
-            firstPage.drawText(formatearPrecio(resumen.total), { 
+            currentPage.drawText(formatearPrecio(resumen.total), { 
                 x: totalValueX, 
                 y: totalY+5, 
                 size: 12, 
@@ -330,6 +348,16 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
                     <div className="linea-resumen">
                         <span>Subtotal:</span>
                         <span id="subtotal">{formatearPrecio(resumen.subtotal)}</span>
+                    </div>
+
+                    <div className="linea-resumen">
+                        <span>Tipos de Producto:</span>
+                        <span id="line-items-count">{resumen.lineItemsCount}</span>
+                    </div>
+
+                    <div className="linea-resumen">
+                        <span>Cantidad Total de Productos:</span>
+                        <span id="total-items">{resumen.totalItems}</span>
                     </div>
 
                     {resumen.descuentoProductos > 0 && (

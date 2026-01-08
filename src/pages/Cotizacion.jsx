@@ -266,6 +266,7 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
 
     useEffect(() => {
         actualizarResumen();
+        window.scrollTo(0, 0);
     }, [cartItems, codigoAplicado, porcentajeDescuento]);
 
     if (cartItems.length === 0) {
@@ -292,8 +293,13 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
             
             <div className="carrito-grid">
                 <div className="carrito-items">
-                    {cartItems.map(item => (
-                        <div key={item.id} className="carrito-item" data-precio={item.producto.precio}>
+                    {cartItems.map((item, index) => (
+                        <div 
+                            key={item.id} 
+                            className="carrito-item" 
+                            style={{ animationDelay: `${index * 0.1}s` }}
+                            data-precio={item.producto.precio}
+                        >
                             <div className="item-imagen">
                                 {item.producto.descuento && <div className="descuento-insignia">{item.producto.descuento}% OFF</div>}
                                 <img src={item.producto.imagenUrl} alt={item.producto.nombre} />

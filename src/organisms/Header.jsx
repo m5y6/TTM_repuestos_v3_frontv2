@@ -29,9 +29,9 @@ export default function Header() {
   return (
     <>
       <header className="primera" id="mainHeader">
-        <div id="logo">
-          <img src="/img/logo3v4.png" alt="logo" />
-        </div>
+        <Link to="/" id="logo">
+          <img src="/img/logo3vfinalv2.png" alt="logo" />
+        </Link>
 
         <div className="header-search">
             <div className="header-search-container">

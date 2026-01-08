@@ -5,8 +5,8 @@
         "descripcion": "Filtro de aceite de alto rendimiento para motores diésel.",
         "precio": 15000,
         "categoria": "Filtros",
-        "marca": "mann fiter",
-        "imagen_url": "/img/placeholder.jpg",
+        "marca": "Mann Filter",
+        "imagen_url": "/img/filtro.png",
         "descuento": 10,
         "oem": "OEM12345",
         "id_producto": "FIL-101"
@@ -17,8 +17,8 @@
         "descripcion": "Juego de pastillas de freno cerámicas para camión.",
         "precio": 45000,
         "categoria": "Frenos",
-        "marca": "bosch",
-        "imagen_url": "/img/placeholder.jpg",
+        "marca": "Bosch",
+        "imagen_url": "/img/pastilla.png",
         "oem": "OEM67890",
         "id_producto": "FRE-201"
     },
@@ -28,8 +28,8 @@
         "descripcion": "Aceite sintético para motor, garrafa de 5 litros.",
         "precio": 35000,
         "categoria": "Lubricantes",
-        "marca": "mobil",
-        "imagen_url": "/img/placeholder.jpg",
+        "marca": "Mobil",
+        "imagen_url": "/img/aceite.png",
         "descuento": 15,
         "oem": "OEM10111",
         "id_producto": "LUB-301"
@@ -40,8 +40,8 @@
         "descripcion": "Batería de alta duración para vehículos de carga.",
         "precio": 120000,
         "categoria": "Baterias",
-        "marca": "hella",
-        "imagen_url": "/img/placeholder.jpg",
+        "marca": "Hella",
+        "imagen_url": "/img/bateria.png",
         "oem": "OEM12131",
         "id_producto": "BAT-401"
     },
@@ -51,8 +51,8 @@
         "descripcion": "Correa de distribución reforzada.",
         "precio": 25000,
         "categoria": "Correa",
-        "marca": "dayco",
-        "imagen_url": "/img/placeholder.jpg",
+        "marca": "Dayco",
+        "imagen_url": "/img/correa.jpg",
         "oem": "OEM14151",
         "id_producto": "COR-501"
     },
@@ -63,7 +63,7 @@
         "precio": 75000,
         "categoria": "Suspensión",
         "marca": "SKF",
-        "imagen_url": "/img/placeholder.jpg",
+        "imagen_url": "/img/amortiguador.png",
         "id_producto": "SUS-601"
     },
     {
@@ -72,8 +72,8 @@
         "descripcion": "Juego de llaves y dados profesional.",
         "precio": 95000,
         "categoria": "Herramientas",
-        "marca": "force",
-        "imagen_url": "/img/placeholder.jpg",
+        "marca": "Force",
+        "imagen_url": "/img/carousel/1.png",
         "descuento": 20,
         "id_producto": "HER-701"
     },
@@ -83,8 +83,8 @@
         "descripcion": "Aditivo para limpieza de sistema de inyección.",
         "precio": 12000,
         "categoria": "Lubricantes",
-        "marca": "liqui moly",
-        "imagen_url": "/img/placeholder.jpg",
+        "marca": "Liqui Moly",
+        "imagen_url": "/img/aceite2.png",
         "id_producto": "LUB-302"
     },
     {
@@ -93,8 +93,8 @@
         "descripcion": "Faro de alta potencia con tecnología LED.",
         "precio": 60000,
         "categoria": "Eléctrica",
-        "marca": "hella",
-        "imagen_url": "/img/placeholder.jpg",
+        "marca": "Hella",
+        "imagen_url": "/img/carousel/2.png",
         "id_producto": "ELE-901"
     },
     {
@@ -103,8 +103,8 @@
         "descripcion": "Neumático de carga pesada, alta durabilidad.",
         "precio": 250000,
         "categoria": "Neumáticos",
-        "marca": "cummins",
-        "imagen_url": "/img/placeholder.jpg",
+        "marca": "Michelin",
+        "imagen_url": "/img/neumatico.png",
         "id_producto": "NEU-101"
     },
     {
@@ -113,8 +113,8 @@
         "descripcion": "Filtro de aire para cabina.",
         "precio": 18000,
         "categoria": "Filtros",
-        "marca": "fleetguart",
-        "imagen_url": "/img/placeholder.jpg",
+        "marca": "Fleetguard",
+        "imagen_url": "/img/filtro2.png",
         "id_producto": "FIL-102"
     },
     {
@@ -123,8 +123,8 @@
         "descripcion": "Grasa de litio para altas temperaturas.",
         "precio": 8000,
         "categoria": "Lubricantes",
-        "marca": "castrol",
-        "imagen_url": "/img/placeholder.jpg",
+        "marca": "Castrol",
+        "imagen_url": "/img/carousel/3.png",
         "id_producto": "LUB-303"
     },
     {
@@ -134,7 +134,7 @@
         "precio": 55000,
         "categoria": "Motor",
         "marca": "MWM",
-        "imagen_url": "/img/placeholder.jpg",
+        "imagen_url": "/img/carousel/4.png",
         "id_producto": "MOT-131"
     },
     {
@@ -143,8 +143,8 @@
         "descripcion": "Válvula de recirculación de gases de escape.",
         "precio": 85000,
         "categoria": "Válvulas",
-        "marca": "diesel technich",
-        "imagen_url": "/img/placeholder.jpg",
+        "marca": "Diesel Technic",
+        "imagen_url": "/img/carousel/5.png",
         "id_producto": "VAL-141"
     },
     {
@@ -154,7 +154,7 @@
         "precio": 5000,
         "categoria": "Herramientas",
         "marca": "3M",
-        "imagen_url": "/img/placeholder.jpg",
+        "imagen_url": "/img/carousel/6.png",
         "id_producto": "HER-702"
     },
     {
@@ -163,8 +163,8 @@
         "descripcion": "Aceite sintético para cajas de cambio manuales.",
         "precio": 22000,
         "categoria": "Lubricantes",
-        "marca": "valvoline",
-        "imagen_url": "/img/placeholder.jpg",
+        "marca": "Valvoline",
+        "imagen_url": "/img/aceite.png",
         "id_producto": "LUB-304"
     },
     {
@@ -173,8 +173,8 @@
         "descripcion": "Bujía de iridio para un encendido eficiente.",
         "precio": 9000,
         "categoria": "Motor",
-        "marca": "bosch",
-        "imagen_url": "/img/placeholder.jpg",
+        "marca": "Bosch",
+        "imagen_url": "/img/carousel/7.png",
         "id_producto": "MOT-171"
     },
     {
@@ -184,7 +184,7 @@
         "precio": 65000,
         "categoria": "Frenos",
         "marca": "SKF",
-        "imagen_url": "/img/placeholder.jpg",
+        "imagen_url": "/img/Disco.jpg",
         "id_producto": "FRE-202"
     },
     {
@@ -193,8 +193,8 @@
         "descripcion": "Gato hidráulico tipo botella, 20 toneladas.",
         "precio": 150000,
         "categoria": "Herramientas",
-        "marca": "smant tools",
-        "imagen_url": "/img/placeholder.jpg",
+        "marca": "Smant Tools",
+        "imagen_url": "/img/carousel/8.png",
         "id_producto": "HER-703"
     },
     {
@@ -203,8 +203,8 @@
         "descripcion": "Líquido refrigerante orgánico, color rojo.",
         "precio": 13000,
         "categoria": "Lubricantes",
-        "marca": "cepsa",
-        "imagen_url": "/img/placeholder.jpg",
+        "marca": "Cepsa",
+        "imagen_url": "/img/carousel/9.png",
         "id_producto": "LUB-305"
     },
     {
@@ -213,8 +213,8 @@
         "descripcion": "Filtro separador de agua para combustible diésel.",
         "precio": 28000,
         "categoria": "Filtros",
-        "marca": "tecfil",
-        "imagen_url": "/img/placeholder.jpg",
+        "marca": "Tecfil",
+        "imagen_url": "/img/filtro.png",
         "id_producto": "FIL-103"
     },
     {
@@ -223,8 +223,8 @@
         "descripcion": "Alternador de 12V y 150A.",
         "precio": 180000,
         "categoria": "Eléctrica",
-        "marca": "mitsuba",
-        "imagen_url": "/img/placeholder.jpg",
+        "marca": "Mitsuba",
+        "imagen_url": "/img/carousel/10.png",
         "id_producto": "ELE-902"
     },
     {
@@ -233,8 +233,8 @@
         "descripcion": "Kit completo de embrague para camión.",
         "precio": 350000,
         "categoria": "Motor",
-        "marca": "eaton",
-        "imagen_url": "/img/placeholder.jpg",
+        "marca": "Eaton",
+        "imagen_url": "/img/carousel/11.png",
         "id_producto": "MOT-231"
     },
     {
@@ -243,8 +243,8 @@
         "descripcion": "Juego de plumillas limpiaparabrisas de silicona.",
         "precio": 12000,
         "categoria": "Artículos de seguridad",
-        "marca": "bosch",
-        "imagen_url": "/img/placeholder.jpg",
+        "marca": "Bosch",
+        "imagen_url": "/img/carousel/12.png",
         "id_producto": "SEG-241"
     },
     {
@@ -253,8 +253,260 @@
         "descripcion": "Aflojatodo y lubricante en aerosol.",
         "precio": 7000,
         "categoria": "Herramientas",
-        "marca": "wurth",
-        "imagen_url": "/img/placeholder.jpg",
+        "marca": "Wurth",
+        "imagen_url": "/img/carousel/13.png",
         "id_producto": "HER-704"
+    },
+    {
+        "id": 26,
+        "nombre": "Sensor de Oxígeno",
+        "descripcion": "Sensor de oxígeno de 4 cables, universal.",
+        "precio": 42000,
+        "categoria": "Motor",
+        "marca": "Bosch",
+        "imagen_url": "/img/sensot.png",
+        "id_producto": "MOT-261"
+    },
+    {
+        "id": 27,
+        "nombre": "Bomba de Agua",
+        "descripcion": "Bomba de agua con junta para motor Cummins.",
+        "precio": 95000,
+        "categoria": "Motor",
+        "marca": "Diesel Technic",
+        "imagen_url": "/img/bombaagua.jpg",
+        "id_producto": "MOT-271"
+    },
+    {
+        "id": 28,
+        "nombre": "Muelle de Suspensión",
+        "descripcion": "Hoja de muelle para paquete de resortes trasero.",
+        "precio": 110000,
+        "categoria": "Suspensión",
+        "marca": "SKF",
+        "imagen_url": "/img/muelle.png",
+        "id_producto": "SUS-281"
+    },
+    {
+        "id": 29,
+        "nombre": "Neumático de Remolque",
+        "descripcion": "Neumático para remolque de alta resistencia.",
+        "precio": 230000,
+        "categoria": "Neumáticos",
+        "marca": "Goodyear",
+        "imagen_url": "/img/neumatico2.png",
+        "descuento": 5,
+        "id_producto": "NEU-291"
+    },
+    {
+        "id": 30,
+        "nombre": "Juego de Faros Antiniebla",
+        "descripcion": "Kit de faros antiniebla halógenos.",
+        "precio": 55000,
+        "categoria": "Eléctrica",
+        "marca": "Hella",
+        "imagen_url": "/img/carousel/14.png",
+        "id_producto": "ELE-301"
+    },
+    {
+        "id": 31,
+        "nombre": "Chaleco Reflectante",
+        "descripcion": "Chaleco de seguridad con cintas reflectantes.",
+        "precio": 6000,
+        "categoria": "Artículos de seguridad",
+        "marca": "3M",
+        "imagen_url": "/img/carousel/15.png",
+        "id_producto": "SEG-311"
+    },
+    {
+        "id": 32,
+        "nombre": "Extintor de Polvo Químico",
+        "descripcion": "Extintor de 1kg para vehículos.",
+        "precio": 15000,
+        "categoria": "Artículos de seguridad",
+        "marca": "Wurth",
+        "imagen_url": "/img/carousel/16.png",
+        "id_producto": "SEG-321"
+    },
+    {
+        "id": 33,
+        "nombre": "Aceite Hidráulico",
+        "descripcion": "Aceite para sistemas hidráulicos, ISO 68.",
+        "precio": 28000,
+        "categoria": "Lubricantes",
+        "marca": "North Sea Lubricants",
+        "imagen_url": "/img/aceite.png",
+        "id_producto": "LUB-331"
+    },
+    {
+        "id": 34,
+        "nombre": "Terminal de Dirección",
+        "descripcion": "Terminal de dirección para eje delantero.",
+        "precio": 32000,
+        "categoria": "Suspensión",
+        "marca": "SKF",
+        "imagen_url": "/img/carousel/17.png",
+        "id_producto": "SUS-341"
+    },
+    {
+        "id": 35,
+        "nombre": "Radiador de Motor",
+        "descripcion": "Radiador de aluminio para camión Volvo.",
+        "precio": 250000,
+        "categoria": "Motor",
+        "marca": "MWM",
+        "imagen_url": "/img/carousel/18.png",
+        "id_producto": "MOT-351"
+    },
+    {
+        "id": 36,
+        "nombre": "Filtro de Cabina",
+        "descripcion": "Filtro de polen para sistema de climatización.",
+        "precio": 16000,
+        "categoria": "Filtros",
+        "marca": "Mann Filter",
+        "imagen_url": "/img/filtro2.png",
+        "id_producto": "FIL-361"
+    },
+    {
+        "id": 37,
+        "nombre": "Bocina de Aire",
+        "descripcion": "Bocina de aire de alta potencia para camión.",
+        "precio": 48000,
+        "categoria": "Eléctrica",
+        "marca": "Hella",
+        "imagen_url": "/img/carousel/19.png",
+        "id_producto": "ELE-371"
+    },
+    {
+        "id": 38,
+        "nombre": "Cadena para Nieve",
+        "descripcion": "Juego de cadenas para nieve para neumáticos de camión.",
+        "precio": 180000,
+        "categoria": "Artículos de seguridad",
+        "marca": "Force",
+        "imagen_url": "/img/carousel/20.png",
+        "id_producto": "SEG-381"
+    },
+    {
+        "id": 39,
+        "nombre": "Inyector Common Rail",
+        "descripcion": "Inyector de combustible para sistema Common Rail.",
+        "precio": 220000,
+        "categoria": "Motor",
+        "marca": "Bosch",
+        "imagen_url": "/img/carousel/21.png",
+        "id_producto": "MOT-391"
+    },
+    {
+        "id": 40,
+        "nombre": "Líquido de Frenos DOT 4",
+        "descripcion": "Líquido de frenos sintético, 1 litro.",
+        "precio": 9000,
+        "categoria": "Frenos",
+        "marca": "Liqui Moly",
+        "imagen_url": "/img/carousel/22.png",
+        "id_producto": "FRE-401"
+    },
+    {
+        "id": 41,
+        "nombre": "Turbo Compresor",
+        "descripcion": "Turbo compresor para motor diésel de alto rendimiento.",
+        "precio": 450000,
+        "categoria": "Motor",
+        "marca": "Cummins",
+        "descuento": 10,
+        "imagen_url": "/img/carousel/23.png",
+        "id_producto": "MOT-411"
+    },
+    {
+        "id": 42,
+        "nombre": "Kit de Pernos de Rueda",
+        "descripcion": "Juego de 10 pernos de rueda cromados.",
+        "precio": 25000,
+        "categoria": "Suspensión",
+        "marca": "Force",
+        "imagen_url": "/img/carousel/1.png",
+        "id_producto": "SUS-421"
+    },
+    {
+        "id": 43,
+        "nombre": "Baliza LED Magnética",
+        "descripcion": "Baliza de emergencia con base magnética y conexión a 12V.",
+        "precio": 35000,
+        "categoria": "Artículos de seguridad",
+        "marca": "Hella",
+        "imagen_url": "/img/carousel/2.png",
+        "id_producto": "SEG-431"
+    },
+    {
+        "id": 44,
+        "nombre": "Abrazadera de Escape",
+        "descripcion": "Abrazadera de acero inoxidable para tubo de escape.",
+        "precio": 8000,
+        "categoria": "Motor",
+        "marca": "Diesel Technic",
+        "imagen_url": "/img/carousel/3.png",
+        "id_producto": "MOT-441"
+    },
+    {
+        "id": 45,
+        "nombre": "Caja de Herramientas Metálica",
+        "descripcion": "Caja de herramientas de 5 compartimentos.",
+        "precio": 75000,
+        "categoria": "Herramientas",
+        "marca": "Smant Tools",
+        "imagen_url": "/img/carousel/4.png",
+        "id_producto": "HER-451"
+    },
+    {
+        "id": 46,
+        "nombre": "Silicona de Alta Temperatura",
+        "descripcion": "Sellador de silicona para juntas, color rojo.",
+        "precio": 6000,
+        "categoria": "Lubricantes",
+        "marca": "Wurth",
+        "imagen_url": "/img/carousel/5.png",
+        "id_producto": "LUB-461"
+    },
+    {
+        "id": 47,
+        "nombre": "Juego de Cables de Batería",
+        "descripcion": "Cables de puente para batería de alta resistencia.",
+        "precio": 28000,
+        "categoria": "Eléctrica",
+        "marca": "Just Power",
+        "imagen_url": "/img/carousel/6.png",
+        "id_producto": "ELE-471"
+    },
+    {
+        "id": 48,
+        "nombre": "Válvula Solenoide",
+        "descripcion": "Válvula solenoide para control de aire.",
+        "precio": 65000,
+        "categoria": "Válvulas",
+        "marca": "Eaton",
+        "imagen_url": "/img/carousel/7.png",
+        "id_producto": "VAL-481"
+    },
+    {
+        "id": 49,
+        "nombre": "Enganche para Remolque",
+        "descripcion": "Enganche de bola de 2 pulgadas para remolque.",
+        "precio": 55000,
+        "categoria": "Insumos agrícolas",
+        "marca": "Force",
+        "imagen_url": "/img/carousel/8.png",
+        "id_producto": "AGR-491"
+    },
+    {
+        "id": 50,
+        "nombre": "Servicio de Escáner",
+        "descripcion": "Servicio de diagnóstico con escáner multimarca.",
+        "precio": 30000,
+        "categoria": "Servicios mecánicos",
+        "marca": "TTM",
+        "imagen_url": "/img/carousel/9.png",
+        "id_producto": "SRV-501"
     }
 ]

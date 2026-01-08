@@ -100,6 +100,18 @@ nav.opciones {
     margin-bottom: 5px;
 }
 
+/* Animación para la aparición de items */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .carrito-items {
     background: white;
     border-radius: 12px;
@@ -115,6 +127,10 @@ nav.opciones {
     padding: 15px 0;
     border-bottom: 1px solid #eee;
     align-items: center;
+    
+    /* Aplicación de la animación */
+    opacity: 0; /* Inicia invisible para que la animación funcione */
+    animation: fadeInUp 0.5s ease-out forwards;
 }
 
 .carrito-item:last-child {

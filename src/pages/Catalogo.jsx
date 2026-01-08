@@ -125,8 +125,14 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
             imagen: p.imagen_url || '/img/placeholder.jpg'
         }));
         
-        const categoriasUnicas = [...new Set(productosApi.map(p => p.categoria).filter(Boolean))];
-        setCategoriasDisponibles(categoriasUnicas);
+        // Lista base de categorías que siempre deben aparecer
+        const categoriasBase = ['Insumos agrícolas', 'Servicios mecánicos'];
+        
+        // Unimos la lista base con las categorías que tienen productos y eliminamos duplicados
+        const categoriasDeProductos = [...new Set(productosApi.map(p => p.categoria).filter(Boolean))];
+        const categoriasFinales = [...new Set([...categoriasBase, ...categoriasDeProductos])];
+        
+        setCategoriasDisponibles(categoriasFinales);
 
         setProductos(productosApi);
         setLoading(false);
@@ -209,6 +215,19 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
     const aplicarFiltros = () => {
         const normalizeString = (str) => 
             str ? str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim() : "";
+
+        // Si no hay filtros aplicados, muestra todos los productos.
+        if (
+            filtros.busqueda.trim() === '' &&
+            filtros.categorias.length === 0 &&
+            filtros.marcas.length === 0 &&
+            filtros.precioMin === '' &&
+            filtros.precioMax === ''
+        ) {
+            setProductosFiltrados([...productos]);
+            setPaginaActual(1);
+            return;
+        }
 
         let resultado = [...productos];
         
@@ -318,15 +337,17 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
     }, [location.search]);
 
     useEffect(() => {
-        aplicarFiltros();
-    }, [productos, filtros.categorias, filtros.marcas, filtros.precioMin, filtros.precioMax, filtros.orden]);
-
-    useEffect(() => {
-        const timeoutId = setTimeout(() => {
+        // Para la búsqueda de texto, esperamos un poco antes de filtrar
+        if (filtros.busqueda) {
+            const timeoutId = setTimeout(() => {
+                aplicarFiltros();
+            }, 300);
+            return () => clearTimeout(timeoutId);
+        } else {
+            // Para los demás filtros, aplicamos inmediatamente
             aplicarFiltros();
-        }, 300);
-        return () => clearTimeout(timeoutId);
-    }, [productos, filtros.busqueda]);
+        }
+    }, [productos, filtros]);
 
 const handleAddToCotizacion = (producto, quantity) => {
     addToCart(producto, quantity);

@@ -70,16 +70,18 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
             // --- AJUSTA ESTAS COORDENADAS (EL ORIGEN 0,0 ES LA ESQUINA INFERIOR IZQUIERDA) ---
             
             // Coordenadas para la fecha
-            const dateX = width - 593;
-            const dateY = height - 230; 
+            const dateX = width - 592;
+            const dateY = height - 252; 
 
             // Coordenadas y configuración para la tabla de items
-            let currentY = height - 250; // Posición Y inicial para el primer item
+            let currentY = height - 305; // Posición Y inicial para el primer item
             const lineHeight = 20;       // Espacio entre líneas
-            const quantityX = 50;
-            const nameX = 100;
-            const unitPriceX = 380;
-            const totalPriceX = 480;
+            const idProductoX = 40;
+            const quantityX = 122;
+            const nameX = 159;
+            const unitPriceX = 409;
+            const discountX = 478;
+            const totalPriceX = 510;
 
             // Dibujar la fecha
             const fecha = new Date().toLocaleDateString('es-CL');
@@ -100,46 +102,51 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
                 const { producto, cantidad } = item;
                 const precioUnitario = producto.precio;
                 const precioTotalItem = precioUnitario * cantidad;
+                const descuentoStr = producto.descuento ? `${producto.descuento}%` : '0%';
 
+                firstPage.drawText(producto.id_producto || 'N/A', { x: idProductoX, y: currentY, size: 10 });
                 firstPage.drawText(String(cantidad), { x: quantityX, y: currentY, size: 10 });
                 firstPage.drawText(producto.nombre, { x: nameX, y: currentY, size: 10 });
                 firstPage.drawText(formatearPrecio(precioUnitario), { x: unitPriceX, y: currentY, size: 10 });
+                firstPage.drawText(descuentoStr, { x: discountX, y: currentY, size: 10 });
                 firstPage.drawText(formatearPrecio(precioTotalItem), { x: totalPriceX, y: currentY, size: 10 });
 
                 currentY -= lineHeight; // Mover a la siguiente línea
             }
 
-            // Coordenadas para los totales
-            currentY -= 20; // Espacio extra antes de los totales
-            const totalLabelX = 380;
-            const totalValueX = 480;
+            // Coordenadas para los totales (posiciones fijas para evitar que se muevan)
+            const totalValueX = 507;
+            const subtotalY = height - 708;
+            const descuentoTotalY = height - 725;
+            // Total va justo debajo del descuento, considerando un espacio de línea (20) y un pequeño ajuste (2).
+            const totalY = descuentoTotalY - 22; 
 
-            firstPage.drawText('Subtotal:', { x: totalLabelX, y: currentY, size: 12 });
-            firstPage.drawText(formatearPrecio(resumen.subtotal), { x: totalValueX, y: currentY, size: 12 });
-            currentY -= lineHeight;
+            // Subtotal (solo valor)
+            firstPage.drawText(formatearPrecio(resumen.subtotal), { x: totalValueX, y: subtotalY, size: 12 });
             
-            if (resumen.descuentoProductos > 0) {
-                 firstPage.drawText('Descuento Productos:', { x: totalLabelX, y: currentY, size: 12, color: rgb(0.8, 0, 0) });
-                 firstPage.drawText(`-${formatearPrecio(resumen.descuentoProductos)}`, { x: totalValueX, y: currentY, size: 12, color: rgb(0.8, 0, 0) });
-                 currentY -= lineHeight;
+            // Descuento total (suma de ambos, solo valor)
+            const descuentoTotal = resumen.descuentoProductos + resumen.descuentoCodigo;
+            if (descuentoTotal > 0) {
+                 firstPage.drawText(`-${formatearPrecio(descuentoTotal)}`, { x: totalValueX, y: descuentoTotalY, size: 12, color: rgb(0.8, 0, 0) });
             }
-             if (resumen.descuentoCodigo > 0) {
-                 firstPage.drawText('Descuento Código:', { x: totalLabelX, y: currentY, size: 12, color: rgb(0.8, 0, 0) });
-                 firstPage.drawText(`-${formatearPrecio(resumen.descuentoCodigo)}`, { x: totalValueX, y: currentY, size: 12, color: rgb(0.8, 0, 0) });
-                 currentY -= lineHeight;
+
+            if (codigoAplicado && porcentajeDescuento > 0) {
+                firstPage.drawText(`Descuento Web Aplicado: ${porcentajeDescuento}%  + `, {
+                    x: 310,
+                    y: descuentoTotalY - 1,
+                    size: 8,
+                    font: await pdfDoc.embedFont(StandardFonts.HelveticaOblique),
+                    color: rgb(0.2, 0.2, 0.2),
+                });
             }
             
-            currentY -= 5;
-            firstPage.drawLine({
-                start: { x: totalLabelX - 10, y: currentY },
-                end: { x: width - 50, y: currentY },
-                thickness: 1,
-                color: rgb(0.2, 0.2, 0.2),
+            // Total (solo valor)
+            firstPage.drawText(formatearPrecio(resumen.total), { 
+                x: totalValueX, 
+                y: totalY+5, 
+                size: 12, 
+                font: await pdfDoc.embedFont(StandardFonts.HelveticaBold) 
             });
-            currentY -= 15;
-
-            firstPage.drawText('Total:', { x: totalLabelX, y: currentY, size: 14, font: await pdfDoc.embedFont(StandardFonts.HelveticaBold) });
-            firstPage.drawText(formatearPrecio(resumen.total), { x: totalValueX, y: currentY, size: 14, font: await pdfDoc.embedFont(StandardFonts.HelveticaBold) });
 
             // Guardar y descargar el PDF
             const pdfBytes = await pdfDoc.save();
@@ -252,11 +259,22 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
                             </div>
                             <div className="item-info">
                                 <h3>{item.producto.nombre}</h3>
-                                <p className="item-marca">{item.producto.marca}</p>
+                                <p className="item-marca">{item.producto.marca} {item.producto.oem && `- ${item.producto.oem}`}</p>
                                 <p>{item.producto.descripcion}</p>
                             </div>
                             <div className="item-precio">
-                                {formatearPrecio(item.producto.precio * item.cantidad)}
+                                {item.producto.descuento ? (
+                                    <>
+                                        <span className="precio-original">
+                                            {formatearPrecio(item.producto.precio * item.cantidad)}
+                                        </span>
+                                        <span className="precio-descuento">
+                                            {formatearPrecio(item.producto.precio * (1 - item.producto.descuento / 100) * item.cantidad)}
+                                        </span>
+                                    </>
+                                ) : (
+                                    formatearPrecio(item.producto.precio * item.cantidad)
+                                )}
                             </div>
                             <div className="item-cantidad">
                                 <button 
@@ -300,14 +318,16 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
                         </div>
                     )}
                     
-                    {codigoAplicado && resumen.descuentoCodigo > 0 && (
-                        <div className="linea-resumen descuento-linea">
-                            <span>Descuento por código ({porcentajeDescuento}%):</span>
-                            <span id="descuento-codigo" style={{ color: '#e74c3c' }}>
-                                -{formatearPrecio(resumen.descuentoCodigo)}
-                            </span>
-                        </div>
-                    )}
+                    <div className={`linea-resumen-container ${codigoAplicado && resumen.descuentoCodigo > 0 ? 'visible' : ''}`}>
+                        {codigoAplicado && resumen.descuentoCodigo > 0 && (
+                            <div className="linea-resumen descuento-linea">
+                                <span>Descuento por código ({porcentajeDescuento}%):</span>
+                                <span id="descuento-codigo" style={{ color: '#e74c3c' }}>
+                                    -{formatearPrecio(resumen.descuentoCodigo)}
+                                </span>
+                            </div>
+                        )}
+                    </div>
                     
                     <div className="linea-total">
                         <span>Total:</span>

@@ -78,12 +78,78 @@ const ProductoCard = ({ producto, handleAddToCotizacion, formatearPrecio }) => {
 };
 
 const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = false }) => {
+    const location = useLocation();
     const { addToCart } = useContext(CotizacionContext);
     const { user, showNotification } = useContext(AuthContext); // Obtener user y showNotification
+    
+    // 1. Declaraciones de Estado
     const [productos, setProductos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [productosFiltrados, setProductosFiltrados] = useState([]);
+    const [filtros, setFiltros] = useState({
+        categorias: [],
+        marcas: [],
+        precioMin: '',
+        precioMax: '',
+        orden: 'relevancia',
+        busqueda: ''
+    });
+    const [isMarcaExpanded, setIsMarcaExpanded] = useState(false);
+    const [paginaActual, setPaginaActual] = useState(1);
+    const [notificacion, setNotificacion] = useState('');
+    const [categoriasDisponibles, setCategoriasDisponibles] = useState([]);
+    
+    // 2. Referencias
+    const catalogoContentRef = useRef(null);
+    const productosPorPagina = 15;
 
+    // 3. Hooks de Efecto
+    useEffect(() => {
+        // Mapa para agrupar categorías generales con las específicas de los productos
+        const categoriaRelaciones = {
+            'electrico': ['Eléctrica', 'Baterias'],
+            'seguridad': ['Artículos de seguridad'],
+            'articulo de seguridad': ['Artículos de seguridad'],
+            'agricola': ['Insumos agrícolas'],
+            'insumos agricolas': ['Insumos agrícolas'],
+            'servicios': ['Servicios mecánicos'],
+            'servicios mecanicos': ['Servicios mecánicos']
+        };
+
+        const params = new URLSearchParams(location.search);
+        const categoriaUrl = params.get('categoria');
+        
+        const productosApi = productosData.map(p => ({
+            ...p,
+            imagen: p.imagen_url || '/img/placeholder.jpg'
+        }));
+        
+        const categoriasUnicas = [...new Set(productosApi.map(p => p.categoria).filter(Boolean))];
+        setCategoriasDisponibles(categoriasUnicas);
+
+        setProductos(productosApi);
+        setLoading(false);
+
+        if (categoriaUrl) {
+            // Normalizamos la categoría de la URL (quitamos tildes, a minúsculas)
+            const categoriaNormalizada = categoriaUrl.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            
+            // Buscamos en el mapa de relaciones; si no, usamos la categoría tal cual
+            const categoriasParaFiltrar = categoriaRelaciones[categoriaNormalizada] || [categoriaUrl];
+
+            setFiltros(prev => ({
+                ...prev,
+                categorias: categoriasParaFiltrar
+            }));
+        }
+    }, [location.search]);
+
+    useEffect(() => {
+        aplicarFiltros();
+    }, [productos, filtros]);
+
+    // 4. Funciones
     const heroImages = [
         '/img/carousel/1.png',
         '/img/carousel/2.png',
@@ -108,20 +174,18 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
         '/img/carousel/21.png',
         '/img/carousel/22.png',
         '/img/carousel/23.png',
-
-        
     ];
 
     const sliderSettings = {
         dots: false,
         infinite: true,
-        speed: 5000, // Aumenta la duración para un desplazamiento más lento y continuo
+        speed: 5000,
         slidesToShow: 3,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 0, // Esencial para el movimiento continuo
-        cssEase: 'linear', // Asegura una velocidad constante
-        pauseOnHover: true, // Pausa el carrusel al pasar el mouse por encima
+        autoplaySpeed: 0,
+        cssEase: 'linear',
+        pauseOnHover: true,
         responsive: [
             {
                 breakpoint: 1024,
@@ -138,60 +202,19 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
         ]
     };
 
-    useEffect(() => {
-        if (productosActualesProp) {
-            setProductos(productosActualesProp);
-            setLoading(false);
-        } else {
-            // Cargar productos desde el JSON local en lugar del servicio
-            const productosApi = productosData.map(p => ({
-                ...p,
-                imagen: p.imagen_url || '/img/placeholder.jpg'
-            }));
-            setProductos(productosApi);
-            setLoading(false);
-            // ProductoService.getAllProductos()
-            //     .then(response => {
-            //         const productosApi = response.data.map(p => ({
-            //             ...p,
-            //             imagen: p.imagen_url || '/img/placeholder.jpg'
-            //         }));
-            //         setProductos(productosApi);
-            //         setLoading(false);
-            //     })
-            //     .catch(err => {
-            //         console.error("Error al cargar productos:", err);
-            //         setError("No se pudieron cargar los productos. Intente nuevamente más tarde.");
-            //         setLoading(false);
-            //     });
-        }
-    }, [productosActualesProp]);
-    
-    const [productosFiltrados, setProductosFiltrados] = useState([]);
-    const [filtros, setFiltros] = useState({
-        categorias: [],
-        marcas: [], // Estado para las marcas
-        precioMin: '',
-        precioMax: '',
-        orden: 'relevancia',
-        busqueda: ''
-    });
-    const [isMarcaExpanded, setIsMarcaExpanded] = useState(false); // Estado para el expansible
-
-    const [paginaActual, setPaginaActual] = useState(1);
-    const [notificacion, setNotificacion] = useState('');
-    const productosPorPagina = 15;
-    const catalogoContentRef = useRef(null);
-
     const formatearPrecio = (precio) => {
         return '$' + (precio ? precio.toLocaleString('es-CL') : '0');
     };
 
     const aplicarFiltros = () => {
         const normalizeString = (str) => 
-            str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+            str ? str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim() : "";
 
         let resultado = [...productos];
+        
+        const params = new URLSearchParams(location.search);
+        const categoriaUrl = params.get('categoria');
+
         if (filtros.busqueda.trim() !== '') {
             const termino = normalizeString(filtros.busqueda);
             resultado = resultado.filter(producto =>
@@ -202,7 +225,9 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
             );
         }
         if (filtros.categorias.length > 0) {
-            resultado = resultado.filter(p => filtros.categorias.includes(p.categoria));
+            resultado = resultado.filter(p => filtros.categorias.some(c => normalizeString(p.categoria).includes(normalizeString(c))));
+        } else if (categoriaUrl) {
+            resultado = resultado.filter(p => normalizeString(p.categoria).includes(normalizeString(categoriaUrl)));
         }
         if (filtros.marcas.length > 0) {
             resultado = resultado.filter(p => filtros.marcas.includes(p.marca));
@@ -244,12 +269,25 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
     };
 
     const handleCategoriaChange = (categoria) => {
-        setFiltros(prev => ({
-            ...prev,
-            categorias: prev.categorias.includes(categoria)
-                ? prev.categorias.filter(c => c !== categoria)
-                : [...prev.categorias, categoria]
-        }));
+        const categoriaEnMinusculas = categoria.toLowerCase();
+        setFiltros(prev => {
+            const categoriasActuales = prev.categorias.map(c => c.toLowerCase());
+            const yaExiste = categoriasActuales.includes(categoriaEnMinusculas);
+
+            if (yaExiste) {
+                // Si ya existe, la quitamos (insensible a mayúsculas)
+                return {
+                    ...prev,
+                    categorias: prev.categorias.filter(c => c.toLowerCase() !== categoriaEnMinusculas)
+                };
+            } else {
+                // Si no existe, la añadimos
+                return {
+                    ...prev,
+                    categorias: [...prev.categorias, categoria]
+                };
+            }
+        });
     };
 
     const handleMarcaChange = (marca) => {
@@ -267,8 +305,6 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
             busqueda: e.target.value
         }));
     };
-
-    const location = useLocation();
 
     useEffect(() => {
         const params = new URLSearchParams(location.search);
@@ -405,11 +441,11 @@ const handleAddToCotizacion = (producto, quantity) => {
                         <div className="filtro-grupo">
                             <h4>Categoría</h4>
                             <div className="filtro-opciones">
-                                {['Motor', 'Frenos', 'Suspensión', 'Neumáticos', 'Eléctrica', 'Filtros', 'Artículos de seguridad', 'Insumos agrícolas', 'Servicios mecánicos', 'Herramientas', 'Lubricantes', 'Válvulas', 'Correas','Baterias'].map(categoria => (
+                                {categoriasDisponibles.map(categoria => (
                                     <label key={categoria} className="filtro-checkbox">
                                         <input 
                                             type="checkbox" 
-                                            checked={filtros.categorias.includes(categoria)}
+                                            checked={filtros.categorias.some(c => c.toLowerCase() === categoria.toLowerCase())}
                                             onChange={() => handleCategoriaChange(categoria)}
                                         />
                                         <span>
@@ -490,7 +526,7 @@ const handleAddToCotizacion = (producto, quantity) => {
 
                                 {productosFiltrados.length > 0 ? (
                                     <div className="productos-grid">
-                                    {productosActuales.map(producto => (
+                                    {productosFiltrados.map(producto => (
                                         <ProductoCard 
                                             key={producto.id}
                                             producto={producto}

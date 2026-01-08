@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // Asegúrate de que la ruta a tu archivo CSS sea correcta.
 import '../styles/App.css'; 
 import Header from '../organisms/Header';
@@ -88,6 +88,7 @@ const ProductCard = React.forwardRef(({ producto, handleAddToCotizacion }, ref) 
 const productos = productosData.slice(0, 6);
 
 export default function Index() {
+  const navigate = useNavigate();
   const { addToCart } = useContext(CotizacionContext);
   const [notificacion, setNotificacion] = useState('');
 
@@ -161,7 +162,13 @@ export default function Index() {
       
       <div className="home-page">
       
-      <section className="cuarta">
+            <section className="cuarta" onClick={(e) => {
+        if (e.target.tagName === 'A') {
+          e.preventDefault();
+          const category = e.target.textContent.toLowerCase();
+          navigate(`/catalogo?categoria=${category}`);
+        }
+      }}>
         <div className="categorias-linea">
           <a href="#lubricantes">Lubricantes</a>
           <span>|</span>
@@ -190,7 +197,13 @@ export default function Index() {
         <section className="categorias-section">
           <div className="categorias-container">
             <h2>Explora por Categorías</h2>
-            <div className="categorias-grid">
+            <div className="categorias-grid" onClick={(e) => {
+        const card = e.target.closest('.categoria-card');
+        if (card) {
+          const category = card.querySelector('h3').textContent.toLowerCase();
+          navigate(`/catalogo?categoria=${category}`);
+        }
+      }}>
                 <div className="categoria-card">
                     <div className="categoria-icon">
                         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

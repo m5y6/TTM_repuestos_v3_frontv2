@@ -30,7 +30,7 @@ export default function Header() {
     <>
       <header className="primera" id="mainHeader">
         <div id="logo">
-          <img src="/img/logo3.png" alt="logo" />
+          <img src="/img/logo3v4.png" alt="logo" />
         </div>
 
         <div className="header-search">

@@ -91,6 +91,7 @@ nav.opciones {
     display: grid;
     grid-template-columns: 2fr 1fr; /* Más espacio para los items */
     gap: 30px;
+    align-items: start;
 }
 
 .item-marca {

@@ -23,6 +23,7 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
     const [porcentajeDescuento, setPorcentajeDescuento] = useState(0);
     const [mensajeCodigo, setMensajeCodigo] = useState({ texto: '', tipo: '', mostrar: false });
     const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
+    const [showWhatsAppModal, setShowWhatsAppModal] = useState(false);
 
 
     const CODIGOS_DESCUENTO = {
@@ -173,6 +174,28 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
     }
 
     // --- End of PDF Generation Logic ---
+
+    const handleWhatsAppRedirect = async () => {
+        await generarPdfDesdePlantilla();
+
+        const numeroEmpresa = "56965768092"; // Reemplaza con tu número de WhatsApp Business
+        
+        let mensaje = "¡Hola! Quisiera consultar el stock para los siguientes productos de mi cotización:\n\n";
+        cartItems.forEach(item => {
+            mensaje += `- *${item.producto.nombre}* (Cantidad: ${item.cantidad})\n`;
+        });
+        mensaje += "\nAdjunto el PDF con el detalle completo. ¡Muchas gracias!";
+
+        const urlWhatsApp = `https://wa.me/${numeroEmpresa}?text=${encodeURIComponent(mensaje)}`;
+
+        window.open(urlWhatsApp, '_blank');
+        setShowWhatsAppModal(false);
+    };
+
+    const handleGenerateGuideOnly = async () => {
+        await generarPdfDesdePlantilla();
+        setShowWhatsAppModal(false);
+    };
 
     // Lógica existente del componente...
     const aplicarCodigoDescuento = () => {
@@ -370,7 +393,7 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
                     
                     <button 
                         className="checkout-button" 
-                        onClick={generarPdfDesdePlantilla}
+                        onClick={() => setShowWhatsAppModal(true)}
                         disabled={isGeneratingPdf}
                         style={{marginRight: '10px', backgroundColor: '#007bff', marginTop: '10px'}}
                     >
@@ -383,6 +406,28 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
                 </div>
             </div>
         </section>
+
+        {showWhatsAppModal && (
+            <div className="modal-overlay">
+                <div className="modal-content">
+                    <button className="modal-close" onClick={() => setShowWhatsAppModal(false)}>×</button>
+                    <h3>Verificar Stock por WhatsApp</h3>
+                    <p>
+                        ¿Quieres enviar tu cotización a nuestro WhatsApp empresarial para confirmar el stock de los productos?
+                        <br/>
+                        <strong>Nota:</strong> Deberás adjuntar el PDF descargado en el chat.
+                    </p>
+                    <div className="modal-actions">
+                        <button onClick={handleWhatsAppRedirect} className="btn-whatsapp">
+                            Sí, ir a WhatsApp
+                        </button>
+                        <button onClick={handleGenerateGuideOnly} className="btn-secondary">
+                            Generar solo guía
+                        </button>
+                    </div>
+                </div>
+            </div>
+        )}
 
         <Footer/>
         </>

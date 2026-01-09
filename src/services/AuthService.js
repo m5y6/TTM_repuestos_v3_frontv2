@@ -1,16 +1,18 @@
-import adminUser from '../adminUser.json';
+import users from '../adminUser.json';
 
 class AuthService {
   login(email, password) {
     return new Promise((resolve, reject) => {
-      if (email === adminUser.email && password === adminUser.password) {
+      const user = users.find(u => u.email === email && u.password === password);
+
+      if (user) {
         // Mocking the API response
         resolve({
           data: {
-            nombre: 'Admin',
-            email: adminUser.email,
-            rol: 1, // Admin role
-            token: 'fake-admin-jwt-token-for-ttm-repuestos'
+            nombre: user.email.split('@')[0], // Or a name property if you add one
+            email: user.email,
+            rol: user.rol === 'admin' ? 1 : 2, // Assuming 1 for admin, 2 for employee
+            token: `fake-${user.rol}-jwt-token-for-ttm-repuestos`
           }
         });
       } else {

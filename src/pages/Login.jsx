@@ -187,10 +187,7 @@ const Login = () => {
 
                     <button type="submit" className="btn-login">Iniciar Sesión</button>
 
-                    <div className="register-link">
-                        <p>¿No tienes una cuenta?</p>
-                        <Link to="/registro">Registrarse</Link>
-                    </div>
+
                 </form>
             </div>
         </div>

@@ -7,6 +7,8 @@ import { CotizacionContext } from "../context/CotizacionContext";
 import { AuthContext } from '../context/AuthContext'; // Importar AuthContext
 // import ProductoService from '../services/ProductoService';
 import productosData from '../productos.json'; // Importar el JSON local
+import categoriasData from '../categorias.json';
+import marcasData from '../marcas.json';
 import '../styles/Catalogo.css';
 import Footer from '../organisms/Footer';
 import Header from '../organisms/Header';
@@ -98,7 +100,8 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
     const [isMarcaExpanded, setIsMarcaExpanded] = useState(false);
     const [paginaActual, setPaginaActual] = useState(1);
     const [notificacion, setNotificacion] = useState('');
-    const [categoriasDisponibles, setCategoriasDisponibles] = useState([]);
+    const [categoriasDisponibles, setCategoriasDisponibles] = useState(categoriasData);
+    const [marcasDisponibles, setMarcasDisponibles] = useState(marcasData);
     
     // 2. Referencias
     const catalogoContentRef = useRef(null);
@@ -125,15 +128,6 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
             imagen: p.imagen_url || '/img/placeholder.jpg'
         }));
         
-        // Lista base de categorías que siempre deben aparecer
-        const categoriasBase = ['Insumos agrícolas', 'Servicios mecánicos'];
-        
-        // Unimos la lista base con las categorías que tienen productos y eliminamos duplicados
-        const categoriasDeProductos = [...new Set(productosApi.map(p => p.categoria).filter(Boolean))];
-        const categoriasFinales = [...new Set([...categoriasBase, ...categoriasDeProductos])];
-        
-        setCategoriasDisponibles(categoriasFinales);
-
         setProductos(productosApi);
         setLoading(false);
 
@@ -310,12 +304,14 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
     };
 
     const handleMarcaChange = (marca) => {
-        setFiltros(prev => ({
-            ...prev,
-            marcas: prev.marcas.includes(marca)
-                ? prev.marcas.filter(m => m !== marca)
-                : [...prev.marcas, marca]
-        }));
+        setFiltros(prev => {
+            const yaExiste = prev.marcas.includes(marca);
+            if (yaExiste) {
+                return { ...prev, marcas: prev.marcas.filter(m => m !== marca) };
+            } else {
+                return { ...prev, marcas: [...prev.marcas, marca] };
+            }
+        });
     };
 
     const handleBusquedaChange = (e) => {
@@ -463,14 +459,14 @@ const handleAddToCotizacion = (producto, quantity) => {
                             <h4>Categoría</h4>
                             <div className="filtro-opciones">
                                 {categoriasDisponibles.map(categoria => (
-                                    <label key={categoria} className="filtro-checkbox">
+                                    <label key={categoria.id} className="filtro-checkbox">
                                         <input 
                                             type="checkbox" 
-                                            checked={filtros.categorias.some(c => c.toLowerCase() === categoria.toLowerCase())}
-                                            onChange={() => handleCategoriaChange(categoria)}
+                                            checked={filtros.categorias.some(c => c.toLowerCase() === categoria.nombre.toLowerCase())}
+                                            onChange={() => handleCategoriaChange(categoria.nombre)}
                                         />
                                         <span>
-                                            {categoria}
+                                            {categoria.nombre}
                                         </span>
                                     </label>
                                 ))}
@@ -484,18 +480,20 @@ const handleAddToCotizacion = (producto, quantity) => {
                             </div>
                             {isMarcaExpanded && (
                                 <div className="filtro-opciones">
-                                    {['Force', 'Smant tools', 'Cepsa', 'Valvoline', 'Liqui moly', 'Wurth', 'Diesel technich', 'Hella', 'Bosch', 'Dayco', 'Mitsuba', 'Just power', '3M', 'Mann fiter', 'Fleetguart', 'Tecfil', 'SKF', 'Mobil', 'Castrol', 'Cummins', 'Eaton', 'North sea lubricants', 'MWM'].map(marca => (
-                                        <label key={marca} className="filtro-checkbox">
+                                    {marcasDisponibles.map(marca => (
+                                        <label key={marca.id} className="filtro-checkbox">
                                             <input
                                                 type="checkbox"
-                                                checked={filtros.marcas.includes(marca)}
-                                                onChange={() => handleMarcaChange(marca)}
+                                                checked={filtros.marcas.includes(marca.nombre)}
+                                                onChange={() => handleMarcaChange(marca.nombre)}
                                             />
-                                            <span>{marca}</span>
+                                            <span>{marca.nombre}</span>
                                         </label>
                                     ))}
                                 </div>
                             )}
+                            
+                            
                         </div>
 
                         <div className="filtro-grupo">

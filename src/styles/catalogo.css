@@ -87,6 +87,11 @@ nav.opciones {
     box-sizing: border-box;
 }
 
+.hero-slider-catalogo .slick-slide {
+    padding: 0 10px; /* Añade espacio entre las imágenes del carrusel */
+}
+
+
 .hero-image {
     width: 100%;
     height: 100%;

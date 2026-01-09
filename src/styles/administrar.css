@@ -1,4 +1,4 @@
-/* General co0ntainer */
+/* General container */
 div {
     padding: 0px;
     font-family: sans-serif;
@@ -85,5 +85,149 @@ div {
   margin: 2rem auto;
   max-width: 800px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ver-productos-container {
+  max-width: 1200px;
+}
+
+.ver-productos-container h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.filtros-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.filtros-container input,
+.filtros-container select {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.btn-agregar {
+  display: inline-block;
+  margin-bottom: 1rem;
+  padding: 0.6rem 1.2rem;
+  background-color: #28a745;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.btn-agregar:hover {
+  background-color: #218838;
+}
+
+.admin-productos-tabla {
+  overflow-x: auto;
+}
+
+.admin-productos-tabla table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-productos-tabla th,
+.admin-productos-tabla td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.admin-productos-tabla th {
+  background-color: #f8f9fa;
+}
+
+.admin-productos-tabla img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.btn-editar, .btn-eliminar {
+  padding: 0.3rem 0.6rem;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-editar {
+  background-color: #ffc107;
+}
+
+.btn-eliminar {
+  background-color: #dc3545;
+}
+
+/* Nuevos estilos para el dashboard */
+.admin-dashboard {
+  padding: 2rem;
+  background-color: #f4f7f6;
+}
+
+.admin-dashboard h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.admin-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.admin-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.admin-card-icon {
+  font-size: 2.5rem;
+  margin-right: 1.5rem;
+  color: #007bff;
+}
+
+.admin-card-body h3 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+}
+
+.admin-card-body p {
+  margin: 0;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .admin-grid {
+    grid-template-columns: 1fr;
+  }
 }
   

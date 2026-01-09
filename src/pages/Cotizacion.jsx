@@ -169,7 +169,12 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
 
             // Guardar y descargar el PDF
             const pdfBytes = await pdfDoc.save();
-            download(pdfBytes, "cotizacion-TTM.pdf", "application/pdf");
+            const fechaActual = new Date();
+            const dia = String(fechaActual.getDate()).padStart(2, '0');
+            const mes = String(fechaActual.getMonth() + 1).padStart(2, '0'); // Enero es 0!
+            const anio = fechaActual.getFullYear();
+            const nombreArchivo = `cotizacion-TTM-${dia}-${mes}-${anio}.pdf`;
+            download(pdfBytes, nombreArchivo, "application/pdf");
 
         } catch (error) {
             console.error("Error generando el PDF:", error);
@@ -434,9 +439,7 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
                         {isGeneratingPdf ? 'Generando...' : 'Generar PDF'}
                     </button>
                     
-                    <button className="checkout-button" onClick={procederAlPago} style={{marginTop: '10px'}}>
-                        Crear guia de cotización
-                    </button>
+                
                 </div>
             </div>
         </section>

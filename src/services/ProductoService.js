@@ -26,41 +26,31 @@ api.interceptors.request.use(
   }
 );
 
-// Add a response interceptor to handle 401 errors
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response && error.response.status === 401) {
-      // Token is invalid or expired
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      // Redirect to login page
-      // We can't use useNavigate here, so we use window.location
-      window.location.href = "/login";
-    }
-    return Promise.reject(error);
-  }
-);
+import productosData from '../productos.json';
 
 class ProductosService {
   getAllProductos() {
-    return api.get("");
+    return Promise.resolve({ data: productosData });
   }
 
   getProductoById(id) {
-    return api.get(`/${id}`);
+    const producto = productosData.find(p => p.id === id);
+    return Promise.resolve({ data: producto });
   }
 
-  createProductos(producto) {
-    return api.post("", producto);
+  createProducto(producto) {
+    console.log("Producto creado (simulado):", producto);
+    return Promise.resolve({ data: producto });
   }
 
-  updateProductos(id, producto) {
-    return api.put(`/${id}`, producto);
+  updateProducto(id, producto) {
+    console.log(`Producto ${id} actualizado (simulado):`, producto);
+    return Promise.resolve({ data: producto });
   }
 
   deleteProducto(id) {
-    return api.delete(`/${id}`);
+    console.log(`Producto ${id} eliminado (simulado).`);
+    return Promise.resolve({ data: { message: "Producto eliminado" } });
   }
 }
 

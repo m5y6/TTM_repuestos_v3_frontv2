@@ -39,6 +39,7 @@ const ProductoList = () => {
             <th>Nombre</th>
             <th>Descripción</th>
             <th>Precio</th>
+            <th>Descuento</th>
             <th>Stock</th>
             <th>Categoría</th>
             <th>Imagen</th>
@@ -51,6 +52,7 @@ const ProductoList = () => {
               <td>{producto.nombre}</td>
               <td>{producto.description}</td>
               <td>{producto.precio}</td>
+              <td>{producto.procentaje_desc}%</td>
               <td>{producto.stock}</td>
               <td>{producto.categoria}</td>
               <td>

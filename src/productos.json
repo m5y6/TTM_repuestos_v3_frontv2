@@ -7,7 +7,7 @@
         "categoria": "Filtros",
         "marca": "Mann Filter",
         "imagen_url": "/img/filtro.png",
-        "descuento": 10,
+        "procentaje_desc": 10,
         "oem": "OEM12345",
         "id_producto": "FIL-101"
     },
@@ -20,7 +20,8 @@
         "marca": "Bosch",
         "imagen_url": "/img/pastilla.png",
         "oem": "OEM67890",
-        "id_producto": "FRE-201"
+        "id_producto": "FRE-201",
+        "procentaje_desc": 0
     },
     {
         "id": 3,
@@ -30,7 +31,7 @@
         "categoria": "Lubricantes",
         "marca": "Mobil",
         "imagen_url": "/img/aceite.png",
-        "descuento": 15,
+        "procentaje_desc": 15,
         "oem": "OEM10111",
         "id_producto": "LUB-301"
     },
@@ -43,7 +44,8 @@
         "marca": "Hella",
         "imagen_url": "/img/bateria.png",
         "oem": "OEM12131",
-        "id_producto": "BAT-401"
+        "id_producto": "BAT-401",
+        "procentaje_desc": 0
     },
     {
         "id": 5,
@@ -54,7 +56,8 @@
         "marca": "Dayco",
         "imagen_url": "/img/correa.jpg",
         "oem": "OEM14151",
-        "id_producto": "COR-501"
+        "id_producto": "COR-501",
+        "procentaje_desc": 0
     },
     {
         "id": 6,
@@ -64,7 +67,8 @@
         "categoria": "Suspensión",
         "marca": "SKF",
         "imagen_url": "/img/amortiguador.png",
-        "id_producto": "SUS-601"
+        "id_producto": "SUS-601",
+        "procentaje_desc": 0
     },
     {
         "id": 7,
@@ -74,7 +78,7 @@
         "categoria": "Herramientas",
         "marca": "Force",
         "imagen_url": "/img/carousel/1.png",
-        "descuento": 20,
+        "procentaje_desc": 20,
         "id_producto": "HER-701"
     },
     {
@@ -85,7 +89,8 @@
         "categoria": "Lubricantes",
         "marca": "Liqui Moly",
         "imagen_url": "/img/aceite2.png",
-        "id_producto": "LUB-302"
+        "id_producto": "LUB-302",
+        "procentaje_desc": 0
     },
     {
         "id": 9,
@@ -95,7 +100,8 @@
         "categoria": "Eléctrica",
         "marca": "Hella",
         "imagen_url": "/img/carousel/2.png",
-        "id_producto": "ELE-901"
+        "id_producto": "ELE-901",
+        "procentaje_desc": 0
     },
     {
         "id": 10,
@@ -105,7 +111,8 @@
         "categoria": "Neumáticos",
         "marca": "Michelin",
         "imagen_url": "/img/neumatico.png",
-        "id_producto": "NEU-101"
+        "id_producto": "NEU-101",
+        "procentaje_desc": 0
     },
     {
         "id": 11,
@@ -115,7 +122,8 @@
         "categoria": "Filtros",
         "marca": "Fleetguard",
         "imagen_url": "/img/filtro2.png",
-        "id_producto": "FIL-102"
+        "id_producto": "FIL-102",
+        "procentaje_desc": 0
     },
     {
         "id": 12,
@@ -125,7 +133,8 @@
         "categoria": "Lubricantes",
         "marca": "Castrol",
         "imagen_url": "/img/carousel/3.png",
-        "id_producto": "LUB-303"
+        "id_producto": "LUB-303",
+        "procentaje_desc": 0
     },
     {
         "id": 13,
@@ -135,7 +144,8 @@
         "categoria": "Motor",
         "marca": "MWM",
         "imagen_url": "/img/carousel/4.png",
-        "id_producto": "MOT-131"
+        "id_producto": "MOT-131",
+        "procentaje_desc": 0
     },
     {
         "id": 14,
@@ -145,7 +155,8 @@
         "categoria": "Válvulas",
         "marca": "Diesel Technic",
         "imagen_url": "/img/carousel/5.png",
-        "id_producto": "VAL-141"
+        "id_producto": "VAL-141",
+        "procentaje_desc": 0
     },
     {
         "id": 15,
@@ -155,7 +166,8 @@
         "categoria": "Herramientas",
         "marca": "3M",
         "imagen_url": "/img/carousel/6.png",
-        "id_producto": "HER-702"
+        "id_producto": "HER-702",
+        "procentaje_desc": 0
     },
     {
         "id": 16,
@@ -165,7 +177,8 @@
         "categoria": "Lubricantes",
         "marca": "Valvoline",
         "imagen_url": "/img/aceite.png",
-        "id_producto": "LUB-304"
+        "id_producto": "LUB-304",
+        "procentaje_desc": 0
     },
     {
         "id": 17,
@@ -175,7 +188,8 @@
         "categoria": "Motor",
         "marca": "Bosch",
         "imagen_url": "/img/carousel/7.png",
-        "id_producto": "MOT-171"
+        "id_producto": "MOT-171",
+        "procentaje_desc": 0
     },
     {
         "id": 18,
@@ -185,7 +199,8 @@
         "categoria": "Frenos",
         "marca": "SKF",
         "imagen_url": "/img/Disco.jpg",
-        "id_producto": "FRE-202"
+        "id_producto": "FRE-202",
+        "procentaje_desc": 0
     },
     {
         "id": 19,
@@ -195,7 +210,8 @@
         "categoria": "Herramientas",
         "marca": "Smant Tools",
         "imagen_url": "/img/carousel/8.png",
-        "id_producto": "HER-703"
+        "id_producto": "HER-703",
+        "procentaje_desc": 0
     },
     {
         "id": 20,
@@ -205,7 +221,8 @@
         "categoria": "Lubricantes",
         "marca": "Cepsa",
         "imagen_url": "/img/carousel/9.png",
-        "id_producto": "LUB-305"
+        "id_producto": "LUB-305",
+        "procentaje_desc": 0
     },
     {
         "id": 21,
@@ -215,7 +232,8 @@
         "categoria": "Filtros",
         "marca": "Tecfil",
         "imagen_url": "/img/filtro.png",
-        "id_producto": "FIL-103"
+        "id_producto": "FIL-103",
+        "procentaje_desc": 0
     },
     {
         "id": 22,
@@ -225,7 +243,8 @@
         "categoria": "Eléctrica",
         "marca": "Mitsuba",
         "imagen_url": "/img/carousel/10.png",
-        "id_producto": "ELE-902"
+        "id_producto": "ELE-902",
+        "procentaje_desc": 0
     },
     {
         "id": 23,
@@ -235,7 +254,8 @@
         "categoria": "Motor",
         "marca": "Eaton",
         "imagen_url": "/img/carousel/11.png",
-        "id_producto": "MOT-231"
+        "id_producto": "MOT-231",
+        "procentaje_desc": 0
     },
     {
         "id": 24,
@@ -245,7 +265,8 @@
         "categoria": "Artículos de seguridad",
         "marca": "Bosch",
         "imagen_url": "/img/carousel/12.png",
-        "id_producto": "SEG-241"
+        "id_producto": "SEG-241",
+        "procentaje_desc": 0
     },
     {
         "id": 25,
@@ -255,7 +276,8 @@
         "categoria": "Herramientas",
         "marca": "Wurth",
         "imagen_url": "/img/carousel/13.png",
-        "id_producto": "HER-704"
+        "id_producto": "HER-704",
+        "procentaje_desc": 0
     },
     {
         "id": 26,
@@ -265,7 +287,8 @@
         "categoria": "Motor",
         "marca": "Bosch",
         "imagen_url": "/img/sensot.png",
-        "id_producto": "MOT-261"
+        "id_producto": "MOT-261",
+        "procentaje_desc": 0
     },
     {
         "id": 27,
@@ -275,7 +298,8 @@
         "categoria": "Motor",
         "marca": "Diesel Technic",
         "imagen_url": "/img/bombaagua.jpg",
-        "id_producto": "MOT-271"
+        "id_producto": "MOT-271",
+        "procentaje_desc": 0
     },
     {
         "id": 28,
@@ -285,7 +309,8 @@
         "categoria": "Suspensión",
         "marca": "SKF",
         "imagen_url": "/img/muelle.png",
-        "id_producto": "SUS-281"
+        "id_producto": "SUS-281",
+        "procentaje_desc": 0
     },
     {
         "id": 29,
@@ -295,7 +320,7 @@
         "categoria": "Neumáticos",
         "marca": "Goodyear",
         "imagen_url": "/img/neumatico2.png",
-        "descuento": 5,
+        "procentaje_desc": 5,
         "id_producto": "NEU-291"
     },
     {
@@ -306,7 +331,8 @@
         "categoria": "Eléctrica",
         "marca": "Hella",
         "imagen_url": "/img/carousel/14.png",
-        "id_producto": "ELE-301"
+        "id_producto": "ELE-301",
+        "procentaje_desc": 0
     },
     {
         "id": 31,
@@ -316,7 +342,8 @@
         "categoria": "Artículos de seguridad",
         "marca": "3M",
         "imagen_url": "/img/carousel/15.png",
-        "id_producto": "SEG-311"
+        "id_producto": "SEG-311",
+        "procentaje_desc": 0
     },
     {
         "id": 32,
@@ -326,7 +353,8 @@
         "categoria": "Artículos de seguridad",
         "marca": "Wurth",
         "imagen_url": "/img/carousel/16.png",
-        "id_producto": "SEG-321"
+        "id_producto": "SEG-321",
+        "procentaje_desc": 0
     },
     {
         "id": 33,
@@ -336,7 +364,8 @@
         "categoria": "Lubricantes",
         "marca": "North Sea Lubricants",
         "imagen_url": "/img/aceite.png",
-        "id_producto": "LUB-331"
+        "id_producto": "LUB-331",
+        "procentaje_desc": 0
     },
     {
         "id": 34,
@@ -346,7 +375,8 @@
         "categoria": "Suspensión",
         "marca": "SKF",
         "imagen_url": "/img/carousel/17.png",
-        "id_producto": "SUS-341"
+        "id_producto": "SUS-341",
+        "procentaje_desc": 0
     },
     {
         "id": 35,
@@ -356,7 +386,8 @@
         "categoria": "Motor",
         "marca": "MWM",
         "imagen_url": "/img/carousel/18.png",
-        "id_producto": "MOT-351"
+        "id_producto": "MOT-351",
+        "procentaje_desc": 0
     },
     {
         "id": 36,
@@ -366,7 +397,8 @@
         "categoria": "Filtros",
         "marca": "Mann Filter",
         "imagen_url": "/img/filtro2.png",
-        "id_producto": "FIL-361"
+        "id_producto": "FIL-361",
+        "procentaje_desc": 0
     },
     {
         "id": 37,
@@ -376,7 +408,8 @@
         "categoria": "Eléctrica",
         "marca": "Hella",
         "imagen_url": "/img/carousel/19.png",
-        "id_producto": "ELE-371"
+        "id_producto": "ELE-371",
+        "procentaje_desc": 0
     },
     {
         "id": 38,
@@ -386,7 +419,8 @@
         "categoria": "Artículos de seguridad",
         "marca": "Force",
         "imagen_url": "/img/carousel/20.png",
-        "id_producto": "SEG-381"
+        "id_producto": "SEG-381",
+        "procentaje_desc": 0
     },
     {
         "id": 39,
@@ -396,7 +430,8 @@
         "categoria": "Motor",
         "marca": "Bosch",
         "imagen_url": "/img/carousel/21.png",
-        "id_producto": "MOT-391"
+        "id_producto": "MOT-391",
+        "procentaje_desc": 0
     },
     {
         "id": 40,
@@ -406,7 +441,8 @@
         "categoria": "Frenos",
         "marca": "Liqui Moly",
         "imagen_url": "/img/carousel/22.png",
-        "id_producto": "FRE-401"
+        "id_producto": "FRE-401",
+        "procentaje_desc": 0
     },
     {
         "id": 41,
@@ -415,7 +451,7 @@
         "precio": 450000,
         "categoria": "Motor",
         "marca": "Cummins",
-        "descuento": 10,
+        "procentaje_desc": 10,
         "imagen_url": "/img/carousel/23.png",
         "id_producto": "MOT-411"
     },
@@ -427,7 +463,8 @@
         "categoria": "Suspensión",
         "marca": "Force",
         "imagen_url": "/img/carousel/1.png",
-        "id_producto": "SUS-421"
+        "id_producto": "SUS-421",
+        "procentaje_desc": 0
     },
     {
         "id": 43,
@@ -437,7 +474,8 @@
         "categoria": "Artículos de seguridad",
         "marca": "Hella",
         "imagen_url": "/img/carousel/2.png",
-        "id_producto": "SEG-431"
+        "id_producto": "SEG-431",
+        "procentaje_desc": 0
     },
     {
         "id": 44,
@@ -447,7 +485,8 @@
         "categoria": "Motor",
         "marca": "Diesel Technic",
         "imagen_url": "/img/carousel/3.png",
-        "id_producto": "MOT-441"
+        "id_producto": "MOT-441",
+        "procentaje_desc": 0
     },
     {
         "id": 45,
@@ -457,7 +496,8 @@
         "categoria": "Herramientas",
         "marca": "Smant Tools",
         "imagen_url": "/img/carousel/4.png",
-        "id_producto": "HER-451"
+        "id_producto": "HER-451",
+        "procentaje_desc": 0
     },
     {
         "id": 46,
@@ -467,7 +507,8 @@
         "categoria": "Lubricantes",
         "marca": "Wurth",
         "imagen_url": "/img/carousel/5.png",
-        "id_producto": "LUB-461"
+        "id_producto": "LUB-461",
+        "procentaje_desc": 0
     },
     {
         "id": 47,
@@ -477,7 +518,8 @@
         "categoria": "Eléctrica",
         "marca": "Just Power",
         "imagen_url": "/img/carousel/6.png",
-        "id_producto": "ELE-471"
+        "id_producto": "ELE-471",
+        "procentaje_desc": 0
     },
     {
         "id": 48,
@@ -487,7 +529,8 @@
         "categoria": "Válvulas",
         "marca": "Eaton",
         "imagen_url": "/img/carousel/7.png",
-        "id_producto": "VAL-481"
+        "id_producto": "VAL-481",
+        "procentaje_desc": 0
     },
     {
         "id": 49,
@@ -497,7 +540,8 @@
         "categoria": "Insumos agrícolas",
         "marca": "Force",
         "imagen_url": "/img/carousel/8.png",
-        "id_producto": "AGR-491"
+        "id_producto": "AGR-491",
+        "procentaje_desc": 0
     },
     {
         "id": 50,
@@ -507,6 +551,7 @@
         "categoria": "Servicios mecánicos",
         "marca": "TTM",
         "imagen_url": "/img/carousel/9.png",
-        "id_producto": "SRV-501"
+        "id_producto": "SRV-501",
+        "procentaje_desc": 0
     }
 ]

@@ -38,7 +38,8 @@ export const CotizacionProvider = ({ children }) => {
                 const newItem = {
                     id: product.id, // Using product id as cart item id
                     producto: product,
-                    cantidad: quantity
+                    cantidad: quantity,
+                    descuento: product.procentaje_desc || 0
                 };
                 return [...prevItems, newItem];
             }
@@ -72,4 +73,3 @@ export const CotizacionProvider = ({ children }) => {
         </CotizacionContext.Provider>
     );
 };
-

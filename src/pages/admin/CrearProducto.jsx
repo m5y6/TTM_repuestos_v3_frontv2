@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ProductoService from "../../services/ProductoService";
 import { uploadFileToS3 } from '../../services/UploadService';
+import Header from '../../organisms/Header';
+import Footer from '../../organisms/Footer';
 import "../../styles/administrar.css";
 import categoriasData from '../../categorias.json';
 import marcasData from '../../marcas.json';
 
-const EditarProducto = () => {
+const CrearProducto = () => {
   const [nombre, setNombre] = useState("");
   const [precio, setPrecio] = useState("");
   const [categoria, setCategoria] = useState("");
   const [description, setDescription] = useState("");
-  const [stock, setStock] = useState("");
   const [imagen_url, setImagenUrl] = useState("");
   const [procentaje_desc, setProcentajeDesc] = useState("");
   const [marca, setMarca] = useState("");
@@ -20,32 +21,12 @@ const EditarProducto = () => {
   const [categorias, setCategorias] = useState([]);
   const [marcas, setMarcas] = useState([]);
 
-  const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     setCategorias(categoriasData.map(c => c.nombre));
     setMarcas(marcasData.map(m => m.nombre));
-    if (id) {
-      ProductoService.getProductoById(id).then((response) => {
-        const producto = response.data;
-        setNombre(producto.nombre);
-        setPrecio(producto.precio);
-        setCategoria(producto.categoria);
-        setDescription(producto.description);
-        setStock(producto.stock);
-        setImagenUrl(producto.imagen_url);
-        setProcentajeDesc(producto.procentaje_desc);
-        setMarca(producto.marca);
-        setOem(producto.oem);
-      }).catch(err => {
-        console.error("Error fetching product:", err);
-        navigate('/admin/ver-productos');
-      });
-    } else {
-      navigate('/admin/ver-productos');
-    }
-  }, [id, navigate]);
+  }, []);
 
   const handleImagenChange = async (e) => {
     const file = e.target.files[0];
@@ -62,7 +43,7 @@ const EditarProducto = () => {
     }
   };
 
-  const updateProducto = async (e) => {
+  const saveProducto = async (e) => {
     e.preventDefault();
 
     const producto = {
@@ -70,14 +51,13 @@ const EditarProducto = () => {
       precio: parseFloat(precio),
       categoria,
       description,
-      stock: parseInt(stock, 10),
       imagen_url: imagen_url,
       procentaje_desc: parseFloat(procentaje_desc),
       marca,
       oem,
     };
 
-    ProductoService.updateProductos(id, producto)
+    ProductoService.createProductos(producto)
       .then(() => {
         navigate("/admin/ver-productos");
       })
@@ -90,9 +70,11 @@ const EditarProducto = () => {
   };
 
   return (
+    <>
+    <Header />
     <div className="admin-container">
-      <h2>Editar Producto</h2>
-      <form onSubmit={updateProducto}>
+      <h2>Agregar Producto</h2>
+      <form onSubmit={saveProducto}>
         <div>
           <label>Nombre:</label>
           <input
@@ -116,15 +98,6 @@ const EditarProducto = () => {
             type="number"
             value={precio}
             onChange={(e) => setPrecio(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Stock:</label>
-          <input
-            type="number"
-            value={stock}
-            onChange={(e) => setStock(e.target.value)}
             required
           />
         </div>
@@ -181,10 +154,12 @@ const EditarProducto = () => {
             </div>
           )}
         </div>
-        <button type="submit" disabled={isUploading}>Actualizar</button>
+        <button type="submit" disabled={isUploading}>Guardar</button>
       </form>
     </div>
+    <Footer />
+    </>
   );
 };
 
-export default EditarProducto;
+export default CrearProducto;

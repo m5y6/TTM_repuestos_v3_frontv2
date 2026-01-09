@@ -35,7 +35,7 @@ const ProductoCard = ({ producto, handleAddToCotizacion, formatearPrecio }) => {
     return (
         <div className="producto-card">
             <div className="producto-imagen">
-                {producto.descuento && <div className="descuento-insignia">{producto.descuento}% OFF</div>}
+                {producto.procentaje_desc > 0 && <div className="descuento-insignia">{producto.procentaje_desc}% OFF</div>}
                 <img 
                     src={producto.imagen} 
                     alt={producto.nombre} 
@@ -48,10 +48,10 @@ const ProductoCard = ({ producto, handleAddToCotizacion, formatearPrecio }) => {
                 <p className="producto-descripcion">{producto.descripcion}</p>
                 <span className="producto-oem">OEM: {producto.oem}</span>
                 <div className="producto-precio">
-                    {producto.descuento ? (
+                    {producto.procentaje_desc > 0 ? (
                         <>
                             <span className="precio-original">{formatearPrecio(producto.precio)}</span>
-                            <span className="precio-descuento">{formatearPrecio(producto.precio * (1 - producto.descuento / 100))}</span>
+                            <span className="precio-descuento">{formatearPrecio(producto.precio * (1 - producto.procentaje_desc / 100))}</span>
                         </>
                     ) : (
                         formatearPrecio(producto.precio)

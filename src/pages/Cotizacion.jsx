@@ -46,8 +46,8 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
             const precioOriginal = item.producto.precio * item.cantidad;
             subtotal += precioOriginal;
             totalItems += item.cantidad;
-            if (item.producto.descuento) {
-                descuentoProductos += precioOriginal * (item.producto.descuento / 100);
+            if (item.descuento) {
+                descuentoProductos += precioOriginal * (item.descuento / 100);
             }
         });
         const subtotalConDescuento = subtotal - descuentoProductos;
@@ -116,7 +116,7 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
                 const { producto, cantidad } = item;
                 const precioUnitario = producto.precio;
                 const precioTotalItem = precioUnitario * cantidad;
-                const descuentoStr = producto.descuento ? `${producto.descuento}%` : '0%';
+                const descuentoStr = item.descuento ? `${item.descuento}%` : '0%';
 
                 currentPage.drawText(producto.id_producto || 'N/A', { x: idProductoX, y: currentY, size: 10 });
                 currentPage.drawText(String(cantidad), { x: quantityX, y: currentY, size: 10 });
@@ -306,7 +306,7 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
                             data-precio={item.producto.precio}
                         >
                             <div className="item-imagen">
-                                {item.producto.descuento && <div className="descuento-insignia">{item.producto.descuento}% OFF</div>}
+                                {item.descuento && <div className="descuento-insignia">{item.descuento}% OFF</div>}
                                 <img src={item.producto.imagenUrl} alt={item.producto.nombre} />
                             </div>
                             <div className="item-info">
@@ -315,13 +315,13 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
                                 <p>{item.producto.descripcion}</p>
                             </div>
                             <div className="item-precio">
-                                {item.producto.descuento ? (
+                                {item.descuento > 0 ? (
                                     <>
                                         <span className="precio-original">
                                             {formatearPrecio(item.producto.precio * item.cantidad)}
                                         </span>
                                         <span className="precio-descuento">
-                                            {formatearPrecio(item.producto.precio * (1 - item.producto.descuento / 100) * item.cantidad)}
+                                            {formatearPrecio(item.producto.precio * (1 - item.descuento / 100) * item.cantidad)}
                                         </span>
                                     </>
                                 ) : (

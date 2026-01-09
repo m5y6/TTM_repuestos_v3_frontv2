@@ -34,7 +34,7 @@ class ProductosService {
   }
 
   getProductoById(id) {
-    const producto = productosData.find(p => p.id === id);
+    const producto = productosData.find(p => p.id == id);
     return Promise.resolve({ data: producto });
   }
 

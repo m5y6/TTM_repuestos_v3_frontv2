@@ -40,7 +40,7 @@ const ProductCard = React.forwardRef(({ producto, handleAddToCotizacion }, ref) 
     <div className="producto" ref={ref}>
       <a href="#">
         <div className="producto-imagen-container">
-          {producto.descuento && <div className="descuento-insignia">{producto.descuento}% OFF</div>}
+          {producto.procentaje_desc > 0 && <div className="descuento-insignia">{producto.procentaje_desc}% OFF</div>}
           <img src={producto.imagen_url} alt={producto.nombre} className="producto-imagen" />
         </div>
         <div className="producto-info">
@@ -52,10 +52,10 @@ const ProductCard = React.forwardRef(({ producto, handleAddToCotizacion }, ref) 
         </div>
         <div className="producto-price-actions">
             <div className="precio">
-                {producto.descuento ? (
+                {producto.procentaje_desc > 0 ? (
                     <>
                         <span className="precio-original">{formatearPrecio(producto.precio)}</span>
-                        <span className="precio-descuento">{formatearPrecio(producto.precio * (1 - producto.descuento / 100))}</span>
+                        <span className="precio-descuento">{formatearPrecio(producto.precio * (1 - producto.procentaje_desc / 100))}</span>
                     </>
                 ) : (
                     formatearPrecio(producto.precio)
@@ -82,7 +82,7 @@ const ProductCard = React.forwardRef(({ producto, handleAddToCotizacion }, ref) 
   );
 });
 
-const productos = productosData.slice(0, 6);
+const productos = productosData.filter(p => p.procentaje_desc > 0).slice(0, 6);
 
 export default function Index() {
   const navigate = useNavigate();
@@ -185,7 +185,28 @@ export default function Index() {
             </div>
           </div>
         </section>
-
+        <section className="tercera">
+          <div className="top_ventas">
+            <h2>Productos en Oferta</h2>
+            <div className="productos-carousel-container">
+              <button className="carousel-arrow prev" onClick={prevSlide}>&#10094;</button>
+              <div className="productos-viewport">
+                <div className="productos" style={{ transform: `translateX(-${currentIndex * slideAmount}px)` }}>
+                  {productos.map((producto, index) => (
+                    <ProductCard
+                      key={index}
+                      ref={addToRefs}
+                      producto={producto}
+                      handleAddToCotizacion={handleAddToCotizacion}
+                    />
+                  ))}
+                </div>
+              </div>
+              <button className="carousel-arrow next" onClick={nextSlide}>&#10095;</button>
+            </div>
+            <Link to="/catalogo" id="vercatalogo">Ver catálogo</Link>
+          </div>
+        </section>
         <section className="categorias-section">
           <div className="categorias-container">
             <h2>Explora por Categorías</h2>
@@ -215,28 +236,7 @@ export default function Index() {
           </div>
         </section>
 
-        <section className="tercera">
-          <div className="top_ventas">
-            <h2>Productos más vendidos</h2>
-            <div className="productos-carousel-container">
-              <button className="carousel-arrow prev" onClick={prevSlide}>&#10094;</button>
-              <div className="productos-viewport">
-                <div className="productos" style={{ transform: `translateX(-${currentIndex * slideAmount}px)` }}>
-                  {productos.map((producto, index) => (
-                    <ProductCard
-                      key={index}
-                      ref={addToRefs}
-                      producto={producto}
-                      handleAddToCotizacion={handleAddToCotizacion}
-                    />
-                  ))}
-                </div>
-              </div>
-              <button className="carousel-arrow next" onClick={nextSlide}>&#10095;</button>
-            </div>
-            <Link to="/catalogo" id="vercatalogo">Ver catálogo</Link>
-          </div>
-        </section>
+        
         
         {notificacion && (
             <div className="notificacion-carrito">

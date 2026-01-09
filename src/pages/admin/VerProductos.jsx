@@ -1,7 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import ProductoService from '../../services/ProductoService';
+import Header from '../../organisms/Header';
+import Footer from '../../organisms/Footer';
+import { uploadFileToS3 } from '../../services/UploadService'; // Import the upload service
 import '../../styles/administrar.css';
+import categoriasData from '../../categorias.json';
+import marcasData from '../../marcas.json';
 
 const VerProductos = () => {
     const [productos, setProductos] = useState([]);
@@ -14,10 +19,18 @@ const VerProductos = () => {
     const [categorias, setCategorias] = useState([]);
     const [marcas, setMarcas] = useState([]);
 
+    // State for inline editing
+    const [editingProductId, setEditingProductId] = useState(null);
+    const [editingProductData, setEditingProductData] = useState({});
+    const [isUploadingImage, setIsUploadingImage] = useState(false); // New state for image upload loading
+    const fileInputRef = useRef(null); // Ref for the hidden file input
+
     useEffect(() => {
+        setCategorias(categoriasData.map(c => c.nombre));
+        setMarcas(marcasData.map(m => m.nombre));
+        
         ProductoService.getAllProductos()
             .then(response => {
-                console.log('API Response:', response.data); // <-- This will show the data in your browser console
                 const data = response.data;
                 const productosArray = Array.isArray(data) ? data : (data.productos || []);
 
@@ -28,11 +41,6 @@ const VerProductos = () => {
 
                 setProductos(productosApi);
                 setProductosFiltrados(productosApi);
-                
-                const uniqueCategorias = [...new Set(productosApi.map(p => p.categoria))];
-                const uniqueMarcas = [...new Set(productosApi.map(p => p.marca))];
-                setCategorias(uniqueCategorias);
-                setMarcas(uniqueMarcas);
             })
             .catch(error => {
                 console.error("Error fetching productos:", error);
@@ -78,7 +86,7 @@ const VerProductos = () => {
 
     const deleteProducto = (id) => {
         if (window.confirm('¿Estás seguro de que deseas eliminar este producto?')) {
-                        ProductoService.deleteProducto(id)
+            ProductoService.deleteProducto(id)
                 .then(() => {
                     setProductos(productos.filter(p => p.id !== id));
                 })
@@ -89,69 +97,161 @@ const VerProductos = () => {
         }
     };
 
-    return (
-        <div className="admin-container ver-productos-container">
-            <h1>Productos</h1>
-            <Link to="/admin/editar-producto" className="btn-agregar">Agregar Producto</Link>
-            
-            <div className="filtros-container" style={{display: 'flex', gap: '1rem', margin: '1rem 0'}}>
-                <input
-                    type="text"
-                    name="busqueda"
-                    placeholder="Buscar..."
-                    value={filtros.busqueda}
-                    onChange={handleFiltroChange}
-                    className="buscador-input"
-                />
-                <select name="categoria" value={filtros.categoria} onChange={handleFiltroChange}>
-                    <option value="">Todas las categorías</option>
-                    {categorias.map(c => <option key={c} value={c}>{c}</option>)}
-                </select>
-                <select name="marca" value={filtros.marca} onChange={handleFiltroChange}>
-                    <option value="">Todas las marcas</option>
-                    {marcas.map(m => <option key={m} value={m}>{m}</option>)}
-                </select>
-            </div>
+    // Handlers for inline editing
+    const handleEditClick = (producto) => {
+        setEditingProductId(producto.id);
+        setEditingProductData({ ...producto });
+    };
 
-            <div className="admin-productos-tabla">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Imagen</th>
-                            <th>Nombre</th>
-                            <th>Precio</th>
-                            <th>Categoría</th>
-                            <th>Marca</th>
-                            <th>OEM</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {productosFiltrados.map((producto) => (
-                            <tr key={producto.id}>
-                                <td>
-                                    <img
-                                        src={producto.imagen}
-                                        alt={producto.nombre}
-                                        style={{ width: "50px", height: "50px", objectFit: "cover" }}
-                                    />
-                                </td>
-                                <td>{producto.nombre}</td>
-                                <td>{`$${producto.precio.toLocaleString('es-CL')}`}</td>
-                                <td>{producto.categoria}</td>
-                                <td>{producto.marca}</td>
-                                <td>{producto.oem}</td>
-                                <td>
-                                    <Link to={`/admin/editar-producto/${producto.id}`} className="btn-editar">✏️</Link>
-                                    <button onClick={() => deleteProducto(producto.id)} className="btn-eliminar">🗑️</button>
-                                </td>
+    const handleCancelClick = () => {
+        setEditingProductId(null);
+        setEditingProductData({});
+    };
+
+    const handleEditFormChange = (e) => {
+        const { name, value } = e.target;
+        setEditingProductData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleSaveClick = (id) => {
+        ProductoService.updateProductos(id, editingProductData)
+            .then(() => {
+                const updatedProductos = productos.map(p =>
+                    p.id === id ? editingProductData : p
+                );
+                setProductos(updatedProductos);
+                setEditingProductId(null);
+            })
+            .catch(error => {
+                console.error("Error updating producto:", error);
+                alert("Error al actualizar el producto.");
+            });
+    };
+
+    const handleImageChange = async (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setIsUploadingImage(true);
+            try {
+                const imageUrl = await uploadFileToS3(file);
+                setEditingProductData(prev => ({ ...prev, imagen: imageUrl, imagen_url: imageUrl }));
+            } catch (error) {
+                alert("Falló la subida de la imagen. Por favor, inténtalo de nuevo.");
+            } finally {
+                setIsUploadingImage(false);
+            }
+        }
+    };
+
+    return (
+        <>
+            <Header />
+            <div className="admin-container ver-productos-container">
+                <h1>Productos</h1>
+                <Link to="/admin/crear-producto" className="btn-agregar">Agregar Producto</Link>
+                
+                <div className="filtros-container" style={{display: 'flex', gap: '1rem', margin: '1rem 0'}}>
+                    <input
+                        type="text"
+                        name="busqueda"
+                        placeholder="Buscar..."
+                        value={filtros.busqueda}
+                        onChange={handleFiltroChange}
+                        className="buscador-input"
+                    />
+                    <select name="categoria" value={filtros.categoria} onChange={handleFiltroChange}>
+                        <option value="">Todas las categorías</option>
+                        {categorias.map(c => <option key={c} value={c}>{c}</option>)}
+                    </select>
+                    <select name="marca" value={filtros.marca} onChange={handleFiltroChange}>
+                        <option value="">Todas las marcas</option>
+                        {marcas.map(m => <option key={m} value={m}>{m}</option>)}
+                    </select>
+                </div>
+
+                <div className="admin-productos-tabla">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Imagen</th>
+                                <th>Nombre</th>
+                                <th>Precio</th>
+                                <th>Descuento</th>
+                                <th>Categoría</th>
+                                <th>Marca</th>
+                                <th>OEM</th>
+                                <th>Acciones</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
-                {productosFiltrados.length === 0 && <p>No se encontraron productos.</p>}
+                        </thead>
+                        <tbody>
+                            {productosFiltrados.map((producto) => (
+                                <tr key={producto.id}>
+                                    {editingProductId === producto.id ? (
+                                        <>
+                                            <td onClick={() => fileInputRef.current.click()} style={{ cursor: 'pointer' }}>
+                                                <img
+                                                    src={editingProductData.imagen}
+                                                    alt={editingProductData.nombre}
+                                                    style={{ width: "50px", height: "50px", objectFit: "cover" }}
+                                                />
+                                                <input
+                                                    type="file"
+                                                    ref={fileInputRef}
+                                                    onChange={handleImageChange}
+                                                    style={{ display: 'none' }}
+                                                    accept="image/png, image/jpeg"
+                                                />
+                                                {isUploadingImage && <p>Subiendo imagen...</p>}
+                                            </td>
+                                            <td><input type="text" name="nombre" value={editingProductData.nombre} onChange={handleEditFormChange} /></td>
+                                            <td><input type="number" name="precio" value={editingProductData.precio} onChange={handleEditFormChange} /></td>
+                                            <td><input type="number" name="procentaje_desc" value={editingProductData.procentaje_desc} onChange={handleEditFormChange} /></td>
+                                            <td>
+                                                <select name="categoria" value={editingProductData.categoria} onChange={handleEditFormChange}>
+                                                    {categorias.map(c => <option key={c} value={c}>{c}</option>)}
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select name="marca" value={editingProductData.marca} onChange={handleEditFormChange}>
+                                                    {marcas.map(m => <option key={m} value={m}>{m}</option>)}
+                                                </select>
+                                            </td>
+                                            <td><input type="text" name="oem" value={editingProductData.oem} onChange={handleEditFormChange} /></td>
+                                            <td>
+                                                <button onClick={() => handleSaveClick(producto.id)} className="btn-guardar">✔️</button>
+                                                <button onClick={handleCancelClick} className="btn-cancelar">❌</button>
+                                            </td>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <td>
+                                                <img
+                                                    src={producto.imagen}
+                                                    alt={producto.nombre}
+                                                    style={{ width: "50px", height: "50px", objectFit: "cover" }}
+                                                />
+                                            </td>
+                                            <td>{producto.nombre}</td>
+                                            <td>{`$${producto.precio.toLocaleString('es-CL')}`}</td>
+                                            <td>{`${producto.procentaje_desc || 0}%`}</td>
+                                            <td>{producto.categoria}</td>
+                                            <td>{producto.marca}</td>
+                                            <td>{producto.oem}</td>
+                                            <td>
+                                                <button onClick={() => handleEditClick(producto)} className="btn-editar">✏️</button>
+                                                <button onClick={() => deleteProducto(producto.id)} className="btn-eliminar">🗑️</button>
+                                            </td>
+                                        </>
+                                    )}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    {productosFiltrados.length === 0 && <p>No se encontraron productos.</p>}
+                </div>
             </div>
-        </div>
+            <Footer />
+        </>
     );
 };
 

@@ -875,45 +875,91 @@ nav.opciones {
 
 
 /* Responsive */
-@media (max-width: 968px) {
+@media (max-width: 992px) {
     .catalogo-container {
-        grid-template-columns: 1fr;
+        grid-template-columns: 220px 1fr;
         gap: 20px;
-        padding: 0 15px; /* Reducir padding horizontal */
     }
-    
+
     .filtros-sidebar {
-        position: static;
-        order: 2;
-        margin: 0 0; /* Asegurar que no tenga margen extra */
-        padding: 20px; /* Reducir padding interno */
-    }
-    
-    .catalogo-content {
-        order: 1;
-    }
-    
-    .productos-grid {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    }
-    
-
-
-    .catalogo-header {
         padding: 20px;
+    }
+
+    .productos-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     }
 }
 
 @media (max-width: 768px) {
+    .catalogo-hero {
+        height: 250px;
+    }
+
+    .catalogo-container {
+        grid-template-columns: 1fr;
+    }
+
+    .filtros-sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 300px;
+        height: 100%;
+        background: white;
+        z-index: 1001;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+        border-radius: 0;
+        max-height: 100%;
+        padding: 30px;
+    }
+
+    .filtros-sidebar.abierto {
+        transform: translateX(0);
+    }
+    
+    .catalogo-content {
+        width: 100%;
+    }
+
+    .btn-filtros-movil {
+        display: flex;
+    }
+
+    .filtro-overlay.activo {
+        display: block;
+    }
+    
+    .catalogo-header {
+        padding: 20px;
+    }
+    
     .productos-grid {
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        grid-template-columns: 1fr;
         gap: 15px;
+    }
+
+    .producto-card {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .producto-imagen {
+        width: 120px;
+        height: 120px;
+        flex-shrink: 0;
+    }
+
+    .producto-info {
+        padding: 15px;
+        gap: 5px;
+        text-align: left;
     }
     
     .catalogo-hero h1 {
         font-size: 2rem;
     }
-
     
     /* Notificación en móvil */
     .notificacion-carrito {
@@ -930,12 +976,10 @@ nav.opciones {
     .notificacion-carrito:not(:empty) {
         transform: translateX(-50%) translateY(0);
     }
-    
 }
 
 @media (max-width: 480px) {
     .productos-grid {
-        /* En pantallas muy pequeñas, forzar una sola columna */
         grid-template-columns: 1fr;
     }
     
@@ -951,7 +995,7 @@ nav.opciones {
     .paginacion {
         padding: 15px 10px;
         gap: 5px;
-        flex-wrap: wrap; /* Permite que los elementos salten de línea si no caben */
+        flex-wrap: wrap;
     }
     
     .btn-pag {
@@ -966,7 +1010,8 @@ nav.opciones {
     }
     
     .filtros-sidebar {
-        padding: 15px;
+        width: 280px;
+        padding: 20px;
     }
     
     .filtros-header h3 {
@@ -1024,4 +1069,42 @@ nav.opciones {
 
 .quantity-selector input:focus {
     outline: none;
+}
+
+/* === Botón para abrir filtros en móvil === */
+.btn-filtros-movil {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #5a8756;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    z-index: 1000;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.btn-filtros-movil:hover {
+    background-color: #4a7349;
+    transform: scale(1.1);
+}
+
+/* === Overlay para el fondo cuando los filtros están abiertos === */
+.filtro-overlay {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
 }

@@ -73,9 +73,9 @@ const CrearProducto = () => {
     <>
     <Header />
     <div className="admin-container">
-      <h2>Agregar Producto</h2>
-      <form onSubmit={saveProducto}>
-        <div>
+      <h1>Agregar Producto</h1>
+      <form onSubmit={saveProducto} className="crear-producto-form">
+        <div className="form-group">
           <label>Nombre:</label>
           <input
             type="text"
@@ -84,7 +84,7 @@ const CrearProducto = () => {
             required
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Descripción:</label>
           <input
             type="text"
@@ -92,7 +92,7 @@ const CrearProducto = () => {
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Precio:</label>
           <input
             type="number"
@@ -101,7 +101,7 @@ const CrearProducto = () => {
             required
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Porcentaje Descuento:</label>
           <input
             type="number"
@@ -109,7 +109,7 @@ const CrearProducto = () => {
             onChange={(e) => setProcentajeDesc(e.target.value)}
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Categoría:</label>
           <select
             value={categoria}
@@ -120,7 +120,7 @@ const CrearProducto = () => {
             {categorias.map(c => <option key={c} value={c}>{c}</option>)}
           </select>
         </div>
-        <div>
+        <div className="form-group">
           <label>Marca:</label>
           <select
             value={marca}
@@ -131,7 +131,7 @@ const CrearProducto = () => {
             {marcas.map(m => <option key={m} value={m}>{m}</option>)}
           </select>
         </div>
-        <div>
+        <div className="form-group">
           <label>OEM:</label>
           <input
             type="text"
@@ -139,7 +139,7 @@ const CrearProducto = () => {
             onChange={(e) => setOem(e.target.value)}
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Imagen:</label>
           <input
             type="file"
@@ -154,7 +154,9 @@ const CrearProducto = () => {
             </div>
           )}
         </div>
-        <button type="submit" disabled={isUploading}>Guardar</button>
+        <div className="form-actions">
+          <button type="submit" className="btn-guardar" disabled={isUploading}>Guardar</button>
+        </div>
       </form>
     </div>
     <Footer />

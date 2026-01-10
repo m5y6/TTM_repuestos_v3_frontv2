@@ -13,6 +13,7 @@ import AdminLayout from './pages/admin/AdminLayout.jsx'
 import VerProductos from './pages/admin/VerProductos.jsx'
 import EditarProducto from './pages/admin/EditarProducto.jsx'
 import CrearProducto from './pages/admin/CrearProducto.jsx'
+import CrearUsuario from './pages/admin/CrearUsuario.jsx'
 import AdministrarCuentas from './pages/admin/AdministrarCuentas.jsx'
 import DashboardCotizaciones from './pages/admin/DashboardCotizaciones.jsx'
 
@@ -42,6 +43,7 @@ function App () {
               element={<EditarProducto />}
             />
             <Route path='/admin/crear-producto' element={<CrearProducto />} />
+            <Route path='/admin/crear-usuario' element={<CrearUsuario />} />
             <Route
               path='/admin/administrar-cuentas'
               element={<AdministrarCuentas />}

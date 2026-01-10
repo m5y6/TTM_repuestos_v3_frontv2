@@ -217,7 +217,7 @@ const VerProductos = () => {
                                                 </select>
                                             </td>
                                             <td><input type="text" name="oem" value={editingProductData.oem} onChange={handleEditFormChange} /></td>
-                                            <td>
+                                            <td className="acciones-cell">
                                                 <button onClick={() => handleSaveClick(producto.id)} className="btn-guardar">✔️</button>
                                                 <button onClick={handleCancelClick} className="btn-cancelar">❌</button>
                                             </td>
@@ -237,7 +237,7 @@ const VerProductos = () => {
                                             <td>{producto.categoria}</td>
                                             <td>{producto.marca}</td>
                                             <td>{producto.oem}</td>
-                                            <td>
+                                            <td className="acciones-cell">
                                                 <button onClick={() => handleEditClick(producto)} className="btn-editar">✏️</button>
                                                 <button onClick={() => deleteProducto(producto.id)} className="btn-eliminar">🗑️</button>
                                             </td>

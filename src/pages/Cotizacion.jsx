@@ -64,6 +64,9 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
     const generarPdfDesdePlantilla = async () => {
         setIsGeneratingPdf(true);
         try {
+            // Guardar la cotización en localStorage
+            await CotizacionService.saveCotizacion(cartItems);
+            
             const { PDFDocument, rgb, StandardFonts } = window.PDFLib;
 
             const plantillaUrl = '/templates/plantilla_cotizacion.pdf';

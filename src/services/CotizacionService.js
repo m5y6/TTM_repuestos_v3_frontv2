@@ -14,7 +14,30 @@ const getAuthHeaders = () => {
     }
 };
 
-class CartService {
+class CotizacionService {
+    // Método para obtener todas las cotizaciones desde localStorage
+    getAllCotizaciones() {
+        const cotizacionesData = JSON.parse(localStorage.getItem('ttm_cotizaciones')) || [];
+        return Promise.resolve({ data: cotizacionesData });
+    }
+
+    // Método para guardar una cotización en localStorage
+    saveCotizacion(productos) {
+        const cotizacionesPrevias = JSON.parse(localStorage.getItem('ttm_cotizaciones')) || [];
+        const nuevaCotizacion = {
+            id: Date.now(), // ID simple basado en el timestamp
+            fecha: new Date().toISOString(),
+            productos: productos.map(item => ({
+                nombre: item.producto.nombre,
+                cantidad: item.cantidad
+            }))
+        };
+        const nuevasCotizaciones = [...cotizacionesPrevias, nuevaCotizacion];
+        localStorage.setItem('ttm_cotizaciones', JSON.stringify(nuevasCotizaciones));
+        return Promise.resolve({ data: nuevaCotizacion });
+    }
+
+
     getCart() {
         return axios.get(API_URL, { headers: getAuthHeaders() });
     }
@@ -40,4 +63,4 @@ class CartService {
     }
 }
 
-export default new CartService();
+export default new CotizacionService();

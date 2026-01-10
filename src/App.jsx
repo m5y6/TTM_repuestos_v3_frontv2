@@ -16,6 +16,10 @@ import CrearProducto from './pages/admin/CrearProducto.jsx'
 import CrearUsuario from './pages/admin/CrearUsuario.jsx'
 import AdministrarCuentas from './pages/admin/AdministrarCuentas.jsx'
 import DashboardCotizaciones from './pages/admin/DashboardCotizaciones.jsx'
+import AdministrarCategorias from './pages/admin/AdministrarCategorias.jsx'
+import CrearCategoria from './pages/admin/CrearCategoria.jsx'
+import AdministrarMarcas from './pages/admin/AdministrarMarcas.jsx'
+import CrearMarca from './pages/admin/CrearMarca.jsx'
 
 function App () {
   return (
@@ -52,6 +56,10 @@ function App () {
               path='/admin/dashboard-cotizaciones'
               element={<DashboardCotizaciones />}
             />
+            <Route path='/admin/administrar-categorias' element={<AdministrarCategorias />} />
+            <Route path='/admin/crear-categoria' element={<CrearCategoria />} />
+            <Route path='/admin/administrar-marcas' element={<AdministrarMarcas />} />
+            <Route path='/admin/crear-marca' element={<CrearMarca />} />
           </Route>
         </Routes>
       </CotizacionProvider>

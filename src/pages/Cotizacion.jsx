@@ -309,8 +309,8 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
                             data-precio={item.producto.precio}
                         >
                             <div className="item-imagen">
-                                {item.descuento && <div className="descuento-insignia">{item.descuento}% OFF</div>}
-                                <img src={item.producto.imagenUrl} alt={item.producto.nombre} />
+                                {item.descuento > 0 && <div className="descuento-insignia">{item.descuento}% OFF</div>}
+                                <img src={item.producto.imagen} alt={item.producto.nombre} />
                             </div>
                             <div className="item-info">
                                 <h3>{item.producto.nombre}</h3>

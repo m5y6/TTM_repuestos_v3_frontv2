@@ -30,6 +30,20 @@ const Administrar = () => {
             icon: 'fas fa-box-open',
             roles: [1, 2] // Admin and Employee
         },
+        {
+            title: 'Administrar Categorías',
+            description: 'Gestiona las categorías de productos.',
+            link: '/admin/administrar-categorias',
+            icon: 'fas fa-tags',
+            roles: [1] // Admin
+        },
+        {
+            title: 'Administrar Marcas',
+            description: 'Gestiona las marcas de productos.',
+            link: '/admin/administrar-marcas',
+            icon: 'fas fa-copyright',
+            roles: [1] // Admin
+        },
     ];
 
     const adminSections = allAdminSections.filter(section => user && section.roles.includes(user.rol));

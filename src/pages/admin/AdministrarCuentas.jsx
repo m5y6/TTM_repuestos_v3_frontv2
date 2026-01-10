@@ -56,6 +56,7 @@ const AdministrarCuentas = () => {
                     <table>
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>Email</th>
                                 <th>Rol</th>
                                 <th>Acciones</th>
@@ -64,6 +65,7 @@ const AdministrarCuentas = () => {
                         <tbody>
                             {users.map((user) => (
                                 <tr key={user.id}>
+                                    <td>{user.id}</td>
                                     <td>{user.email}</td>
                                     <td>
                                         {editingUserId === user.id ? (

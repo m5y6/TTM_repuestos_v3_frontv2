@@ -173,6 +173,7 @@ const VerProductos = () => {
                     <table>
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>Imagen</th>
                                 <th>Nombre</th>
                                 <th>Precio</th>
@@ -188,6 +189,7 @@ const VerProductos = () => {
                                 <tr key={producto.id}>
                                     {editingProductId === producto.id ? (
                                         <>
+                                            <td>{producto.id}</td>
                                             <td onClick={() => fileInputRef.current.click()} style={{ cursor: 'pointer' }}>
                                                 <img
                                                     src={editingProductData.imagen}
@@ -224,6 +226,7 @@ const VerProductos = () => {
                                         </>
                                     ) : (
                                         <>
+                                            <td>{producto.id}</td>
                                             <td>
                                                 <img
                                                     src={producto.imagen}

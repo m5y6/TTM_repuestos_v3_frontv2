@@ -125,9 +125,9 @@ const Login = () => {
                 <div style={{ marginBottom: '2rem' }}>
                     <img className="logo-contacto" src="img/logo3.png" alt="logo" />
                     <h3>CONTACTO</h3>
-                    <p>📱 Whatsapp: +569123123</p>
-                    <p>☎ Llamadas: 123123123</p>
-                    <p>✉ Correo: truck&trailer.melipilla@gmail.com</p>
+                    <p>📱 Whatsapp: +56 9 3058 7091</p>
+                    <p>☎ Llamadas: 22 8327645</p>
+                    <p>✉ Correo: matias.nunez@ttmrepuestos.cl</p>
                 </div>
                 <a href="/" className="btn-index">Volver a la pagina principal</a>
             </section>

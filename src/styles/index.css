@@ -2,11 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 /* === ESTILOS GLOBALES === */
-* {
-    margin: 0;
-    font-family: "Roboto", sans-serif;
-    box-sizing: border-box;
-}
+
 
 /* === ESTILOS PARA LA PÁGINA PRINCIPAL (INDEX.HTML) === */
 .home-page {

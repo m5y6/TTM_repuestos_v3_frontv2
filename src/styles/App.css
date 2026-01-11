@@ -123,8 +123,7 @@ nav.opciones {
     align-items: center;
 }
 
-.botones-auth .boton-inicio,
-.botones-auth .boton-registro {
+.botones-auth .boton-inicio{
     font-family: "Oswald", sans-serif;
     display: flex;
     padding: 8px 12px;
@@ -935,26 +934,27 @@ nav.opciones {
     }
 }
 /*aquiven
-/* === RESPONSIVE SOLO PARA TABLETS Y MÓVILES === */
-
-/* TABLETS (Entre 768px y 1024px) */
-@media (max-width: 1024px) and (min-width: 768px) {
+/* MÓVILES (Cualquier pantalla menor a 768px) */
+/* MÓVILES (Cualquier pantalla menor a 768px) */
+@media (max-width: 767px) {
     .primera {
         height: auto;
-        min-height: 90px;
-        padding: 10px 20px;
-        flex-wrap: nowrap;
-        gap: 15px;
-        align-items: center; /* Asegura centrado vertical */
+        min-height: 80px;
+        padding: 10px 15px;
+        display: grid;
+        grid-template-columns: min-content 1fr; 
+        grid-template-rows: auto auto auto;
+        gap: 1px; 
+        align-items: center; 
     }
 
     #logo {
-        height: 75px !important; /* +15% sobre el anterior */
+        height: 80px !important;
         width: auto !important;
-        flex-shrink: 0;
+        grid-column: 1;
+        grid-row: 1;
+        margin-right: 5px;
         padding: 0;
-        margin: 0;
-        line-height: 0; /* Elimina espacio vertical fantasma */
         display: block;
     }
 
@@ -962,70 +962,7 @@ nav.opciones {
         height: 100%;
         width: auto;
         object-fit: contain;
-        display: block; /* Elimina espacio inferior fantasma */
-    }
-
-    .header-search {
-        order: 2;
-        flex: 1;
-        margin: 0;
-        max-width: none;
-        display: flex;
-        align-items: center; /* Centra el contenido del buscador */
-    }
-
-    .header-search-container {
-        width: 100%;
-        padding: 8px 15px;
-    }
-
-    nav.opciones {
-        order: 3;
-        width: 100%;
-        justify-content: center;
-        margin-top: 10px;
-    }
-    
-    .botones-auth { order: 4; }
-
-    /* Ajustes generales Tablet */
-    .contenedor-imagen { height: 400px; }
-    .categorias-grid { grid-template-columns: repeat(2, 1fr); }
-    .home-page .footer-content { grid-template-columns: repeat(2, 1fr); }
-}
-
-/* MÓVILES (Cualquier pantalla menor a 768px) */
-@media (max-width: 767px) {
-    .primera {
-        height: auto;
-        min-height: 80px;
-        padding: 8px 10px;
-        display: grid;
-        grid-template-columns: min-content 1fr; 
-        grid-template-rows: auto auto;
-        gap: 8px; /* Gap reducido para aprovechar espacio */
-        align-items: center; /* CLAVE: Centra verticalmente el buscador con el logo */
-    }
-
-    #logo {
-        height: 74px !important; /* AUMENTADO: +15% (aprox 74px) */
-        width: auto !important;
-        min-width: auto;
-        grid-column: 1;
-        grid-row: 1;
-        margin-right: 5px; /* Margen derecho mínimo */
-        padding: 0;
-        line-height: 0; /* Mata espacios invisibles verticales */
-        display: flex; /* Asegura que la caja se ajuste */
-        align-items: center;
-    }
-
-    #logo img {
-        height: 100%;
-        width: auto;
-        max-width: 220px; 
-        object-fit: contain;
-        display: block; /* Mata espacios invisibles inferiores */
+        display: block;
     }
 
     .header-search {
@@ -1034,48 +971,60 @@ nav.opciones {
         width: 100%;
         margin: 0;
         display: flex;
-        align-items: center; /* Centrado vertical interno */
+        align-items: center;
         justify-content: center;
     }
 
     .header-search-container {
         padding: 6px 12px;
         width: 100%;
-        height: 42px; /* Un poco más alto para balancear con el logo grande */
+        height: 40px;
         display: flex;
         align-items: center;
     }
 
     .header-search-input {
-        font-size: 15px;
+        font-size: 14px;
         width: 100%;
     }
 
-    /* Navegación y Botones */
-    nav.opciones {
-        grid-column: 1;
-        grid-row: 2;
-        margin-top: 5px;
-        justify-content: flex-start;
-    }
-
-    .opciones > a {
-        font-size: 13px;
-        padding: 4px 8px;
-    }
-
+    /* === CAMBIO APLICADO AQUÍ === */
     .botones-auth {
-        grid-column: 2;
-        grid-row: 2;
-        justify-self: end;
+        grid-column: 1 / -1; /* Ocupa todo el ancho */
+        grid-row: 2;         /* Se mantiene en su fila */
+        justify-self: end;   /* <--- ESTO LO MUEVE TOTALMENTE A LA DERECHA */
         margin-top: 5px;
+        display: flex;
+        gap: 10px;
     }
+    /* ============================ */
 
     .botones-auth .boton-inicio,
     .botones-auth .boton-registro {
-        font-size: 12px;
-        padding: 6px 12px;
-        height: 32px;
+        font-size: 13px;
+        padding: 6px 15px;
+        height: 34px;
+    }
+
+    /* NAV GRANDE Y SEPARADO (Tu pedido anterior) */
+    nav.opciones {
+        grid-column: 1 / -1;
+        grid-row: 3;
+        margin-top: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;     
+        gap: 40px;           /* Separación grande */
+        padding: 10px 0;
+        width: 100%;
+        border-top: 1px solid rgba(255,255,255,0.1); 
+    }
+
+    .opciones > a {
+        font-size: 1.2rem; /* Letra grande */
+        padding: 5px 10px;
+        font-weight: 600;
     }
 
     /* Ajustes generales Móvil */
@@ -1093,38 +1042,4 @@ nav.opciones {
     .categorias-grid { grid-template-columns: 1fr; gap: 20px; }
     .home-page .footer-content { grid-template-columns: 1fr; gap: 25px; }
     .notificacion-carrito { top: 90px; width: 92%; left: 4%; font-size: 0.9rem; }
-}
-
-/* MÓVILES PEQUEÑOS (Pantallas muy estrechas, menor a 480px) */
-@media (max-width: 480px) {
-    .primera {
-        padding: 6px 8px;
-        gap: 5px;
-    }
-
-    #logo {
-        height: 59px !important; /* AUMENTADO: +15% (aprox 59px) */
-        margin-right: 4px;
-    }
-    
-    #logo img {
-        max-width: 160px;
-    }
-
-    .header-search-container {
-        height: 38px;
-        padding: 5px 10px;
-    }
-
-    .header-search-input {
-        font-size: 14px;
-    }
-
-    nav.opciones > a {
-        font-size: 12px;
-        padding: 3px 5px;
-    }
-    
-    .contenedor-imagen { height: 180px; }
-    .contenedor-imagen .titulo { font-size: 1.3rem; }
 }

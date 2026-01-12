@@ -46,7 +46,7 @@ const ProductCard = React.forwardRef(({ producto, handleAddToCotizacion }, ref) 
         <div className="producto-info">
           <div className="producto-details">
             <span className="producto-code">ID TTM: {producto.id}</span>
-            <span className="producto-oem">OEM: {producto.oem}</span>
+            {producto.oem && <span className="producto-oem">OEM: {producto.oem}</span>}
             <span className="producto-title">{producto.nombre}</span>
           </div>
         </div>

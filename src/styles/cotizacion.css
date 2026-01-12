@@ -30,8 +30,8 @@ body {
 }
 
 .carrito-titulo {
+    grid-column: 1 / -1;
     text-align: center;
-    margin-bottom: 30px;
     color: #bebebe;
     font-family: "Oswald", sans-serif;
     font-size: 2.5rem;
@@ -126,6 +126,7 @@ body {
 .item-info p {
     font-size: 0.9rem;
     color: #666;
+    display: block; /* Asegurarse de que sea visible en desktop */
 }
 
 .item-precio {
@@ -336,6 +337,110 @@ body {
     background: #4a7349;
 }
 
+/* === ESTILOS PARA EL BOTÓN DE INFO Y MODAL === */
+.item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.item-header h3 {
+    flex-grow: 1;
+    margin-bottom: 0 !important;
+}
+
+.btn-info-cotizacion {
+    display: none; /* Oculto en desktop por defecto */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: #999;
+    flex-shrink: 0;
+    transition: color 0.2s ease;
+}
+
+.btn-info-cotizacion:hover {
+    color: #5a8756;
+}
+
+.btn-info-cotizacion svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Estilos para el modal de descripción */
+.descripcion-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050;
+    padding: 20px;
+}
+
+.descripcion-modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 500px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+    animation: zoomIn 0.3s ease-out;
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.descripcion-modal-content h3 {
+    font-family: "Oswald", sans-serif;
+    font-size: 1.8rem;
+    color: #5a8756;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.descripcion-modal-content p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.modal-item-details strong {
+    color: #333;
+    font-weight: 600;
+}
+
+.descripcion-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: #999;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    transition: color 0.2s ease;
+}
+
+.descripcion-modal-close:hover {
+    color: #333;
+}
+
+
 /* === CARRITO VACÍO === */
 .carrito-vacio {
     text-align: center;
@@ -475,14 +580,25 @@ footer {
 
 /* === RESPONSIVE === */
 @media (max-width: 900px) {
-    /* El carrito-grid se convierte en una sola columna a partir de 900px */
+    /* El carrito-grid se convierte en una sola columna y se reordena */
     .carrito-grid {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
     }
-    
-    /* El resumen ya no es sticky en móvil/tablet */
+
     .resumen-pedido {
         position: static;
+        order: 1; /* 1. Resumen */
+    }
+
+    .carrito-titulo {
+        order: 2; /* 2. Título */
+        margin-top: 30px;
+        margin-bottom: 20px;
+    }
+
+    .carrito-items {
+        order: 3; /* 3. Items */
     }
 }
 
@@ -496,6 +612,18 @@ footer {
     }
     
     /* === ÍTEMS DEL CARRITO (LAYOUT MOBILE) === */
+    
+    /* En móvil, se ocultan marca y descripción para un layout más limpio */
+    .item-info .item-marca,
+    .item-info .item-descripcion {
+        display: none;
+    }
+
+    /* Y se muestra el botón de información */
+    .btn-info-cotizacion {
+        display: block;
+    }
+
     .carrito-item {
         /* Define un diseño de grilla de 2 columnas con 3 filas */
         grid-template-columns: 60px 1fr;

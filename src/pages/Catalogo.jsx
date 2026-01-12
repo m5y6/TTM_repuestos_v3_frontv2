@@ -58,7 +58,7 @@ const ProductoCard = ({ producto, handleAddToCotizacion, formatearPrecio }) => {
                     </div>
                     <p className="producto-marca">{producto.marca}</p>
                     <p className="producto-descripcion">{producto.descripcion}</p>
-                    <span className="producto-oem">OEM: {producto.oem}</span>
+                    {producto.oem && <span className="producto-oem">OEM: {producto.oem}</span>}
                     <div className="producto-precio">
                         {producto.procentaje_desc > 0 ? (
                             <>

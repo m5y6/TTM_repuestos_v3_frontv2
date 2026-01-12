@@ -817,6 +817,7 @@ body {
 }
 
 .btn-info-descripcion {
+    display: none; /* Oculto en desktop por defecto */
     background: none;
     border: none;
     cursor: pointer;
@@ -1232,6 +1233,10 @@ body {
         display: flex;
         justify-content: space-between;
         align-items: center;
+    }
+
+    .btn-info-descripcion {
+        display: block; /* Se muestra en móvil */
     }
     
     /* Barra de acciones debajo del buscador */

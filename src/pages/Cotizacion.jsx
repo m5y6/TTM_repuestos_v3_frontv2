@@ -26,6 +26,7 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
     const [mensajeCodigo, setMensajeCodigo] = useState({ texto: '', tipo: '', mostrar: false });
     const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
     const [showWhatsAppModal, setShowWhatsAppModal] = useState(false);
+    const [modalItem, setModalItem] = useState(null);
 
 
     const CODIGOS_DESCUENTO = {
@@ -297,9 +298,8 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
         {!sinHeaderFooter && <Header/>}
 
         <section className="carrito-simple">
-            <h1 className="carrito-titulo">Mi Cotizacion</h1>
-            
             <div className="carrito-grid">
+                <h1 className="carrito-titulo">Mi Cotizacion</h1>
                 <div className="carrito-items">
                     {cartItems.map((item, index) => (
                         <div 
@@ -313,9 +313,14 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
                                 <img src={item.producto.imagen} alt={item.producto.nombre} />
                             </div>
                             <div className="item-info">
-                                <h3>{item.producto.nombre}</h3>
+                                <div className="item-header">
+                                    <h3>{item.producto.nombre}</h3>
+                                    <button className="btn-info-cotizacion" onClick={() => setModalItem(item)} title="Ver detalles">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                                    </button>
+                                </div>
                                 <p className="item-marca">{item.producto.marca} {item.producto.oem && `- ${item.producto.oem}`}</p>
-                                <p>{item.producto.descripcion}</p>
+                                <p className="item-descripcion">{item.producto.descripcion}</p>
                             </div>
                             <div className="item-precio">
                                 {item.descuento > 0 ? (
@@ -464,6 +469,21 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
                         <button onClick={handleGenerateGuideOnly} className="btn-secondary">
                             Generar solo guía
                         </button>
+                    </div>
+                </div>
+            </div>
+        )}
+
+        {modalItem && (
+            <div className="descripcion-modal-overlay" onClick={() => setModalItem(null)}>
+                <div className="descripcion-modal-content" onClick={(e) => e.stopPropagation()}>
+                    <button className="descripcion-modal-close" onClick={() => setModalItem(null)}>×</button>
+                    <h3>{modalItem.producto.nombre}</h3>
+                    <div className="modal-item-details">
+                        <p><strong>Marca:</strong> {modalItem.producto.marca}</p>
+                        {modalItem.producto.oem && <p><strong>OEM:</strong> {modalItem.producto.oem}</p>}
+                        <p><strong>Descripción:</strong></p>
+                        <p>{modalItem.producto.descripcion}</p>
                     </div>
                 </div>
             </div>

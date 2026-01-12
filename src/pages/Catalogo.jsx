@@ -15,6 +15,7 @@ import Header from '../organisms/Header';
 
 const ProductoCard = ({ producto, handleAddToCotizacion, formatearPrecio }) => {
     const [quantity, setQuantity] = useState(1);
+    const [showDescriptionModal, setShowDescriptionModal] = useState(false);
 
     const increaseQuantity = () => setQuantity(prev => (prev === '' ? 1 : parseInt(prev, 10) + 1));
     const decreaseQuantity = () => setQuantity(prev => (prev > 1 ? parseInt(prev, 10) - 1 : 1));
@@ -32,50 +33,71 @@ const ProductoCard = ({ producto, handleAddToCotizacion, formatearPrecio }) => {
         }
     };
 
+    const toggleDescriptionModal = (e) => {
+        e.stopPropagation();
+        setShowDescriptionModal(!showDescriptionModal);
+    };
+
     return (
-        <div className="producto-card">
-            <div className="producto-imagen">
-                {producto.procentaje_desc > 0 && <div className="descuento-insignia">{producto.procentaje_desc}% OFF</div>}
-                <img 
-                    src={producto.imagen} 
-                    alt={producto.nombre} 
-                    onError={(e) => { e.target.src = '/img/placeholder.jpg'; }}
-                />
-            </div>
-            <div className="producto-info">
-                <h3 className="producto-nombre">{producto.nombre}</h3>
-                <p className="producto-marca">{producto.marca}</p>
-                <p className="producto-descripcion">{producto.descripcion}</p>
-                <span className="producto-oem">OEM: {producto.oem}</span>
-                <div className="producto-precio">
-                    {producto.procentaje_desc > 0 ? (
-                        <>
-                            <span className="precio-original">{formatearPrecio(producto.precio)}</span>
-                            <span className="precio-descuento">{formatearPrecio(producto.precio * (1 - producto.procentaje_desc / 100))}</span>
-                        </>
-                    ) : (
-                        formatearPrecio(producto.precio)
-                    )}
+        <>
+            <div className="producto-card">
+                <div className="producto-imagen">
+                    {producto.procentaje_desc > 0 && <div className="descuento-insignia">{producto.procentaje_desc}% OFF</div>}
+                    <img 
+                        src={producto.imagen} 
+                        alt={producto.nombre} 
+                        onError={(e) => { e.target.src = '/img/placeholder.jpg'; }}
+                    />
                 </div>
-                <div className="producto-acciones">
-                    <div className="quantity-selector">
-                        <button className="sub" onClick={decreaseQuantity}>-</button>
-                        <input
-                            type="number"
-                            value={quantity}
-                            onChange={handleQuantityChange}
-                            onBlur={handleBlur}
-                            min="1"
-                        />
-                        <button className="add" onClick={increaseQuantity}>+</button>
+                <div className="producto-info">
+                    <div className="producto-header">
+                        <h3 className="producto-nombre">{producto.nombre}</h3>
+                        <button onClick={toggleDescriptionModal} className="btn-info-descripcion" title="Ver descripción">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        </button>
                     </div>
-                    <button 
-                        className="btn-carrito" 
-                        onClick={() => handleAddToCotizacion(producto, quantity)}
-                    >Agregar Cotizacion</button>
+                    <p className="producto-marca">{producto.marca}</p>
+                    <p className="producto-descripcion">{producto.descripcion}</p>
+                    <span className="producto-oem">OEM: {producto.oem}</span>
+                    <div className="producto-precio">
+                        {producto.procentaje_desc > 0 ? (
+                            <>
+                                <span className="precio-original">{formatearPrecio(producto.precio)}</span>
+                                <span className="precio-descuento">{formatearPrecio(producto.precio * (1 - producto.procentaje_desc / 100))}</span>
+                            </>
+                        ) : (
+                            formatearPrecio(producto.precio)
+                        )}
+                    </div>
+                    <div className="producto-acciones">
+                        <div className="quantity-selector">
+                            <button className="sub" onClick={decreaseQuantity}>-</button>
+                            <input
+                                type="number"
+                                value={quantity}
+                                onChange={handleQuantityChange}
+                                onBlur={handleBlur}
+                                min="1"
+                            />
+                            <button className="add" onClick={increaseQuantity}>+</button>
+                        </div>
+                        <button 
+                            className="btn-carrito" 
+                            onClick={() => handleAddToCotizacion(producto, quantity)}
+                        >Agregar Cotizacion</button>
+                    </div>
                 </div>
             </div>
-        </div>
+            {showDescriptionModal && (
+                <div className="descripcion-modal-overlay" onClick={toggleDescriptionModal}>
+                    <div className="descripcion-modal-content" onClick={(e) => e.stopPropagation()}>
+                        <button className="descripcion-modal-close" onClick={toggleDescriptionModal}>&times;</button>
+                        <h3>{producto.nombre}</h3>
+                        <p>{producto.descripcion || 'No hay descripción disponible.'}</p>
+                    </div>
+                </div>
+            )}
+        </>
     );
 };
 

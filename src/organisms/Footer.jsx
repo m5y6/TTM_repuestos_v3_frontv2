@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/footer.css';
 
 export default function Footer() {
   return (
@@ -40,7 +41,7 @@ export default function Footer() {
             <div className="sucursal">
               <p><strong>Dirección:</strong><br />Av. Vicuña Mackenna 601<br />Melipilla, Región Metropolitana</p>
               <p><strong>Teléfono:</strong><br />+56 9 30587091</p>
-              <p><strong>Email:</strong><br />truck&trailer.melipilla@gmail.com</p>
+              <p><strong>Email:</strong><br />matias.nunez@ttmrepuestos.cl</p>
             </div>
           </div>
         </div>

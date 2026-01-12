@@ -188,6 +188,16 @@ div {
   background-color: #dc3545 !important;
 }
 
+.admin-productos-tabla tr:hover {
+  background-color: #f1f1f1;
+}
+
+.no-results {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-top: 2rem;
+}
+
 /* Nuevos estilos para el dashboard */
 .admin-dashboard {
   padding: 2rem;

@@ -490,14 +490,7 @@ footer {
     margin-top: auto;
 }
 
-.footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
-    margin-bottom: 30px;
-}
+
 
 .footer-section h3 {
     font-family: "Oswald", sans-serif;
@@ -691,11 +684,7 @@ footer {
         width: 100%;
     }
     
-    /* === FOOTER === */
-    .footer-content {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
+
     
     footer {
         padding: 30px 1rem 15px;

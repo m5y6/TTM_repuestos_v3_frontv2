@@ -44,6 +44,13 @@ const Administrar = () => {
             icon: 'fas fa-copyright',
             roles: [1] // Admin
         },
+        {
+            title: 'Historial',
+            description: 'Revisa el historial de cambios en el sistema.',
+            link: '/historial',
+            icon: 'fas fa-history',
+            roles: [1] // Admin
+        },
     ];
 
     const adminSections = allAdminSections.filter(section => user && section.roles.includes(user.rol));

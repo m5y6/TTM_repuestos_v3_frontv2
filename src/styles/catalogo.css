@@ -854,14 +854,7 @@ body {
     color: white;
 }
 
-.footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
-    margin-bottom: 30px;
-}
+
 
 .footer-section h3 {
     font-family: "Oswald", sans-serif;
@@ -1077,12 +1070,7 @@ body {
         transform: translateX(-50%) translateY(0);
     }
 
-    /* Footer en móvil */
-    .footer-content {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
-    
+   
     .footer {
         padding: 30px 1rem 15px;
     }

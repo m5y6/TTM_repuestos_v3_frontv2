@@ -21,6 +21,7 @@ import CrearCategoria from './pages/admin/CrearCategoria.jsx'
 import AdministrarMarcas from './pages/admin/AdministrarMarcas.jsx'
 import CrearMarca from './pages/admin/CrearMarca.jsx'
 import ScrollToTop from './components/ScrollToTop.jsx'
+import Historial from './pages/Historial.jsx'
 
 function App () {
   return (
@@ -62,6 +63,7 @@ function App () {
             <Route path='/admin/crear-categoria' element={<CrearCategoria />} />
             <Route path='/admin/administrar-marcas' element={<AdministrarMarcas />} />
             <Route path='/admin/crear-marca' element={<CrearMarca />} />
+            <Route path='/historial' element={<Historial />} />
           </Route>
         </Routes>
       </CotizacionProvider>

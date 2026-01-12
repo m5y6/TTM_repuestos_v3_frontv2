@@ -209,9 +209,26 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
         
         let mensaje = "¡Hola! Quisiera consultar el stock para los siguientes productos de mi cotización:\n\n";
         cartItems.forEach(item => {
-            mensaje += `- *${item.producto.nombre}* (Cantidad: ${item.cantidad})\n`;
+            const precioUnitario = item.producto.precio;
+            const conDescuento = item.descuento && item.descuento > 0;
+            const precioFinal = conDescuento ? Math.round(precioUnitario * (1 - item.descuento / 100)) : precioUnitario;
+
+            mensaje += `- *${item.producto.nombre.trim()}*\n`;
+            mensaje += `  Cantidad: ${item.cantidad}\n`;
+
+            if (conDescuento) {
+                mensaje += `  Precio con Descuento: ${formatearPrecio(precioFinal)}\n`;
+            } else {
+                mensaje += `  Precio: ${formatearPrecio(precioUnitario)}\n`;
+            }
+            
+            if (item.producto.oem && item.producto.oem.trim() !== 'S/N') {
+                mensaje += `  OEM: ${item.producto.oem.trim()}\n`;
+            }
+            
+            mensaje += '\n'; 
         });
-        mensaje += "\nAdjunto el PDF con el detalle completo. ¡Muchas gracias!";
+        mensaje += "Adjunto el PDF con el detalle completo. ¡Muchas gracias!";
 
         const urlWhatsApp = `https://wa.me/${numeroEmpresa}?text=${encodeURIComponent(mensaje)}`;
 

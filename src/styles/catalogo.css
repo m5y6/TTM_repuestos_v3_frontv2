@@ -901,22 +901,22 @@ body {
 }
 
 .notificacion-carrito {
-    /* Posicionamiento fijo para que sea visible en cualquier parte de la pantalla */
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: #5a8756; /* Fondo del color primario */
+    background-color: #5a8756;
     color: white;
-    padding: 15px 25px;
-    border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    padding: 10px 15px;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    z-index: 1000;
     opacity: 0;
     visibility: hidden;
     transform: translateY(20px);
-    transition: all 0.5s ease-in-out;
-    font-size: 1rem;
+    transition: all 0.4s ease-in-out;
+    font-size: 0.9rem;
     font-weight: 500;
+    max-width: 300px;
 }
 
 /* Clase para mostrar la notificación (se maneja con estado en React) */
@@ -1051,10 +1051,10 @@ body {
         left: 50%;
         right: auto;
         transform: translateX(-50%) translateY(20px);
-        width: 20px;
-        max-width: 20px;
-        text-align: center;
-        padding: 12px 20px;
+        width: auto;
+        max-width: 80%;
+        padding: 8px 12px;
+        font-size: 0.85rem;
     }
     
     .notificacion-carrito:not(:empty) {

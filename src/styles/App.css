@@ -908,21 +908,6 @@ nav.opciones {
     margin: 0;
 }
 
-.notificacion-carrito {
-    position: fixed;
-    top: 120px;
-    right: 20px;
-    background: linear-gradient(135deg, #00bd65, #5a8756);
-    color: white;
-    padding: 15px 25px;
-    border-radius: 10px;
-    box-shadow: 0 8px 25px rgba(0, 189, 101, 0.4);
-    z-index: 9999;
-    font-family: "Oswald", sans-serif;
-    font-size: 1rem;
-    animation: slideInRight 0.5s ease-out;
-}
-
 @keyframes slideInRight {
     from {
         transform: translateX(400px);
@@ -933,8 +918,6 @@ nav.opciones {
         opacity: 1;
     }
 }
-/*aquiven
-/* MÓVILES (Cualquier pantalla menor a 768px) */
 /* MÓVILES (Cualquier pantalla menor a 768px) */
 @media (max-width: 767px) {
     .primera {
@@ -1000,9 +983,7 @@ nav.opciones {
     /* ============================ */
 
     .botones-auth .boton-inicio {
-        font-size: 13px;
-        padding: 6px 15px;
-        height: 34px;
+        display: none;
     }
 
     /* NAV GRANDE Y SEPARADO (Tu pedido anterior) */
@@ -1072,7 +1053,6 @@ nav.opciones {
         justify-content: center;
         gap: 20px;
     }
-    .notificacion-carrito { top: 20px; width: 20px; left: 4%; font-size: 0.9rem; }
     .categorias-container h2 {
     text-align: center;
     font-family: "Oswald", sans-serif;

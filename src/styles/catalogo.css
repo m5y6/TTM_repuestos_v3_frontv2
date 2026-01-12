@@ -56,7 +56,7 @@ body {
     font-family: "Oswald", sans-serif;
     font-size: 3.5rem;
     font-weight: bold;
-    margin-bottom: 12rem;
+    margin-bottom: 12rem;   
 }
 
 .catalogo-hero p {
@@ -954,7 +954,11 @@ body {
     }
     
     .catalogo-hero {
-        height: 250px;
+        height: 200px;
+    }
+
+    .hero-slide {
+        height: 200px;
     }
 
     .catalogo-container {
@@ -1054,6 +1058,7 @@ body {
     
     .catalogo-hero h1 {
         font-size: 2rem;
+        margin-bottom: 2rem;
     }
     
     /* Notificación en móvil */
@@ -1210,10 +1215,16 @@ body {
     
     .catalogo-hero {
         padding: 40px 15px;
+        height: 180px;
     }
     
     .catalogo-hero h1 {
         font-size: 1.8rem;
+        margin-bottom: 4rem;
+    }
+
+    .hero-slide {
+        height: 180px;
     }
 
     .paginacion {

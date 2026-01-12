@@ -704,6 +704,13 @@ footer {
     .footer-section {
         text-align: center;
     }
+
+    .descuento-insignia {
+        font-size: 0.7rem;
+        padding: 3px 2px;
+        top: 2px;
+        left: 2px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -723,6 +730,11 @@ footer {
     
     .carrito-titulo {
         font-size: 1.7rem;
+    }
+
+    .descuento-insignia {
+        font-size: 0.6rem;
+        padding: 2px 1px;
     }
 }
 

@@ -443,7 +443,7 @@ const handleAddToCotizacion = (producto, quantity) => {
                     </div>
                 </div>
 
-                // ... código anterior ...
+              
         <div className="buscador-container">
             <div className="buscador-wrapper">
                 <div className="buscador-input-container">
@@ -482,7 +482,7 @@ const handleAddToCotizacion = (producto, quantity) => {
                 </div>
             </div>
         </div>
-// ... resto del código ...
+
                 <div className="filtros-movil-acciones">
                     <button className="btn-accion-movil" onClick={() => setIsMobileFiltroAbierto(true)}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 3H2l8 9.46V19l4 2v-8.46L22 3z"></path></svg>

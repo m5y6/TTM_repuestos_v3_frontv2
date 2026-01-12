@@ -20,11 +20,13 @@ import AdministrarCategorias from './pages/admin/AdministrarCategorias.jsx'
 import CrearCategoria from './pages/admin/CrearCategoria.jsx'
 import AdministrarMarcas from './pages/admin/AdministrarMarcas.jsx'
 import CrearMarca from './pages/admin/CrearMarca.jsx'
+import ScrollToTop from './components/ScrollToTop.jsx'
 
 function App () {
   return (
     <AuthProvider>
       <CotizacionProvider>
+        <ScrollToTop />
         <GlobalNotification />
         <Routes>
           <Route path='/' element={<Index />} />

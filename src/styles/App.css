@@ -923,7 +923,7 @@ nav.opciones {
     .primera {
         height: auto;
         min-height: 80px;
-        padding: 10px 15px;
+        padding: 1px 5px;
         display: grid;
         grid-template-columns: min-content 1fr; 
         grid-template-rows: auto auto auto;

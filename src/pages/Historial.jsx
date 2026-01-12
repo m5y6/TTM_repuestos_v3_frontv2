@@ -8,14 +8,17 @@ const Historial = () => {
   const [historial, setHistorial] = useState([])
   const [filteredHistorial, setFilteredHistorial] = useState([])
   const [filtro, setFiltro] = useState('todos')
-  const [menuAbierto, setMenuAbierto] = useState(false)
-
   const [busqueda, setBusqueda] = useState('')
 
   useEffect(() => {
     const fetchHistorial = async () => {
       const data = await HistorialService.getHistorial()
-      setHistorial(data)
+      const sortedData = data.sort((a, b) => {
+        const dateA = new Date(`${a.fecha}T${a.hora}`);
+        const dateB = new Date(`${b.fecha}T${b.hora}`);
+        return dateB - dateA;
+      });
+      setHistorial(sortedData)
     }
     fetchHistorial()
   }, [])
@@ -40,10 +43,6 @@ const Historial = () => {
     setFilteredHistorial(filteredData)
   }, [filtro, busqueda, historial])
 
-  const toggleMenu = () => {
-    setMenuAbierto(!menuAbierto)
-  }
-
   const limpiarFiltros = () => {
     setFiltro('todos')
     setBusqueda('')
@@ -55,38 +54,22 @@ const Historial = () => {
       <div className='admin-container ver-productos-container'>
         <h1>Historial de Cambios</h1>
         <div className='filtros-container'>
-          <h2 className='filtros-title'>Filtros</h2>
-          <div className='filtros-content'>
-            <input
-              type='text'
-              name='busqueda'
-              placeholder='Buscar...'
-              value={busqueda}
-              onChange={e => setBusqueda(e.target.value)}
-              className='buscador-input'
-            />
-            <div className='menu-sandwich-container'>
-              <button className='btn-agregar' onClick={toggleMenu}>
-                <i className='fas fa-bars' /> Categorías
-              </button>
-              {menuAbierto && (
-                <div className='menu-sandwich-content'>
-                  <button key='todos' onClick={() => setFiltro('todos')}>
-                    Mostrar Todos
-                  </button>
-                  <button key='usuarios' onClick={() => setFiltro('usuario')}>
-                    Filtrar por Usuarios
-                  </button>
-                  <button key='productos' onClick={() => setFiltro('producto')}>
-                    Filtrar por Productos
-                  </button>
-                </div>
-              )}
-            </div>
-            <button onClick={limpiarFiltros} className='btn-limpiar-filtros'>
-              Limpiar Filtros
-            </button>
-          </div>
+          <input
+            type='text'
+            name='busqueda'
+            placeholder='Buscar...'
+            value={busqueda}
+            onChange={e => setBusqueda(e.target.value)}
+            className='buscador-input'
+          />
+          <select name="filtro" value={filtro} onChange={(e) => setFiltro(e.target.value)}>
+            <option value="todos">Mostrar Todos</option>
+            <option value="usuario">Usuarios</option>
+            <option value="producto">Productos</option>
+          </select>
+          <button onClick={limpiarFiltros} className='btn-limpiar-filtros'>
+            Limpiar Filtros
+          </button>
         </div>
         <div className='admin-productos-tabla'>
           {filteredHistorial.length > 0 ? (

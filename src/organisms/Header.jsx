@@ -75,7 +75,7 @@ export default function Header() {
             </>
           ) : (
             <>
-              <Link to="/login" onClick={toggleMenu} className="boton-inicio">Iniciar Sesión</Link>            </>
+              <Link to="/login" onClick={toggleMenu} className="boton-inicio login-button">Iniciar Sesión</Link>            </>
           )}
         </div>
       </header>

@@ -1,33 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+/* =========================================
+   1. IMPORTACIONES Y VARIABLES GLOBALES
+   ========================================= */
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-
-
 
 body {
     min-height: 100vh;
     background-color: #f8f9fa;
+    margin: 0;
+    font-family: "Roboto", sans-serif;
 }
 
-
-
-
-
-
-
-
-.botones-auth a:hover {
-    background-color: #4a7349;
-    transform: translateY(-2px);
-}
-
-/* Hero del catálogo */
+/* =========================================
+   2. HERO SECTION (CARRUSEL)
+   ========================================= */
 .catalogo-hero {
     position: relative;
     width: 100%;
-    height: 300px; /* Ajusta la altura según necesites */
+    height: 300px;
     overflow: hidden;
-    color: #333; /* Cambiado a color oscuro para fondo blanco */
-    background-color: #ffffff; /* Fondo blanco */
+    color: #333;
+    background-color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -38,21 +30,19 @@ body {
 .hero-slide {
     position: relative;
     width: 100%;
-    height: 300px; /* Igualar a la altura del hero-container */
-    padding: 10px; /* Agrega un poco de espacio alrededor de las imágenes */
+    height: 300px;
+    padding: 10px;
     box-sizing: border-box;
 }
 
 .hero-slider-catalogo .slick-slide {
-    padding: 0 10px; /* Añade espacio entre las imágenes del carrusel */
+    padding: 0 10px;
 }
-
 
 .hero-image {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* Mantenido para que la imagen completa se vea */
-    /* Se elimina el filtro de brillo, ya no es necesario */
+    object-fit: contain;
 }
 
 .hero-content {
@@ -72,10 +62,9 @@ body {
 .catalogo-hero p {
     font-size: 1.3rem;
     opacity: 0.9;
-    /* Se elimina la sombra de texto */
 }
 
-/* Slick Carousel Styles */
+/* Estilos Slick Carousel */
 .slick-slider {
     position: absolute;
     top: 0;
@@ -99,7 +88,102 @@ body {
     opacity: 1;
 }
 
-/* Contenedor principal simplificado */
+/* =========================================
+   3. BUSCADOR (MODIFICADO PARA PC)
+   ========================================= */
+.buscador-container {
+    background: rgb(0, 0, 0);
+    padding: 30px 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-bottom: 0px solid #e0e0e0;
+}
+
+/* --- CAMBIO SOLICITADO AQUÍ --- */
+.buscador-wrapper {
+    max-width: 800px; /* Aquí controlas el largo. 400px es bastante corto. */
+    width: 100%;      /* Ocupa el espacio disponible hasta llegar a los 400px */
+    margin: 0 auto;   /* ESTO es lo que lo centra horizontalmente */
+}
+/* ------------------------------- */
+
+.buscador-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: #f8f9fa;
+    border: 2px solid #e0e0e0;
+    border-radius: 25px;
+    padding: 12px 20px;
+    transition: all 0.3s ease;
+}
+
+.buscador-input-container:focus-within {
+    border-color: #5a8756;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(90, 135, 86, 0.1);
+}
+
+.buscador-icon {
+    color: #999;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.buscador-input {
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+    color: #333;
+    flex: 1;
+    outline: none;
+    padding: 0;
+}
+
+.buscador-input::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+.limpiar-buscador {
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+    flex-shrink: 0;
+}
+
+.limpiar-buscador:hover {
+    background: #ff5252;
+    transform: scale(1.1);
+}
+
+.buscador-input:not([value=""]) + .limpiar-buscador,
+.buscador-input:focus + .limpiar-buscador {
+    display: flex;
+}
+
+/* Animación Placeholder Móvil (Definición Base) */
+@keyframes scrollingText {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+.placeholder-animado-movil {
+    display: none; /* Oculto en PC */
+}
+
+/* =========================================
+   4. LAYOUT PRINCIPAL Y SIDEBAR FILTROS
+   ========================================= */
 .catalogo-container {
     max-width: 100%;
     margin: 0 auto;
@@ -107,19 +191,41 @@ body {
     display: grid;
     grid-template-columns: 280px 1fr;
     gap: 40px;
-    margin-bottom: 0px; /* Ajuste: removido el 'solid black' para evitar error de sintaxis */
-    background-color: black ;
+    margin-bottom: 0px;
+    background-color: black;
 }
 
-/* Sidebar de filtros simplificado */
+.catalogo-content {
+    min-height: 600px;
+}
+
+.catalogo-header {
+    background: white;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.resultados-info {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.resultados-info strong {
+    color: #5a8756;
+    font-weight: 600;
+}
+
+/* Sidebar Estilos */
 .filtros-sidebar {
     background: white;
     border-radius: 15px;
     padding: 30px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     height: fit-content;
-    max-height: calc(100vh - 40px); /* Altura máxima para que no ocupe toda la pantalla */
-    overflow-y: auto; /* Scroll vertical cuando el contenido es más largo */
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
     position: sticky;
     top: 20px;
 }
@@ -324,31 +430,22 @@ body {
     border-color: #5a8756;
 }
 
-
-/* Contenido principal */
-.catalogo-content {
-    min-height: 600px;
+/* Elementos ocultos por defecto en PC para filtros móviles */
+.btn-filtros-movil,
+.filtros-movil-acciones,
+.titulo-filtros-movil,
+.btn-cerrar-filtros,
+.filtro-overlay {
+    display: none;
 }
 
-.catalogo-header {
-    background: white;
-    padding: 20px 30px;
-    border-radius: 12px;
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
-    margin-bottom: 30px;
+.titulo-filtros-desktop {
+    display: block;
 }
 
-.resultados-info {
-    font-size: 1.1rem;
-    color: #555;
-}
-
-.resultados-info strong {
-    color: #5a8756;
-    font-weight: 600;
-}
-
-/* Grid de productos - solo vista grid */
+/* =========================================
+   5. GRID DE PRODUCTOS Y TARJETAS
+   ========================================= */
 .productos-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -356,35 +453,6 @@ body {
     margin-bottom: 40px;
 }
 
-.producto-imagen {
-    position: relative;
-    /* ... otros estilos ... */
-}
-
-.descuento-insignia {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background-color: #e74c3c;
-    color: white;
-    padding: 6px 12px;
-    font-size: 0.9rem;
-    font-weight: bold;
-    border-radius: 5px;
-    z-index: 1;
-}
-
-.precio-original {
-    text-decoration: line-through;
-    color: #999;
-    margin-right: 10px;
-    font-size: 0.9rem;
-}
-
-.precio-descuento {
-    color: #e74c3c;
-    font-weight: bold;
-}
 .producto-card {
     background: white;
     border-radius: 15px;
@@ -403,6 +471,7 @@ body {
 }
 
 .producto-imagen {
+    position: relative;
     height: 220px;
     overflow: hidden;
 }
@@ -418,12 +487,32 @@ body {
     transform: scale(1.1);
 }
 
+.descuento-insignia {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #e74c3c;
+    color: white;
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border-radius: 5px;
+    z-index: 1;
+}
+
 .producto-info {
     padding: 20px;
     display: flex;
     flex-direction: column;
     gap: 10px;
     flex-grow: 1;
+}
+
+.producto-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
 }
 
 .producto-nombre {
@@ -433,6 +522,7 @@ body {
     margin: 0;
     font-weight: 600;
     line-height: 1.2;
+    flex-grow: 1;
 }
 
 .producto-marca {
@@ -444,7 +534,7 @@ body {
 }
 
 .producto-descripcion {
-  color: #666;
+    color: #666;
     font-size: 0.9rem;
     line-height: 1.4;
     margin: 0;
@@ -459,6 +549,18 @@ body {
     margin: 10px 0;
 }
 
+.precio-original {
+    text-decoration: line-through;
+    color: #999;
+    margin-right: 10px;
+    font-size: 0.9rem;
+}
+
+.precio-descuento {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
 .producto-acciones {
     display: flex;
     gap: 10px;
@@ -466,6 +568,51 @@ body {
     margin-top: auto;
 }
 
+/* Selector de Cantidad */
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.quantity-selector button {
+    background: white;
+    border: none;
+    padding: 8px 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: #5a8756;
+    transition: all 0.3s ease;
+}
+
+.quantity-selector button:hover {
+    background: #5a8756;
+    color: white;
+}
+
+.quantity-selector input {
+    width: 60px;
+    border: none;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 8px 0;
+    background: white;
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+    appearance: none;
+    margin: 0;
+}
+
+.quantity-selector input:focus {
+    outline: none;
+}
+
+/* Botones */
 .btn-carrito {
     background: linear-gradient(135deg, #00bd65, #5a8756);
     color: white;
@@ -488,265 +635,28 @@ body {
     box-shadow: 0 5px 15px rgba(0, 189, 101, 0.4);
 }
 
-/* Paginación */
-.paginacion {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
-}
-
-.btn-pag {
-    background: #f8f9fa;
-    color: #666;
-    border: 2px solid #e0e0e0;
-    padding: 10px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 500;
-}
-
-.btn-pag:hover:not(:disabled) {
-    background: #5a8756;
-    color: white;
-    border-color: #5a8756;
-}
-
-.btn-pag.active {
-    background: #5a8756;
-    color: white;
-    border-color: #5a8756;
-}
-
-.btn-pag:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.numeros-pag {
-    display: flex;
-    gap: 5px;
-    align-items: center;
-}
-
-/* Footer */
-/* Footer - REEMPLAZAR la sección footer existente con esta */
-.footer {
-    width: 100%;
-    background-color: #000000;
-    padding: 40px 2rem 20px;
-    color: white;
-}
-
-.footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
-    margin-bottom: 30px;
-}
-
-.footer-section h3 {
-    font-family: "Oswald", sans-serif;
-    font-size: 1.3rem;
-    color: #5a8756;
-    margin-bottom: 20px;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-/* Enlaces sociales */
-.social-links {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.social-link {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: #e0e0e0;
-    text-decoration: none;
-    padding: 10px 15px;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
-    font-size: 0.95rem;
-}
-
-.social-link:hover {
-    background: rgba(90, 135, 86, 0.2);
-    border-color: #5a8756;
-    transform: translateY(-2px);
-    color: #5a8756;
-}
-
-.social-link svg {
-    flex-shrink: 0;
-}
-
-/* Horarios */
-.horarios p {
-    margin-bottom: 15px;
-    color: #e0e0e0;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    padding: 8px 0;
-}
-
-.horarios strong {
-    color: #5a8756;
-    font-weight: 600;
-}
-
-/* Sucursal */
-.sucursal p {
-    margin-bottom: 15px;
-    color: #e0e0e0;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    padding: 8px 0;
-}
-
-.sucursal strong {
-    color: #5a8756;
-    font-weight: 600;
-}
-
-/* Footer bottom */
-.footer-bottom {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding-top: 20px;
-    text-align: center;
-}
-
-.footer-bottom p {
-    color: #999;
-    font-size: 0.9rem;
-    margin: 0;
-}
-
-/* Media queries para el footer */
-@media (max-width: 768px) {
-    .footer-content {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
-    
-    .footer {
-        padding: 30px 1rem 15px;
-    }
-    
-    .footer-section { /* Añadido para centrar secciones en móvil */
-        text-align: center;
-    }
-}
-
-@media (max-width: 480px) {
-    .footer-section h3 {
-        font-size: 1.1rem;
-    }
-    
-    .social-link {
-        font-size: 0.9rem;
-        padding: 8px 12px;
-    }
-    
-    .horarios p, .sucursal p {
-        font-size: 0.9rem;
-    }
-}
-
-/* Estilos para el buscador - AGREGAR AL FINAL DEL CSS */
-
-/* Contenedor del buscador */
-.buscador-container {
-    background: rgb(0, 0, 0);
-    padding: 30px 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    border-bottom: 0px solid #e0e0e0;
-}
-
-.buscador-wrapper {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.buscador-input-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    background: #f8f9fa;
-    border: 2px solid #e0e0e0;
-    border-radius: 25px;
-    padding: 12px 20px;
-    transition: all 0.3s ease;
-}
-
-.buscador-input-container:focus-within {
-    border-color: #5a8756;
-    background: white;
-    box-shadow: 0 0 0 3px rgba(90, 135, 86, 0.1);
-}
-
-.buscador-icon {
-    color: #999;
-    margin-right: 12px;
-    flex-shrink: 0;
-}
-
-.buscador-input {
+.btn-info-descripcion {
+    background: none;
     border: none;
-    background: transparent;
-    font-size: 1rem;
-    color: #333;
-    flex: 1;
-    outline: none;
+    cursor: pointer;
     padding: 0;
-}
-
-.buscador-input::placeholder {
     color: #999;
-    font-style: italic;
-}
-
-.limpiar-buscador {
-    background: #ff6b6b;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-left: 10px;
     flex-shrink: 0;
+    transition: color 0.2s ease;
 }
 
-.limpiar-buscador:hover {
-    background: #ff5252;
-    transform: scale(1.1);
+.btn-info-descripcion:hover {
+    color: #5a8756;
 }
 
-/* Mostrar botón limpiar cuando hay texto */
-.buscador-input:not([value=""]) + .limpiar-buscador,
-.buscador-input:focus + .limpiar-buscador {
-    display: flex;
+.btn-info-descripcion svg {
+    width: 20px;
+    height: 20px;
 }
 
-/* Mejoras en la paginación para que funcione mejor */
+/* =========================================
+   6. PAGINACIÓN
+   ========================================= */
 .paginacion {
     display: flex;
     justify-content: center;
@@ -817,7 +727,6 @@ body {
 }
 
 .btn-info-descripcion {
-    display: none; /* Oculto en desktop por defecto */
     background: none;
     border: none;
     cursor: pointer;
@@ -906,10 +815,10 @@ body {
     right: 20px;
     background-color: #5a8756;
     color: white;
-    padding: 10px 15px;
-    border-radius: 6px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-    z-index: 1000;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
     opacity: 0;
     visibility: hidden;
     transform: translateY(20px);
@@ -919,15 +828,103 @@ body {
     max-width: 300px;
 }
 
-/* Clase para mostrar la notificación (se maneja con estado en React) */
 .notificacion-carrito:not(:empty) {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
 }
 
+.botones-auth a:hover {
+    background-color: #4a7349;
+    transform: translateY(-2px);
+}
 
-/* Responsive */
+/* =========================================
+   8. FOOTER
+   ========================================= */
+.footer {
+    width: 100%;
+    background-color: #000000;
+    padding: 40px 2rem 20px;
+    color: white;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+.footer-section h3 {
+    font-family: "Oswald", sans-serif;
+    font-size: 1.3rem;
+    color: #5a8756;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #e0e0e0;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.social-link:hover {
+    background: rgba(90, 135, 86, 0.2);
+    border-color: #5a8756;
+    transform: translateY(-2px);
+    color: #5a8756;
+}
+
+.horarios p, .sucursal p {
+    margin-bottom: 15px;
+    color: #e0e0e0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    padding: 8px 0;
+}
+
+.horarios strong, .sucursal strong {
+    color: #5a8756;
+    font-weight: 600;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 20px;
+    text-align: center;
+}
+
+.footer-bottom p {
+    color: #999;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* =========================================
+   9. MEDIA QUERIES (RESPONSIVE)
+   ========================================= */
+
+/* Desktop Pequeño (Laptops) */
 @media (max-width: 992px) {
     .catalogo-container {
         grid-template-columns: 220px 1fr;
@@ -943,7 +940,14 @@ body {
     }
 }
 
+/* Tablet y Móvil (General < 768px) */
 @media (max-width: 768px) {
+    /* --- RESTAURAR ANCHO DEL BUSCADOR EN MÓVIL --- */
+    .buscador-wrapper {
+        max-width: 100% !important; 
+
+    }
+    
     .catalogo-hero {
         height: 250px;
     }
@@ -952,6 +956,7 @@ body {
         grid-template-columns: 1fr;
     }
 
+    /* Sidebar Off-Canvas en móvil */
     .filtros-sidebar {
         position: fixed;
         left: 0;
@@ -972,10 +977,6 @@ body {
         transform: translateX(0);
     }
     
-    .catalogo-content {
-        width: 100%;
-    }
-
     .btn-filtros-movil {
         display: flex;
     }
@@ -984,10 +985,15 @@ body {
         display: block;
     }
     
+    .catalogo-content {
+        width: 100%;
+    }
+    
     .catalogo-header {
         padding: 20px;
     }
     
+    /* Layout Productos Móvil */
     .productos-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 15px;
@@ -1060,12 +1066,119 @@ body {
     .notificacion-carrito:not(:empty) {
         transform: translateX(-50%) translateY(0);
     }
+
+    /* Footer en móvil */
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .footer {
+        padding: 30px 1rem 15px;
+    }
+    
+    .footer-section {
+        text-align: center;
+    }
+
+    /* Buscador Animado Móvil */
+    .buscador-input-container {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .buscador-input::placeholder {
+        color: transparent; 
+    }
+
+    .placeholder-animado-movil {
+        display: block;
+        position: absolute;
+        left: 45px;
+        right: 40px;
+        top: 0;
+        bottom: 0;
+        pointer-events: none;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .placeholder-animado-movil span {
+        display: inline-block;
+        color: #999;
+        font-style: italic;
+        padding-right: 20px;
+        animation: scrollingText 8s linear infinite;
+        will-change: transform;
+    }
+
+    /* UI Filtros Móvil */
+    .titulo-filtros-desktop {
+        display: none;
+    }
+
+    .titulo-filtros-movil {
+        display: block;
+        font-size: 1.5rem;
+        margin: 0;
+    }
+
+    .btn-cerrar-filtros {
+        display: block;
+        background: none;
+        border: none;
+        color: #333;
+        cursor: pointer;
+        padding: 0;
+    }
+
+    .filtros-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .filtros-movil-acciones {
+        display: flex;
+        justify-content: center;
+        padding: 0 20px 20px;
+        background-color: black;
+    }
+
+    .btn-accion-movil {
+        flex: 0 1 280px;
+        padding: 12px;
+        background: #f8f9fa;
+        border: 1px solid #e0e0e0;
+        border-radius: 25px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #333;
+        transition: all 0.2s ease;
+    }
+
+    .btn-accion-movil:hover {
+        background: #e9ecef;
+    }
+
+    .btn-accion-movil svg {
+        width: 20px;
+        height: 20px;
+    }
 }
 
+/* Pantallas muy pequeñas (Móvil Pequeño) */
 @media (max-width: 480px) {
     .productos-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 10px; /* Reducir espacio en pantallas muy pequeñas */
+        gap: 10px;
     }
 
     .producto-info {
@@ -1098,7 +1211,6 @@ body {
         font-size: 1.8rem;
     }
 
-    /* Paginación compacta en móvil */
     .paginacion {
         padding: 15px 10px;
         gap: 5px;
@@ -1234,10 +1346,6 @@ body {
         justify-content: space-between;
         align-items: center;
     }
-
-    .btn-info-descripcion {
-        display: block; /* Se muestra en móvil */
-    }
     
     /* Barra de acciones debajo del buscador */
     .filtros-movil-acciones {
@@ -1270,4 +1378,3 @@ body {
         height: 20px;
     }
 }
-

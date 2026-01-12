@@ -986,6 +986,10 @@ nav.opciones {
         display: none;
     }
 
+    .botones-auth .login-button {
+        display: none !important;
+    }
+
     /* NAV GRANDE Y SEPARADO (Tu pedido anterior) */
     nav.opciones {
         grid-column: 1 / -1;

@@ -443,37 +443,46 @@ const handleAddToCotizacion = (producto, quantity) => {
                     </div>
                 </div>
 
-                <div className="buscador-container">
-                    <div className="buscador-wrapper">
-                         <div className="buscador-input-container">
-                            <svg className="buscador-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <circle cx="11" cy="11" r="8"></circle>
-                                <path d="m21 21-4.35-4.35"></path>
-                            </svg>
-                            <input 
-                                type="text" 
-                                className="buscador-input" 
-                                placeholder="Buscar repuestos (nombre, descripción, categoría)..."
-                                autoComplete="off"
-                                value={filtros.busqueda}
-                                onChange={handleBusquedaChange}
-                            />
-                            {filtros.busqueda && (
-                                <button 
-                                    type="button" 
-                                    className="limpiar-buscador" 
-                                    onClick={() => setFiltros(prev => ({ ...prev, busqueda: '' }))}
-                                >
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                                    </svg>
-                                </button>
-                            )}
-                        </div>
-                    </div>
-                </div>
+                // ... código anterior ...
+        <div className="buscador-container">
+            <div className="buscador-wrapper">
+                <div className="buscador-input-container">
+                    <svg className="buscador-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    
+                    <input 
+                        type="text" 
+                        className="buscador-input" 
+                        placeholder="Buscar repuestos (nombre, descripción, categoría)..."
+                        autoComplete="off"
+                        value={filtros.busqueda}
+                        onChange={handleBusquedaChange}
+                    />
 
+                    {!filtros.busqueda && (
+                        <div className="placeholder-animado-movil">
+                            <span>Buscar repuestos (nombre, descripción, categoría)...</span>
+                        </div>
+                    )}
+
+                    {filtros.busqueda && (
+                        <button 
+                            type="button" 
+                            className="limpiar-buscador" 
+                            onClick={() => setFiltros(prev => ({ ...prev, busqueda: '' }))}
+                        >
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    )}
+                </div>
+            </div>
+        </div>
+// ... resto del código ...
                 <div className="filtros-movil-acciones">
                     <button className="btn-accion-movil" onClick={() => setIsMobileFiltroAbierto(true)}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 3H2l8 9.46V19l4 2v-8.46L22 3z"></path></svg>

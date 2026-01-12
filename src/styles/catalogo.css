@@ -410,7 +410,7 @@ body {
 .producto-imagen img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     transition: transform 0.3s ease;
 }
 
@@ -923,8 +923,8 @@ body {
         left: 50%;
         right: auto;
         transform: translateX(-50%) translateY(20px);
-        width: 90%;
-        max-width: 400px;
+        width: 20px;
+        max-width: 20px;
         text-align: center;
         padding: 12px 20px;
     }
@@ -1027,30 +1027,9 @@ body {
     outline: none;
 }
 
-/* === Botón para abrir filtros en móvil === */
+/* === Botón para abrir filtros en móvil (Legacy) === */
 .btn-filtros-movil {
-    display: none; /* Oculto por defecto */
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    background-color: #5a8756;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    font-size: 1.5rem;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    z-index: 1000;
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-}
-
-.btn-filtros-movil:hover {
-    background-color: #4a7349;
-    transform: scale(1.1);
+    display: none; /* Oculto por defecto, ahora usamos la nueva barra */
 }
 
 /* === Overlay para el fondo cuando los filtros están abiertos === */
@@ -1064,3 +1043,76 @@ body {
     background: rgba(0,0,0,0.5);
     z-index: 1000;
 }
+
+
+/* === Estilos por Defecto (Desktop) === */
+.filtros-movil-acciones,
+.titulo-filtros-movil,
+.btn-cerrar-filtros {
+    display: none;
+}
+
+.titulo-filtros-desktop {
+    display: block;
+}
+
+
+/* === Estilos Responsivos (Móvil) === */
+@media (max-width: 768px) {
+    /* Ocultar elementos de desktop */
+    .titulo-filtros-desktop {
+        display: none;
+    }
+
+    /* Mostrar y estilizar elementos de móvil */
+    .titulo-filtros-movil {
+        display: block;
+        font-size: 1.5rem;
+        margin: 0;
+    }
+    .btn-cerrar-filtros {
+        display: block;
+        background: none;
+        border: none;
+        color: #333;
+        cursor: pointer;
+        padding: 0;
+    }
+    .filtros-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    /* Barra de acciones debajo del buscador */
+    .filtros-movil-acciones {
+        display: flex;
+        justify-content: center;
+        padding: 0 20px 20px;
+        background-color: black;
+    }
+    .btn-accion-movil {
+        flex: 0 1 280px; /* Ancho máximo para el botón */
+        padding: 12px;
+        background: #f8f9fa;
+        border: 1px solid #e0e0e0;
+        border-radius: 25px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #333;
+        transition: all 0.2s ease;
+    }
+    .btn-accion-movil:hover {
+        background: #e9ecef;
+    }
+    .btn-accion-movil svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+

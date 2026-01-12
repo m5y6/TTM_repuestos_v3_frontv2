@@ -102,8 +102,45 @@ export default function Index() {
   };
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [slideAmount, setSlideAmount] = useState(0);
+  const [itemsVisible, setItemsVisible] = useState(4);
   const productRefs = useRef([]);
+  const productosContainerRef = useRef(null);
   productRefs.current = [];
+
+  useEffect(() => {
+    const handleResize = () => {
+      const screenWidth = window.innerWidth;
+      if (screenWidth <= 767) {
+        if (productosContainerRef.current && productosContainerRef.current.firstChild) {
+          const productWidth = productosContainerRef.current.firstChild.offsetWidth;
+          const style = window.getComputedStyle(productosContainerRef.current);
+          const gap = parseInt(style.gap, 10) || 0;
+          setSlideAmount(productWidth + gap);
+          setItemsVisible(1);
+        }
+      } else {
+        setSlideAmount(280 + 25);
+        setItemsVisible(4);
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    
+    // Set up a ResizeObserver to recalculate on container resize, useful for initial render and orientation changes
+    const resizeObserver = new ResizeObserver(handleResize);
+    if (productosContainerRef.current) {
+        resizeObserver.observe(productosContainerRef.current);
+    }
+
+    return () => {
+        window.removeEventListener('resize', handleResize);
+        if (productosContainerRef.current) {
+            resizeObserver.unobserve(productosContainerRef.current);
+        }
+    };
+  }, [productos]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -141,16 +178,12 @@ export default function Index() {
     }
   };
 
-  const slideAmount = 280 + 25;
-
   const prevSlide = () => {
-    const newIndex = currentIndex > 0 ? currentIndex - 1 : 0;
-    setCurrentIndex(newIndex);
+    setCurrentIndex(prevIndex => (prevIndex > 0 ? prevIndex - 1 : 0));
   };
 
   const nextSlide = () => {
-    const newIndex = currentIndex < productos.length - 4 ? currentIndex + 1 : currentIndex;
-    setCurrentIndex(newIndex);
+    setCurrentIndex(prevIndex => (prevIndex < productos.length - itemsVisible ? prevIndex + 1 : prevIndex));
   };
 
   return (
@@ -191,7 +224,7 @@ export default function Index() {
             <div className="productos-carousel-container">
               <button className="carousel-arrow prev" onClick={prevSlide}>&#10094;</button>
               <div className="productos-viewport">
-                <div className="productos" style={{ transform: `translateX(-${currentIndex * slideAmount}px)` }}>
+                <div className="productos" ref={productosContainerRef} style={{ transform: `translateX(-${currentIndex * slideAmount}px)` }}>
                   {productos.map((producto, index) => (
                     <ProductCard
                       key={index}

@@ -102,6 +102,7 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
     const [notificacion, setNotificacion] = useState('');
     const [categoriasDisponibles, setCategoriasDisponibles] = useState(categoriasData);
     const [marcasDisponibles, setMarcasDisponibles] = useState(marcasData);
+    const [isMobileFiltroAbierto, setIsMobileFiltroAbierto] = useState(false);
     
     // 2. Referencias
     const catalogoContentRef = useRef(null);
@@ -404,6 +405,9 @@ const handleAddToCotizacion = (producto, quantity) => {
         {!sinHeaderFooter && <Header/>}
         <div>
             <main>
+                {/* Contenido para filtros en móvil */}
+                <div className={`filtro-overlay ${isMobileFiltroAbierto ? 'activo' : ''}`} onClick={() => setIsMobileFiltroAbierto(false)}></div>
+                
                 <div className="catalogo-hero">
                     <Slider {...sliderSettings}>
                         {heroImages.map((img, index) => (
@@ -448,13 +452,23 @@ const handleAddToCotizacion = (producto, quantity) => {
                     </div>
                 </div>
 
-                <div className="catalogo-container">
-                    <aside className="filtros-sidebar">
-                        {/* ... El JSX de los filtros se mantiene igual ... */}
-                        <div className="filtros-header">
-                            <h3>Filtrar Productos</h3>
-                        </div>
+                <div className="filtros-movil-acciones">
+                    <button className="btn-accion-movil" onClick={() => setIsMobileFiltroAbierto(true)}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 3H2l8 9.46V19l4 2v-8.46L22 3z"></path></svg>
+                        <span>Filtrar / Ordenar</span>
+                    </button>
+                </div>
 
+                <div className="catalogo-container">
+                    <aside className={`filtros-sidebar ${isMobileFiltroAbierto ? 'abierto' : ''}`}>
+                        <div className="filtros-header">
+                            <h3 className="titulo-filtros-desktop">Filtrar Productos</h3>
+                            <h3 className="titulo-filtros-movil">Filtrar y Ordenar</h3>
+                            <button className="btn-cerrar-filtros" onClick={() => setIsMobileFiltroAbierto(false)}>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+                            </button>
+                        </div>
+                    
                         <div className="filtro-grupo">
                             <h4>Categoría</h4>
                             <div className="filtro-opciones">
@@ -465,14 +479,11 @@ const handleAddToCotizacion = (producto, quantity) => {
                                             checked={filtros.categorias.some(c => c.toLowerCase() === categoria.nombre.toLowerCase())}
                                             onChange={() => handleCategoriaChange(categoria.nombre)}
                                         />
-                                        <span>
-                                            {categoria.nombre}
-                                        </span>
+                                        <span>{categoria.nombre}</span>
                                     </label>
                                 ))}
                             </div>
                         </div>
-
                         <div className="filtro-grupo">
                             <div className="filtro-expansible-header" onClick={() => setIsMarcaExpanded(!isMarcaExpanded)}>
                                 <h4>Marca</h4>
@@ -492,10 +503,7 @@ const handleAddToCotizacion = (producto, quantity) => {
                                     ))}
                                 </div>
                             )}
-                            
-                            
                         </div>
-
                         <div className="filtro-grupo">
                             <h4>Rango de Precio</h4>
                             <div className="filtro-precio">
@@ -511,10 +519,9 @@ const handleAddToCotizacion = (producto, quantity) => {
                                 </div>
                             </div>
                         </div>
-
                         <div className="filtro-grupo">
                             <h4>Ordenar por</h4>
-                            <select className="select-ordenar" value={filtros.orden} onChange={(e) => setFiltros(prev => ({ ...prev, orden: e.target.value }))}>
+                            <select className="select-ordenar" value={filtros.orden} onChange={e => { setFiltros(prev => ({ ...prev, orden: e.target.value })); setIsMobileFiltroAbierto(false); }}>
                                 <option value="relevancia">Relevancia</option>
                                 <option value="precio-asc">Precio: Menor a Mayor</option>
                                 <option value="precio-desc">Precio: Mayor a Menor</option>
@@ -522,9 +529,8 @@ const handleAddToCotizacion = (producto, quantity) => {
                                 <option value="nombre-desc">Nombre: Z-A</option>
                             </select>
                         </div>
-                        <button className="btn-limpiar" onClick={limpiarFiltros}>
-                            Limpiar Filtros
-                        </button>
+
+                        <button className="btn-limpiar" onClick={limpiarFiltros}>Limpiar Filtros</button>
                     </aside>
 
                     <div ref={catalogoContentRef} className="catalogo-content">

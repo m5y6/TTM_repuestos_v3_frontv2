@@ -960,10 +960,11 @@ nav.opciones {
 
     .header-search-container {
         padding: 6px 12px;
-        width: 100%;
+        width: 90%;
         height: 40px;
         display: flex;
         align-items: center;
+        margin: 0 auto;
     }
 
     .header-search-input {

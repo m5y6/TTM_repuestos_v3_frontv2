@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Oswald:wght@400;600;700&display=swap');
+
 /* === ESTILOS PARA LA PÁGINA DE INICIO DE SESIÓN (LOGIN.HTML) === */
 .login-body {
     min-height: 100vh;
@@ -12,55 +14,270 @@
     padding: 20px;
     position: relative;
     gap: 40px;
+    font-family: 'Roboto', sans-serif;
 }
 
-/* Sección de contacto para login */
-.login-body .contacto-section {
-    background: rgba(0, 0, 0, 0.8);
-    border-radius: 20px;
-    padding: 40px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    max-width: 400px;
-    width: 100%;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-}
-
-.login-body .contacto-section::before {
+.login-body::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #5a8756, #00bd65, #d4e35d);
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    z-index: 1;
 }
 
-.login-body .contacto-section .logo-contacto {
+/* Contenedor principal del formulario y contacto */
+.login-container,
+.contacto-section {
+    position: relative;
+    z-index: 2;
+}
+
+/* Formulario de login con efecto glassmorphism */
+.login-container {
+    background: rgba(1, 1, 1, 0.6);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    width: 100%;
+    max-width: 450px;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-logo-section {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-logo-section h1 {
+    font-family: "Oswald", sans-serif;
+    font-size: 2.8rem;
+    color: #ffffff;
+    margin-bottom: 10px;
+    font-weight: 700;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.login-logo-section p {
+    color: #e0e0e0;
+    font-size: 1.1rem;
+}
+
+.login-form-group {
+    margin-bottom: 20px;
+}
+
+.login-form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #d4e35d;
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.login-form-group input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+}
+
+.login-form-group input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.login-form-group input:focus {
+    outline: none;
+    border-color: #5a8756;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 15px rgba(90, 135, 86, 0.3);
+}
+.login-form-group input:-webkit-autofill,
+.login-form-group input:-webkit-autofill:hover,
+.login-form-group input:-webkit-autofill:focus,
+.login-form-group input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px rgba(0,0,0,0.8) inset !important;
+  -webkit-text-fill-color: #fff !important;
+  caret-color: #fff !important;
+}
+
+
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.remember-me input[type="checkbox"] {
+    appearance: none;
+    background-color: transparent;
+    border: 2px solid #5a8756;
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: relative;
+    top: -1px;
+}
+
+.remember-me input[type="checkbox"]:checked {
+    background-color: #5a8756;
+}
+
+.remember-me input[type="checkbox"]:checked::after {
+    content: '✔';
+    color: white;
+    font-size: 12px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.remember-me label {
+    font-size: 0.9rem;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.forgot-password {
+    color: #5a8756;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.forgot-password:hover {
+    color: #d4e35d;
+    text-decoration: underline;
+}
+
+.btn-login {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #5a8756, #00bd65);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-family: "Oswald", sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-login:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(90, 135, 86, 0.4);
+    background: linear-gradient(135deg, #4a7349, #009954);
+}
+
+.register-link {
+    text-align: center;
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.register-link p {
+    color: #ccc;
+    font-size: 0.95rem;
+}
+
+.register-link a {
+    color: #5a8756;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.register-link a:hover {
+    color: #d4e35d;
+    text-decoration: underline;
+}
+
+
+/* Mensajes de error */
+.error-text {
+    color: #ff6b6b;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    display: block;
+}
+
+.login-form-group input.error {
+    border-color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.1);
+}
+
+
+/* Sección de contacto */
+.contacto-section {
+    background: rgba(10, 10, 10, 0.8);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.logo-contacto {
     width: 120px;
     height: auto;
-    margin-bottom: 20px;
+    margin: 0 auto 20px;
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
     border-radius: 10px;
 }
 
-.login-body .contacto-section h3 {
+.contacto-section h3 {
     font-family: "Oswald", sans-serif;
-    font-size: 2.2rem;
+    font-size: 2rem;
     color: #ffffff;
     margin-bottom: 25px;
-    font-weight: bold;
+    font-weight: 700;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
 }
 
-.login-body .contacto-section p {
+.contacto-section p {
     color: #e0e0e0;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     margin-bottom: 15px;
-    padding: 12px 20px;
+    padding: 12px 15px;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -69,27 +286,25 @@
     align-items: center;
     justify-content: flex-start;
     gap: 12px;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-.login-body .contacto-section p:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(0, 189, 101, 0.3);
+.contacto-section p:hover {
+    background: rgba(90, 135, 86, 0.2);
+    border-color: rgba(90, 135, 86, 0.5);
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0, 189, 101, 0.2);
 }
 
 .btn-index {
-    display: block;
+    display: inline-block;
     width: 100%;
     padding: 12px;
     background: linear-gradient(135deg, #5a8756, #00bd65);
     color: white;
     border: none;
     border-radius: 10px;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-family: "Oswald", sans-serif;
-    font-weight: bold;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
     text-transform: uppercase;
@@ -104,200 +319,35 @@
     background: linear-gradient(135deg, #4a7349, #009954);
 }
 
-/* Formulario de login */
-.login-container {
-    background: white;
-    border-radius: 20px;
-    padding: 40px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    max-width: 450px;
-    position: relative;
-    overflow: hidden;
-    height: auto;
-    min-height: 500px;
-}
-
-.login-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 5px;
-    background: linear-gradient(90deg, #5a8756, #00bd65, #d4e35d);
-}
-
-.login-logo-section {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.login-logo-section h1 {
-    font-family: "Oswald", sans-serif;
-    font-size: 2.5rem;
-    color: #5a8756;
-    margin-bottom: 10px;
-    font-weight: bold;
-}
-
-.login-logo-section p {
-    color: #666;
-    font-size: 1.1rem;
-    margin-bottom: 30px;
-}
-
-.login-form-group {
-    margin-bottom: 25px;
-}
-
-.login-form-group label {
-    display: block;
-    margin-bottom: 8px;
-    color: #333;
-    font-weight: 500;
-    font-size: 0.95rem;
-}
-
-.login-form-group input {
-    width: 100%;
-    padding: 15px 18px;
-    border: 2px solid #e0e0e0;
-    border-radius: 10px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    background: #f9f9f9;
-}
-
-.login-form-group input:focus {
-    outline: none;
-    border-color: #5a8756;
-    background: white;
-    box-shadow: 0 0 10px rgba(90, 135, 86, 0.1);
-}
-
-.login-options {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.remember-me {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.remember-me input[type="checkbox"] {
-    transform: scale(1.1);
-}
-
-.remember-me label {
-    font-size: 0.9rem;
-    color: #666;
-    cursor: pointer;
-    margin: 0;
-}
-
-.forgot-password {
-    color: #5a8756;
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-}
-
-.forgot-password:hover {
-    text-decoration: underline;
-}
-
-.btn-login {
-    width: 100%;
-    padding: 16px;
-    background: linear-gradient(135deg, #5a8756, #00bd65);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 1.1rem;
-    font-family: "Oswald", sans-serif;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 25px;
-}
-
-.btn-login:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(90, 135, 86, 0.3);
-    background: linear-gradient(135deg, #4a7349, #009954);
-}
-
-.register-link {
-    text-align: center;
-    padding-top: 20px;
-    border-top: 1px solid #e0e0e0;
-}
-
-.register-link p {
-    color: #666;
-    margin-bottom: 10px;
-}
-
-.register-link a {
-    color: #5a8756;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 1.1rem;
-}
-
-.register-link a:hover {
-    text-decoration: underline;
-}
-
 /* === MEDIA QUERIES === */
-
-/* === Pantallas Grandes (Tablets en vertical) === */
-@media (max-width: 1200px) {
+@media (max-width: 992px) {
     .login-body {
         flex-direction: column;
-        gap: 30px;
+        padding: 20px;
     }
-    .login-body .contacto-section {
+    .contacto-section {
         max-width: 450px;
+        order: 2; /* Para que aparezca después del login en móvil */
+    }
+    .login-container {
+        order: 1;
     }
 }
 
-/* === Pantallas Medianas (Tablets) === */
-@media (max-width: 768px) {
-    .login-body {
-        padding: 10px;
+@media (max-width: 480px) {
+    .login-container,
+    .contacto-section {
+        padding: 25px;
     }
-    
-    .login-container {
-        padding: 30px;
-        min-height: auto;
+    .login-logo-section h1 {
+        font-size: 2.2rem;
     }
-    
+    .contacto-section h3 {
+        font-size: 1.8rem;
+    }
     .login-options {
         flex-direction: column;
         align-items: flex-start;
         gap: 15px;
-    }
-}
-
-/* === Pantallas Pequeñas (Móviles) === */
-@media (max-width: 480px) {
-    .login-logo-section h1 {
-        font-size: 2rem;
-    }
-    .login-body .contacto-section h3 {
-        font-size: 1.8rem;
-    }
-    .login-body .contacto-section p {
-        font-size: 1rem;
     }
 }

@@ -922,6 +922,19 @@ body {
    9. MEDIA QUERIES (RESPONSIVE)
    ========================================= */
 
+/* Tablet */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .catalogo-container {
+        grid-template-columns: 240px 1fr;
+        gap: 25px;
+    }
+
+    .productos-grid {
+        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+        gap: 20px;
+    }
+}
+
 /* Desktop Pequeño (Laptops) */
 @media (max-width: 992px) {
     .catalogo-container {

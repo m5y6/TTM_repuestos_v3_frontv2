@@ -175,3 +175,75 @@
     box-shadow: 0 8px 25px rgba(90, 135, 86, 0.4);
 }
 
+
+/* =========================================
+   MEDIA QUERIES (RESPONSIVE)
+   ========================================= */
+
+/* === ESTILOS PARA TABLET === */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .tercera {
+        padding: 40px 50px;
+    }
+
+    .productos {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+
+    .contenedor-imagen .titulo {
+        font-size: 40px;
+        padding: 12px 25px;
+    }
+
+    .contenedor-imagen .texto {
+        font-size: 24px;
+        padding: 15px;
+        max-width: 70%;
+    }
+}
+
+/* === ESTILOS PARA CELULAR === */
+@media (max-width: 767px) {
+    .tercera {
+        padding: 30px 20px;
+    }
+
+    .top_ventas > h2 {
+        font-size: 2rem;
+        height: auto;
+        margin-bottom: 30px;
+    }
+
+    .productos {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .home-page .producto {
+        padding: 15px;
+    }
+
+    .home-page .producto img {
+        height: 200px;
+    }
+
+    .home-page #vercatalogo {
+        padding: 12px 30px;
+        font-size: 1.1rem;
+    }
+
+    .contenedor-imagen .titulo {
+        font-size: 32px;
+        padding: 10px 20px;
+        top: 25%;
+    }
+
+    .contenedor-imagen .texto {
+        font-size: 18px;
+        padding: 12px;
+        max-width: 90%;
+        top: 55%;
+    }
+}
+

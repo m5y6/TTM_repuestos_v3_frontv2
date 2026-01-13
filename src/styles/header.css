@@ -30,7 +30,7 @@ nav.opciones {
 .opciones > a {
     color: #5a8756;
     font-family: "Oswald", sans-serif;
-    font-weight: 1000;
+    font-weight: bold;
     font-size: 2rem;
     display: flex;
     justify-content: center;
@@ -168,93 +168,74 @@ nav.opciones {
     color: #4a7349;
 }
 
-@media (max-width: 767px) {
+/* === ESTILOS PARA TABLET === */
+@media (max-width: 1024px) {
     .primera {
-        height: auto;
-        min-height: 80px;
-        padding: 1px 5px;
-        display: grid;
-        grid-template-columns: min-content 1fr; 
-        grid-template-rows: auto auto auto;
-        gap: 1px; 
-        align-items: center; 
-    }
-
-    #logo {
-        height: 80px !important;
-        width: auto !important;
-        grid-column: 1;
-        grid-row: 1;
-        margin-right: 5px;
-        padding: 0;
-        display: block;
-    }
-
-    #logo img {
-        height: 100%;
-        width: auto;
-        object-fit: contain;
-        display: block;
+        padding: 0 1.5rem;
+        gap: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 
     .header-search {
-        grid-column: 2;
-        grid-row: 1;
-        width: 100%;
-        margin: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        flex-grow: 1;
+        margin: 0 1rem;
     }
 
-    .header-search-container {
-        padding: 6px 12px;
-        width: 90%;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        margin: 0 auto;
-    }
-
-    .header-search-input {
-        font-size: 14px;
-        width: 100%;
-    }
-
-    .botones-auth {
-        grid-column: 1 / -1;
-        grid-row: 2;
-        justify-self: end;
-        margin-top: 5px;
-        display: flex;
-        gap: 10px;
-    }
-
-    .botones-auth .boton-inicio {
-        display: none;
-    }
-
-    .botones-auth .login-button {
-        display: none !important;
-    }
-
-    nav.opciones {
-        grid-column: 1 / -1;
-        grid-row: 3;
-        margin-top: 5px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;     
-        gap: 40px;
-        padding: 10px 0;
-        width: 100%;
-        border-top: 1px solid rgba(255,255,255,0.1); 
+    .opciones {
+        gap: 1rem;
     }
 
     .opciones > a {
         font-size: 1.2rem;
-        padding: 5px 10px;
+        padding: 0.4rem 0.6rem;
+    }
+
+    #logo {
+        height: 4rem;
+        width: 8rem;
+        flex-shrink: 0;
+    }
+
+    .botones-auth {
+        display: none;
+    }
+}
+
+@media (max-width: 767px) {
+    .primera {
+        height: auto;
+        padding: 10px 15px;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .header-search {
+        order: 1;
+        width: 100%;
+        margin: 0;
+    }
+
+    nav.opciones {
+        order: 2;
+        width: 100%;
+        justify-content: space-around;
+        padding: 10px 0;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        gap: 15px;
+    }
+
+    .botones-auth {
+        display: none; /* Oculta el contenedor de botones de autenticación */
+    }
+
+    #logo {
+        display: none; /* Oculta el logo en la vista móvil para dar espacio */
+    }
+
+    .opciones > a {
+        font-size: 1.1rem;
         font-weight: 600;
     }
 }

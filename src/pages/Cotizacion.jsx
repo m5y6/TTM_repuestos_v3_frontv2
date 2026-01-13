@@ -205,7 +205,7 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
     const handleWhatsAppRedirect = async () => {
         await generarPdfDesdePlantilla();
 
-        const numeroEmpresa = "56965768092"; // Reemplaza con tu número de WhatsApp Business
+        const numeroEmpresa = "56930587091"; // Reemplaza con tu número de WhatsApp Business
         
         let mensaje = "¡Hola! Quisiera consultar el stock para los siguientes productos de mi cotización:\n\n";
         cartItems.forEach(item => {

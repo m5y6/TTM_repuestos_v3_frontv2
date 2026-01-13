@@ -127,7 +127,7 @@ const Login = () => {
                     <h3>CONTACTO</h3>
                     <p>📱 Whatsapp: +56 9 3058 7091</p>
                     <p>☎ Llamadas: 22 8327645</p>
-                    <p>✉ Correo: matias.nunez@ttmrepuestos.cl</p>
+                    <p>✉ Correo: contacto@ttmrepuestos.cl</p>
                 </div>
                 <a href="/" className="btn-index">Volver a la pagina principal</a>
             </section>

@@ -588,6 +588,9 @@ footer {
     .resumen-pedido {
         position: static;
         order: 1; /* 1. Resumen */
+        width: 90%;
+        max-width: 500px; /* Para que no se estire demasiado en tablets más grandes */
+        margin: 0 auto 30px auto; /* Centrado y con margen inferior */
     }
 
     .carrito-titulo {

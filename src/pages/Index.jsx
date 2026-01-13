@@ -110,19 +110,23 @@ export default function Index() {
 
   useEffect(() => {
     const handleResize = () => {
-      const screenWidth = window.innerWidth;
-      if (screenWidth <= 767) {
-        if (productosContainerRef.current && productosContainerRef.current.firstChild) {
-          const productWidth = productosContainerRef.current.firstChild.offsetWidth;
-          const style = window.getComputedStyle(productosContainerRef.current);
-          const gap = parseInt(style.gap, 10) || 0;
-          setSlideAmount(productWidth + gap);
-          setItemsVisible(1);
-        }
-      } else {
-        setSlideAmount(280 + 25);
-        setItemsVisible(4);
+      if (!productosContainerRef.current || !productosContainerRef.current.firstChild) {
+        return;
       }
+      
+      const viewport = productosContainerRef.current.parentElement;
+      const productNode = productosContainerRef.current.firstChild;
+      const containerStyles = window.getComputedStyle(productosContainerRef.current);
+
+      const productWidth = productNode.offsetWidth;
+      const gap = parseInt(containerStyles.gap, 10) || 0;
+      const viewportWidth = viewport.clientWidth;
+      
+      const totalProductWidth = productWidth + gap;
+      setSlideAmount(totalProductWidth);
+      
+      const visible = Math.floor((viewportWidth + gap) / totalProductWidth);
+      setItemsVisible(visible > 0 ? visible : 1);
     };
 
     handleResize();
@@ -179,11 +183,13 @@ export default function Index() {
   };
 
   const prevSlide = () => {
-    setCurrentIndex(prevIndex => (prevIndex > 0 ? prevIndex - 1 : 0));
+    const scrollAmount = itemsVisible > 1 ? itemsVisible - 1 : 1;
+    setCurrentIndex(prevIndex => Math.max(prevIndex - scrollAmount, 0));
   };
 
   const nextSlide = () => {
-    setCurrentIndex(prevIndex => (prevIndex < productos.length - itemsVisible ? prevIndex + 1 : prevIndex));
+    const scrollAmount = itemsVisible > 1 ? itemsVisible - 1 : 1;
+    setCurrentIndex(prevIndex => Math.min(prevIndex + scrollAmount, productos.length - itemsVisible));
   };
 
   return (

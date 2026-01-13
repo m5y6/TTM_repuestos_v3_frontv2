@@ -933,6 +933,17 @@ body {
         grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
         gap: 20px;
     }
+
+    /* Reorganizamos las acciones para que quepan mejor en tablets */
+    .producto-acciones {
+        flex-direction: column; /* Apila los elementos verticalmente */
+        align-items: stretch;   /* Estira los elementos para que ocupen el mismo ancho */
+        gap: 8px;               /* Añade espacio entre el selector y el botón */
+    }
+
+    .quantity-selector {
+        justify-content: center; /* Centra los botones y el input dentro del selector */
+    }
 }
 
 /* Desktop Pequeño (Laptops) */

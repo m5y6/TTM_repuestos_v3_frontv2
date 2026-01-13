@@ -207,35 +207,40 @@ nav.opciones {
     .primera {
         height: auto;
         padding: 10px 15px;
-        flex-direction: column;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
         gap: 10px;
     }
 
+    #logo {
+        display: block;
+        height: 70px;
+        width: auto;
+        flex-shrink: 0;
+    }
+
     .header-search {
-        order: 1;
-        width: 100%;
+        flex-grow: 1;
+        min-width: 150px;
         margin: 0;
     }
 
     nav.opciones {
-        order: 2;
+        order: 3;
         width: 100%;
         justify-content: space-around;
-        padding: 10px 0;
+        padding-top: 10px;
+        margin-top: 10px;
         border-top: 1px solid rgba(255,255,255,0.1);
-        gap: 15px;
     }
-
-    .botones-auth {
-        display: none; /* Oculta el contenedor de botones de autenticación */
-    }
-
-    #logo {
-        display: none; /* Oculta el logo en la vista móvil para dar espacio */
-    }
-
+    
     .opciones > a {
         font-size: 1.1rem;
         font-weight: 600;
+    }
+
+    .botones-auth {
+        display: none;
     }
 }

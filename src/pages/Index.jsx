@@ -219,7 +219,7 @@ export default function Index() {
           <div id="galeria">
             <div className="contenedor-imagen">
               <img className="imagen" src="/img/camiones.jpg" alt="Camión Volvo en carretera" />
-              <h2 className="titulo">Truck & Trailer Melipilla</h2>
+              <h2 className="titulo" translate="no">Truck & Trailer Melipilla</h2>
               
             </div>
           </div>

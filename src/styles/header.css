@@ -197,6 +197,10 @@ nav.opciones {
         width: 8rem;
         flex-shrink: 0;
     }
+    
+    .login-button {
+        display: none;
+    }
 
     .botones-auth {
         display: none;

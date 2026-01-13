@@ -12,6 +12,7 @@ import marcasData from '../marcas.json';
 import '../styles/Catalogo.css';
 import Footer from '../organisms/Footer';
 import Header from '../organisms/Header';
+import WhatsAppButton from '../components/WhatsAppButton';
 
 const ProductoCard = ({ producto, handleAddToCotizacion, formatearPrecio }) => {
     const [quantity, setQuantity] = useState(1);
@@ -629,6 +630,7 @@ const handleAddToCotizacion = (producto, quantity) => {
             )}
         </div>
         {!sinHeaderFooter && <Footer/>}
+        <WhatsAppButton />
         </>
     );
 };

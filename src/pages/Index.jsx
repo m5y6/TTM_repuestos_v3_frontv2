@@ -8,6 +8,7 @@ import SealIcon from '../assets/icons/SealIcon';
 import productosData from '../productos.json';
 import categoriasData from '../categorias.json';
 import { CotizacionContext } from "../context/CotizacionContext";
+import WhatsAppButton from '../components/WhatsAppButton';
 
 
 const ProductCard = React.forwardRef(({ producto, handleAddToCotizacion }, ref) => {
@@ -284,6 +285,7 @@ export default function Index() {
         )}
         <Footer/>
       </div>
+      <WhatsAppButton />
     </>
   );
 }

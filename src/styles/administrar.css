@@ -313,3 +313,30 @@ div {
   border-radius: 4px;
   padding: 5px;
 }
+
+.tabla-fija {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.tabla-fija th, .tabla-fija td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tabla-fija th:nth-child(1) { width: 5%; } /* ID */
+.tabla-fija th:nth-child(2) { width: 10%; } /* ID Producto */
+.tabla-fija th:nth-child(3) { width: 10%; } /* Imagen */
+.tabla-fija th:nth-child(4) { width: 20%; } /* Nombre */
+.tabla-fija th:nth-child(5) { width: 10%; } /* Precio */
+.tabla-fija th:nth-child(6) { width: 10%; } /* Descuento */
+.tabla-fija th:nth-child(7) { width: 10%; } /* Categoría */
+.tabla-fija th:nth-child(8) { width: 10%; } /* Marca */
+.tabla-fija th:nth-child(9) { width: 10%; } /* OEM */
+.tabla-fija th:nth-child(10) { width: 15%; } /* Acciones */
+
+.tabla-fija input, .tabla-fija select {
+    width: 90%;
+    box-sizing: border-box;
+}

@@ -114,7 +114,7 @@ const VerProductos = () => {
     };
 
     const handleSaveClick = (id) => {
-        ProductoService.updateProductos(id, editingProductData)
+        ProductoService.updateProducto(id, editingProductData)
             .then(() => {
                 const updatedProductos = productos.map(p =>
                     p.id === id ? editingProductData : p
@@ -170,10 +170,11 @@ const VerProductos = () => {
                 </div>
 
                 <div className="admin-productos-tabla">
-                    <table>
+                    <table className="tabla-fija">
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>ID Producto</th>
                                 <th>Imagen</th>
                                 <th>Nombre</th>
                                 <th>Precio</th>
@@ -189,8 +190,7 @@ const VerProductos = () => {
                                 <tr key={producto.id}>
                                     {editingProductId === producto.id ? (
                                         <>
-                                            <td>{producto.id}</td>
-                                            <td onClick={() => fileInputRef.current.click()} style={{ cursor: 'pointer' }}>
+                                            <td>{producto.id}</td>                                            <td><input type="text" name="id_producto" value={editingProductData.id_producto} onChange={handleEditFormChange} /></td>                                            <td onClick={() => fileInputRef.current.click()} style={{ cursor: 'pointer' }}>
                                                 <img
                                                     src={editingProductData.imagen}
                                                     alt={editingProductData.nombre}
@@ -226,8 +226,7 @@ const VerProductos = () => {
                                         </>
                                     ) : (
                                         <>
-                                            <td>{producto.id}</td>
-                                            <td>
+                                            <td>{producto.id}</td>                                            <td>{producto.id_producto}</td>                                            <td>
                                                 <img
                                                     src={producto.imagen}
                                                     alt={producto.nombre}

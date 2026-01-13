@@ -16,6 +16,7 @@ const EditarProducto = () => {
   const [procentaje_desc, setProcentajeDesc] = useState("");
   const [marca, setMarca] = useState("");
   const [oem, setOem] = useState("");
+  const [idProducto, setIdProducto] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [categorias, setCategorias] = useState([]);
   const [marcas, setMarcas] = useState([]);
@@ -38,6 +39,7 @@ const EditarProducto = () => {
         setProcentajeDesc(producto.procentaje_desc);
         setMarca(producto.marca);
         setOem(producto.oem);
+        setIdProducto(producto.id_producto);
       }).catch(err => {
         console.error("Error fetching product:", err);
         navigate('/admin/ver-productos');
@@ -66,6 +68,7 @@ const EditarProducto = () => {
     e.preventDefault();
 
     const producto = {
+      id_producto: idProducto,
       nombre,
       precio: parseFloat(precio),
       categoria,
@@ -77,7 +80,7 @@ const EditarProducto = () => {
       oem,
     };
 
-    ProductoService.updateProductos(id, producto)
+    ProductoService.updateProducto(id, producto)
       .then(() => {
         navigate("/admin/ver-productos");
       })
@@ -93,6 +96,14 @@ const EditarProducto = () => {
     <div className="admin-container">
       <h2>Editar Producto</h2>
       <form onSubmit={updateProducto}>
+        <div>
+          <label>ID Producto:</label>
+          <input
+            type="text"
+            value={idProducto}
+            onChange={(e) => setIdProducto(e.target.value)}
+          />
+        </div>
         <div>
           <label>Nombre:</label>
           <input

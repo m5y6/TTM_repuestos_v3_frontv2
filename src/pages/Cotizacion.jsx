@@ -5,6 +5,7 @@ import CotizacionService from "../services/CotizacionService";
 import '../styles/cotizacion.css';
 import Footer from '../organisms/Footer';
 import Header from '../organisms/Header';
+import WhatsAppButton from '../components/WhatsAppButton';
 
 const Cotizacion = ({ sinHeaderFooter = false }) => {
     const { cartItems, removeFromCart, changeQuantity, clearCart } = useContext(CotizacionContext);
@@ -214,6 +215,9 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
             const precioFinal = conDescuento ? Math.round(precioUnitario * (1 - item.descuento / 100)) : precioUnitario;
 
             mensaje += `- *${item.producto.nombre.trim()}*\n`;
+            if (item.producto.id_producto) {
+                mensaje += `  ID Producto: ${item.producto.id_producto}\n`;
+            }
             mensaje += `  Cantidad: ${item.cantidad}\n`;
 
             if (conDescuento) {
@@ -507,6 +511,7 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
         )}
 
         <Footer/>
+        <WhatsAppButton />
         </>
     );
 };

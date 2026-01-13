@@ -17,6 +17,7 @@ const CrearProducto = () => {
   const [procentaje_desc, setProcentajeDesc] = useState("");
   const [marca, setMarca] = useState("");
   const [oem, setOem] = useState("");
+  const [idProducto, setIdProducto] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [categorias, setCategorias] = useState([]);
   const [marcas, setMarcas] = useState([]);
@@ -47,6 +48,7 @@ const CrearProducto = () => {
     e.preventDefault();
 
     const producto = {
+      id_producto: idProducto,
       nombre,
       precio: parseFloat(precio),
       categoria,
@@ -57,7 +59,7 @@ const CrearProducto = () => {
       oem,
     };
 
-    ProductoService.createProductos(producto)
+    ProductoService.createProducto(producto)
       .then(() => {
         navigate("/admin/ver-productos");
       })
@@ -75,6 +77,14 @@ const CrearProducto = () => {
     <div className="admin-container">
       <h1>Agregar Producto</h1>
       <form onSubmit={saveProducto} className="crear-producto-form">
+        <div className="form-group">
+          <label>ID Producto:</label>
+          <input
+            type="text"
+            value={idProducto}
+            onChange={(e) => setIdProducto(e.target.value)}
+          />
+        </div>
         <div className="form-group">
           <label>Nombre:</label>
           <input

@@ -40,7 +40,8 @@ export default function Footer() {
             <h3>Sucursal</h3>
             <div className="sucursal">
               <p><strong>Dirección:</strong><br />Av. Vicuña Mackenna 601<br />Melipilla, Región Metropolitana</p>
-              <p><strong>Teléfono:</strong><br />+56 9 30587091</p>
+              <p><strong>Whatsapp:</strong><br />+56 9 30587091</p>
+              <p><strong>Contacto:</strong><br />228327645</p>
               <p><strong>Email:</strong><br />contacto@ttmrepuestos.cl</p>
             </div>
           </div>

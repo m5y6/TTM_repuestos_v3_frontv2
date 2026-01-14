@@ -154,16 +154,6 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
             if (descuentoTotal > 0) {
                  currentPage.drawText(`-${formatearPrecio(descuentoTotal)}`, { x: totalValueX, y: descuentoTotalY, size: 12, color: rgb(0.8, 0, 0) });
             }
-
-            if (codigoAplicado && porcentajeDescuento > 0) {
-                currentPage.drawText(`Descuento Web Aplicado: ${porcentajeDescuento}%  + `, {
-                    x: 310,
-                    y: descuentoTotalY - 1,
-                    size: 8,
-                    font: await pdfDoc.embedFont(StandardFonts.HelveticaOblique),
-                    color: rgb(0.2, 0.2, 0.2),
-                });
-            }
             
             currentPage.drawText(formatearPrecio(resumen.total), { 
                 x: totalValueX, 
@@ -423,40 +413,6 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
                     <div className="linea-total">
                         <span>Total:</span>
                         <span id="total">{formatearPrecio(resumen.total)}</span>
-                    </div>
-                    
-                    {/* Sección de código de descuento */}
-                    <div className="codigo-descuento">
-                        <div className="input-grupo">
-                            <input 
-                                type="text" 
-                                id="codigo-input" 
-                                placeholder="Código de descuento" 
-                                maxLength="20"
-                                value={codigoInput}
-                                onChange={(e) => setCodigoInput(e.target.value)}
-                                disabled={codigoAplicado}
-                                style={codigoAplicado ? { backgroundColor: '#f0f0f-0' } : {}}
-                                onKeyPress={(e) => {
-                                    if (e.key === 'Enter') {
-                                        aplicarCodigoDescuento();
-                                    }
-                                }}
-                            />
-                            <button 
-                                id="aplicar-codigo" 
-                                className="btn-aplicar-codigo"
-                                onClick={codigoAplicado ? quitarCodigoDescuento : aplicarCodigoDescuento}
-                                style={codigoAplicado ? { backgroundColor: '#4caf50' } : {}}
-                            >
-                                {codigoAplicado ? 'Aplicado ✓' : 'Aplicar'}
-                            </button>
-                        </div>
-                        {mensajeCodigo.mostrar && (
-                            <div id="mensaje-codigo" className={`mensaje-codigo ${mensajeCodigo.tipo}`}>
-                                {mensajeCodigo.texto}
-                            </div>
-                        )}
                     </div>
                     
                     <button 

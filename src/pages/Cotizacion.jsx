@@ -295,7 +295,7 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
                 {!sinHeaderFooter && <Header/>}
                 <div className="carrito-vacio">
                     <div className="carrito-vacio-icon">🛒</div>
-                    <h2>Tu carrito está vacío</h2>
+                    <h2>Tu cotización está vacía</h2>
                     <p>¡Explora nuestro catálogo y encuentra las mejores refacciones para tu vehículo!</p>
                     <p><a href="/catalogo">Ver Catálogo</a></p>
                 </div>

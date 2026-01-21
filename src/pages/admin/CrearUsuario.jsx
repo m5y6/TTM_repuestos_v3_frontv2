@@ -6,6 +6,7 @@ import '../../styles/administrar.css';
 
 const CrearUsuario = ({ onAddUser }) => {
     const [email, setEmail] = useState('');
+    const [nombre, setNombre] = useState('');
     const [password, setPassword] = useState('');
     const [rol, setRol] = useState('empleado');
     const navigate = useNavigate();
@@ -30,6 +31,15 @@ const CrearUsuario = ({ onAddUser }) => {
             <div className="admin-container">
                 <h1>Crear Usuario</h1>
                 <form onSubmit={handleSubmit} className="crear-producto-form">
+                    <div className="form-group">
+                        <label>Nombre:</label>
+                        <input
+                            type="text"
+                            value={nombre}
+                            onChange={(e) => setNombre  (e.target.value)}
+                            required
+                        />
+                    </div>
                     <div className="form-group">
                         <label>Email:</label>
                         <input

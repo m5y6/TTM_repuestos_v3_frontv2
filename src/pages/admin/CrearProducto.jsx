@@ -86,6 +86,14 @@ const CrearProducto = () => {
           />
         </div>
         <div className="form-group">
+          <label>OEM (Opcional):</label>
+          <input
+            type="text"
+            value={oem}
+            onChange={(e) => setOem(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
           <label>Nombre:</label>
           <input
             type="text"
@@ -112,7 +120,7 @@ const CrearProducto = () => {
           />
         </div>
         <div className="form-group">
-          <label>Porcentaje Descuento:</label>
+          <label>Porcentaje Descuento (opcional) (0-100%):</label>
           <input
             type="number"
             value={procentaje_desc}
@@ -141,14 +149,7 @@ const CrearProducto = () => {
             {marcas.map(m => <option key={m} value={m}>{m}</option>)}
           </select>
         </div>
-        <div className="form-group">
-          <label>OEM:</label>
-          <input
-            type="text"
-            value={oem}
-            onChange={(e) => setOem(e.target.value)}
-          />
-        </div>
+      
         <div className="form-group">
           <label>Imagen:</label>
           <input

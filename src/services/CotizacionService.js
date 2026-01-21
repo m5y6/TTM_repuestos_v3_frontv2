@@ -1,65 +1,33 @@
-import axios from 'axios';
+import api from './api';
 
-const API_URL = '/api/cotizacion';
-
-// Helper para obtener el token de autenticación
-const getAuthHeaders = () => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    // Make token retrieval more robust by checking for common property names
-    const token = user ? (user.token || user.jwt || user.accessToken) : null;
-    if (token) {
-        return { Authorization: 'Bearer ' + token };
-    } else {
-        return {};
-    }
-};
+const API_URL = 'http://localhost:8080/api/cotizaciones';
 
 class CotizacionService {
-    // Método para obtener todas las cotizaciones desde localStorage
-    getAllCotizaciones() {
-        const cotizacionesData = JSON.parse(localStorage.getItem('ttm_cotizaciones')) || [];
-        return Promise.resolve({ data: cotizacionesData });
-    }
-
-    // Método para guardar una cotización en localStorage
+    /**
+     * Guarda una lista de productos que componen una cotización (carrito).
+     * @param {Array} productos - Array de objetos, ej: [{ "productoId": 1, "cantidad": 2, "precio": 1000 }, ...]
+     * @returns {Promise}
+     */
     saveCotizacion(productos) {
-        const cotizacionesPrevias = JSON.parse(localStorage.getItem('ttm_cotizaciones')) || [];
-        const nuevaCotizacion = {
-            id: Date.now(), // ID simple basado en el timestamp
-            fecha: new Date().toISOString(),
-            productos: productos.map(item => ({
-                nombre: item.producto.nombre,
-                cantidad: item.cantidad
-            }))
-        };
-        const nuevasCotizaciones = [...cotizacionesPrevias, nuevaCotizacion];
-        localStorage.setItem('ttm_cotizaciones', JSON.stringify(nuevasCotizaciones));
-        return Promise.resolve({ data: nuevaCotizacion });
+        return api.post(API_URL, productos);
     }
 
-
-    getCart() {
-        return axios.get(API_URL, { headers: getAuthHeaders() });
+    /**
+     * Lista todas las cotizaciones guardadas (histórico).
+     * @returns {Promise}
+     */
+    getAllCotizaciones() {
+        return api.get(API_URL);
     }
 
-    addToCart(item) { // item: { productoId: ..., cantidad: ... }
-        return axios.post(API_URL + '/items', item, { headers: getAuthHeaders() });
-    }
-
-    updateQuantity(itemId, quantity) {
-        return axios.put(API_URL + `/items/${itemId}`, { cantidad: quantity }, { headers: getAuthHeaders() });
-    }
-
-    removeFromCart(productId) {
-        return axios.delete(API_URL + `/items/${productId}`, { headers: getAuthHeaders() });
-    }
-    
-    clearCart() {
-        return axios.delete(API_URL, { headers: getAuthHeaders() });
-    }
-
-    checkout() {
-        return axios.post(API_URL + '/checkout', {}, { headers: getAuthHeaders() });
+    /**
+     * Filtra las cotizaciones por un rango de fechas.
+     * @param {string} inicio - Fecha de inicio en formato ISO (ej: 2023-01-01T00:00:00)
+     * @param {string} fin - Fecha de fin en formato ISO
+     * @returns {Promise}
+     */
+    getCotizacionesPorRango(inicio, fin) {
+        return api.get(`${API_URL}/rango`, { params: { inicio, fin } });
     }
 }
 

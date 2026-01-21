@@ -1,56 +1,28 @@
-import axios from "axios";
+import api from "./api"; // Usamos la instancia central de axios
 
-const API_URL = "/api/productos";
-
-// Create an axios instance
-const api = axios.create({
-  baseURL: API_URL,
-});
-
-// Add a request interceptor to add the token to the headers
-api.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      config.headers["Authorization"] = `Bearer ${token}`;
-    }
-    // Do NOT set Content-Type manually for FormData
-    // Axios will automatically set it with the correct boundary
-    if (config.data instanceof FormData) {
-      delete config.headers['Content-Type'];
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
-
-import productosData from '../productos.json';
+const API_URL = "http://localhost:8080/api/productos";
 
 class ProductosService {
   getAllProductos() {
-    return Promise.resolve({ data: productosData });
+    return api.get(API_URL);
   }
 
   getProductoById(id) {
-    const producto = productosData.find(p => p.id == id);
-    return Promise.resolve({ data: producto });
+    return api.get(`${API_URL}/${id}`);
   }
 
   createProducto(producto) {
-    console.log("Producto creado (simulado):", producto);
-    return Promise.resolve({ data: producto });
+    // La subida de la imagen debe manejarse antes de llamar a esta función.
+    // El backend espera un campo 'imagen_url' con el link a la imagen.
+    return api.post(API_URL, producto);
   }
 
   updateProducto(id, producto) {
-    console.log(`Producto ${id} actualizado (simulado):`, producto);
-    return Promise.resolve({ data: producto });
+    return api.put(`${API_URL}/${id}`, producto);
   }
 
   deleteProducto(id) {
-    console.log(`Producto ${id} eliminado (simulado).`);
-    return Promise.resolve({ data: { message: "Producto eliminado" } });
+    return api.delete(`${API_URL}/${id}`);
   }
 }
 

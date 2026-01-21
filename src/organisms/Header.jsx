@@ -64,7 +64,7 @@ export default function Header() {
           <Link to="/catalogo" onClick={toggleMenu}>Catálogo</Link>
           <Link to="/cotizacion" onClick={toggleMenu}>Cotizacion</Link>
 
-          {(user && (user.rol === 1 || user.rol === 2)) && (
+          {user && user.usuario && user.usuario.rol && (user.usuario.rol.nombre === 'ADMIN' || user.usuario.rol.nombre === 'EMPLEADO') && (
             <Link to="/administrar" onClick={toggleMenu}>Administrar</Link>
           )}
         </nav>

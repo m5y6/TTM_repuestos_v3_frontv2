@@ -1,46 +1,22 @@
-import marcasData from '../marcas.json';
+import api from './api';
 
-const LOCAL_STORAGE_KEY = 'ttm_marcas';
-
-// Cargar datos iniciales si no existen en localStorage
-const initializeData = () => {
-    const data = localStorage.getItem(LOCAL_STORAGE_KEY);
-    if (!data) {
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(marcasData));
-    }
-};
-
-initializeData();
+const API_URL = 'http://localhost:8080/api/marcas';
 
 class MarcaService {
     getMarcas() {
-        const marcas = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
-        return Promise.resolve({ data: marcas });
+        return api.get(API_URL);
     }
 
     createMarca(marca) {
-        let marcas = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
-        const newMarca = {
-            id: marcas.length > 0 ? Math.max(...marcas.map(m => m.id)) + 1 : 1,
-            ...marca
-        };
-        marcas.push(newMarca);
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(marcas));
-        return Promise.resolve({ data: newMarca });
+        return api.post(API_URL, marca);
     }
 
     updateMarca(id, updatedMarca) {
-        let marcas = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
-        marcas = marcas.map(m => (m.id === id ? { ...m, ...updatedMarca } : m));
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(marcas));
-        return Promise.resolve({ data: updatedMarca });
+        return api.put(`${API_URL}/${id}`, updatedMarca);
     }
 
     deleteMarca(id) {
-        let marcas = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
-        marcas = marcas.filter(m => m.id !== id);
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(marcas));
-        return Promise.resolve();
+        return api.delete(`${API_URL}/${id}`);
     }
 }
 

@@ -1,20 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import ProductoService from '../../services/ProductoService';
+import CategoriaService from '../../services/CategoriaService'; // Importar
+import MarcaService from '../../services/MarcaService';       // Importar
 import Header from '../../organisms/Header';
 import Footer from '../../organisms/Footer';
-import { uploadFileToS3 } from '../../services/UploadService'; // Import the upload service
+import { uploadFileToS3 } from '../../services/UploadService';
 import '../../styles/administrar.css';
-import categoriasData from '../../categorias.json';
-import marcasData from '../../marcas.json';
 
 const VerProductos = () => {
     const [productos, setProductos] = useState([]);
     const [productosFiltrados, setProductosFiltrados] = useState([]);
     const [filtros, setFiltros] = useState({
         busqueda: '',
-        categoria: '',
-        marca: ''
+        categoria: '', // Almacenará el nombre de la categoría para el filtro
+        marca: ''      // Almacenará el nombre de la marca para el filtro
     });
     const [categorias, setCategorias] = useState([]);
     const [marcas, setMarcas] = useState([]);
@@ -22,29 +22,34 @@ const VerProductos = () => {
     // State for inline editing
     const [editingProductId, setEditingProductId] = useState(null);
     const [editingProductData, setEditingProductData] = useState({});
-    const [isUploadingImage, setIsUploadingImage] = useState(false); // New state for image upload loading
-    const fileInputRef = useRef(null); // Ref for the hidden file input
+    const [isUploadingImage, setIsUploadingImage] = useState(false);
+    const fileInputRef = useRef(null);
 
     useEffect(() => {
-        setCategorias(categoriasData.map(c => c.nombre));
-        setMarcas(marcasData.map(m => m.nombre));
-        
-        ProductoService.getAllProductos()
-            .then(response => {
-                const data = response.data;
-                const productosArray = Array.isArray(data) ? data : (data.productos || []);
+        // Cargar todos los datos iniciales en paralelo
+        Promise.all([
+            ProductoService.getAllProductos(),
+            CategoriaService.getCategorias(),
+            MarcaService.getMarcas()
+        ]).then(([productosRes, categoriasRes, marcasRes]) => {
+            
+            const productosApi = productosRes.data.map(p => ({
+                ...p,
+                imagen: p.imagen_url || '/img/placeholder.jpg',
+                // La API ya devuelve los nombres, así que los usamos directamente
+                categoria: p.categoria.nombre, 
+                marca: p.marca.nombre
+            }));
 
-                const productosApi = productosArray.map(p => ({
-                    ...p,
-                    imagen: p.imagen_url || '/img/placeholder.jpg'
-                }));
+            setProductos(productosApi);
+            setProductosFiltrados(productosApi);
+            setCategorias(categoriasRes.data);
+            setMarcas(marcasRes.data);
 
-                setProductos(productosApi);
-                setProductosFiltrados(productosApi);
-            })
-            .catch(error => {
-                console.error("Error fetching productos:", error);
-            });
+        }).catch(error => {
+            console.error("Error fetching initial data:", error);
+            alert("Error al cargar los datos iniciales. Revise la consola.");
+        });
     }, []);
 
     useEffect(() => {
@@ -54,13 +59,13 @@ const VerProductos = () => {
     const aplicarFiltros = () => {
         let resultado = [...productos];
         const normalizeString = (str) =>
-            str ? str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim() : "";
+            str ? str.toString().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim() : "";
 
         if (filtros.busqueda.trim() !== '') {
             const termino = normalizeString(filtros.busqueda);
             resultado = resultado.filter(producto =>
                 normalizeString(producto.nombre).includes(termino) ||
-                (producto.descripcion && normalizeString(producto.descripcion).includes(termino)) ||
+                (producto.description && normalizeString(producto.description).includes(termino)) ||
                 normalizeString(producto.oem).includes(termino)
             );
         }
@@ -89,6 +94,7 @@ const VerProductos = () => {
             ProductoService.deleteProducto(id)
                 .then(() => {
                     setProductos(productos.filter(p => p.id !== id));
+                    alert("Producto eliminado con éxito.");
                 })
                 .catch(error => {
                     console.error("Error deleting producto:", error);
@@ -100,7 +106,15 @@ const VerProductos = () => {
     // Handlers for inline editing
     const handleEditClick = (producto) => {
         setEditingProductId(producto.id);
-        setEditingProductData({ ...producto });
+        // En `editingProductData` guardamos los IDs para los selects
+        const categoriaOriginal = categorias.find(c => c.nombre === producto.categoria);
+        const marcaOriginal = marcas.find(m => m.nombre === producto.marca);
+
+        setEditingProductData({
+            ...producto,
+            categoriaId: categoriaOriginal ? categoriaOriginal.id : '',
+            marcaId: marcaOriginal ? marcaOriginal.id : ''
+        });
     };
 
     const handleCancelClick = () => {
@@ -114,13 +128,24 @@ const VerProductos = () => {
     };
 
     const handleSaveClick = (id) => {
-        ProductoService.updateProducto(id, editingProductData)
+        // Al guardar, enviamos los IDs correctos
+        const { id_producto, nombre, precio, procentaje_desc, oem, categoriaId, marcaId, imagen_url, description } = editingProductData;
+        const productoParaActualizar = { id_producto, nombre, precio, procentaje_desc, oem, categoriaId, marcaId, imagen_url, description };
+
+        ProductoService.updateProducto(id, productoParaActualizar)
             .then(() => {
-                const updatedProductos = productos.map(p =>
-                    p.id === id ? editingProductData : p
-                );
+                // Actualizamos la lista local para reflejar el cambio visualmente
+                const updatedProductos = productos.map(p => {
+                    if (p.id === id) {
+                        const catNombre = categorias.find(c => c.id == categoriaId)?.nombre || '';
+                        const marNombre = marcas.find(m => m.id == marcaId)?.nombre || '';
+                        return { ...editingProductData, categoria: catNombre, marca: marNombre };
+                    }
+                    return p;
+                });
                 setProductos(updatedProductos);
                 setEditingProductId(null);
+                alert("Producto actualizado con éxito.");
             })
             .catch(error => {
                 console.error("Error updating producto:", error);
@@ -161,11 +186,13 @@ const VerProductos = () => {
                     />
                     <select name="categoria" value={filtros.categoria} onChange={handleFiltroChange}>
                         <option value="">Todas las categorías</option>
-                        {categorias.map(c => <option key={c} value={c}>{c}</option>)}
+                        {/* El filtro usa nombres, así que el select también */}
+                        {categorias.map(c => <option key={c.id} value={c.nombre}>{c.nombre}</option>)}
                     </select>
                     <select name="marca" value={filtros.marca} onChange={handleFiltroChange}>
                         <option value="">Todas las marcas</option>
-                        {marcas.map(m => <option key={m} value={m}>{m}</option>)}
+                        {/* El filtro usa nombres, así que el select también */}
+                        {marcas.map(m => <option key={m.id} value={m.nombre}>{m.nombre}</option>)}
                     </select>
                 </div>
 
@@ -174,7 +201,6 @@ const VerProductos = () => {
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>ID Producto</th>
                                 <th>Imagen</th>
                                 <th>Nombre</th>
                                 <th>Precio</th>
@@ -190,7 +216,8 @@ const VerProductos = () => {
                                 <tr key={producto.id}>
                                     {editingProductId === producto.id ? (
                                         <>
-                                            <td>{producto.id}</td>                                            <td><input type="text" name="id_producto" value={editingProductData.id_producto} onChange={handleEditFormChange} /></td>                                            <td onClick={() => fileInputRef.current.click()} style={{ cursor: 'pointer' }}>
+                                            <td>{producto.id}</td>
+                                            <td onClick={() => fileInputRef.current && fileInputRef.current.click()} style={{ cursor: 'pointer' }}>
                                                 <img
                                                     src={editingProductData.imagen}
                                                     alt={editingProductData.nombre}
@@ -203,19 +230,19 @@ const VerProductos = () => {
                                                     style={{ display: 'none' }}
                                                     accept="image/png, image/jpeg"
                                                 />
-                                                {isUploadingImage && <p>Subiendo imagen...</p>}
+                                                {isUploadingImage && <p>Subiendo...</p>}
                                             </td>
                                             <td><input type="text" name="nombre" value={editingProductData.nombre} onChange={handleEditFormChange} /></td>
                                             <td><input type="number" name="precio" value={editingProductData.precio} onChange={handleEditFormChange} /></td>
                                             <td><input type="number" name="procentaje_desc" value={editingProductData.procentaje_desc} onChange={handleEditFormChange} /></td>
                                             <td>
-                                                <select name="categoria" value={editingProductData.categoria} onChange={handleEditFormChange}>
-                                                    {categorias.map(c => <option key={c} value={c}>{c}</option>)}
+                                                <select name="categoriaId" value={editingProductData.categoriaId} onChange={handleEditFormChange}>
+                                                    {categorias.map(c => <option key={c.id} value={c.id}>{c.nombre}</option>)}
                                                 </select>
                                             </td>
                                             <td>
-                                                <select name="marca" value={editingProductData.marca} onChange={handleEditFormChange}>
-                                                    {marcas.map(m => <option key={m} value={m}>{m}</option>)}
+                                                <select name="marcaId" value={editingProductData.marcaId} onChange={handleEditFormChange}>
+                                                    {marcas.map(m => <option key={m.id} value={m.id}>{m.nombre}</option>)}
                                                 </select>
                                             </td>
                                             <td><input type="text" name="oem" value={editingProductData.oem} onChange={handleEditFormChange} /></td>
@@ -226,7 +253,8 @@ const VerProductos = () => {
                                         </>
                                     ) : (
                                         <>
-                                            <td>{producto.id}</td>                                            <td>{producto.id_producto}</td>                                            <td>
+                                            <td>{producto.id}</td>
+                                            <td>
                                                 <img
                                                     src={producto.imagen}
                                                     alt={producto.nombre}
@@ -234,13 +262,13 @@ const VerProductos = () => {
                                                 />
                                             </td>
                                             <td>{producto.nombre}</td>
-                                            <td>{`$${producto.precio.toLocaleString('es-CL')}`}</td>
+                                            <td>{`$${Number(producto.precio).toLocaleString('es-CL')}`}</td>
                                             <td>{`${producto.procentaje_desc || 0}%`}</td>
                                             <td>{producto.categoria}</td>
                                             <td>{producto.marca}</td>
                                             <td>{producto.oem}</td>
                                             <td className="acciones-cell">
-                                                <button onClick={() => handleEditClick(producto)} className="btn-editar">✏️</button>
+                                                <Link to={`/admin/editar-producto/${producto.id}`} className="btn-editar">✏️</Link>
                                                 <button onClick={() => deleteProducto(producto.id)} className="btn-eliminar">🗑️</button>
                                             </td>
                                         </>

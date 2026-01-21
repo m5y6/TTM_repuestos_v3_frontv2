@@ -5,8 +5,8 @@ import Header from '../organisms/Header';
 import Footer from '../organisms/Footer';
 import ShoppingCartIcon from '../assets/icons/ShoppingCartIcon';
 import SealIcon from '../assets/icons/SealIcon';
-import productosData from '../productos.json';
-import categoriasData from '../categorias.json';
+import ProductoService from '../services/ProductoService';
+import CategoriaService from '../services/CategoriaService';
 import { CotizacionContext } from "../context/CotizacionContext";
 import WhatsAppButton from '../components/WhatsAppButton';
 
@@ -83,12 +83,32 @@ const ProductCard = React.forwardRef(({ producto, handleAddToCotizacion }, ref) 
   );
 });
 
-const productos = productosData.filter(p => p.procentaje_desc > 0).slice(0, 6);
-
 export default function Index() {
   const navigate = useNavigate();
   const { addToCart } = useContext(CotizacionContext);
   const [notificacion, setNotificacion] = useState('');
+  const [productosEnOferta, setProductosEnOferta] = useState([]);
+  const [categorias, setCategorias] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    Promise.all([
+      ProductoService.getAllProductos(),
+      CategoriaService.getCategorias(),
+    ]).then(([productosRes, categoriasRes]) => {
+      const ofertas = productosRes.data.filter(p => p.procentaje_desc > 0).slice(0, 10);
+      setProductosEnOferta(ofertas);
+      
+      setCategorias(categoriasRes.data);
+      
+      setLoading(false);
+    }).catch(error => {
+      console.error("Error al cargar datos para la página principal:", error);
+      setLoading(false);
+    });
+  }, []);
+
 
   const mostrarNotificacion = (mensaje) => {
     setNotificacion(mensaje);
@@ -130,10 +150,10 @@ export default function Index() {
       setItemsVisible(visible > 0 ? visible : 1);
     };
 
-    handleResize();
+    setTimeout(handleResize, 100);
+
     window.addEventListener('resize', handleResize);
     
-    // Set up a ResizeObserver to recalculate on container resize, useful for initial render and orientation changes
     const resizeObserver = new ResizeObserver(handleResize);
     if (productosContainerRef.current) {
         resizeObserver.observe(productosContainerRef.current);
@@ -145,7 +165,7 @@ export default function Index() {
             resizeObserver.unobserve(productosContainerRef.current);
         }
     };
-  }, [productos]);
+  }, [productosEnOferta, loading]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -175,7 +195,7 @@ export default function Index() {
         }
       });
     };
-  }, []);
+  }, [productosEnOferta]);
 
   const addToRefs = (el) => {
     if (el && !productRefs.current.includes(el)) {
@@ -190,7 +210,7 @@ export default function Index() {
 
   const nextSlide = () => {
     const scrollAmount = itemsVisible > 1 ? itemsVisible - 1 : 1;
-    setCurrentIndex(prevIndex => Math.min(prevIndex + scrollAmount, productos.length - itemsVisible));
+    setCurrentIndex(prevIndex => Math.min(prevIndex + scrollAmount, productosEnOferta.length - itemsVisible));
   };
 
   return (
@@ -207,7 +227,7 @@ export default function Index() {
         }
       }}>
         <div className="categorias-linea">
-          {categoriasData.slice(0, 6).map((categoria, index) => (
+          {categorias.slice(0, 6).map((categoria, index) => (
             <React.Fragment key={categoria.id}>
               <a href={`#${categoria.nombre.toLowerCase()}`}>{categoria.nombre}</a>
               {index < 5 && <span>|</span>}
@@ -228,22 +248,24 @@ export default function Index() {
         <section className="tercera">
           <div className="top_ventas">
             <h2>Productos en Oferta</h2>
-            <div className="productos-carousel-container">
-              <button className="carousel-arrow prev" onClick={prevSlide}>&#10094;</button>
-              <div className="productos-viewport">
-                <div className="productos" ref={productosContainerRef} style={{ transform: `translateX(-${currentIndex * slideAmount}px)` }}>
-                  {productos.map((producto, index) => (
-                    <ProductCard
-                      key={index}
-                      ref={addToRefs}
-                      producto={producto}
-                      handleAddToCotizacion={handleAddToCotizacion}
-                    />
-                  ))}
+            {loading ? <p>Cargando ofertas...</p> : (
+              <div className="productos-carousel-container">
+                <button className="carousel-arrow prev" onClick={prevSlide} disabled={currentIndex === 0}>&#10094;</button>
+                <div className="productos-viewport">
+                  <div className="productos" ref={productosContainerRef} style={{ transform: `translateX(-${currentIndex * slideAmount}px)` }}>
+                    {productosEnOferta.map((producto) => (
+                      <ProductCard
+                        key={producto.id}
+                        ref={addToRefs}
+                        producto={producto}
+                        handleAddToCotizacion={handleAddToCotizacion}
+                      />
+                    ))}
+                  </div>
                 </div>
+                <button className="carousel-arrow next" onClick={nextSlide} disabled={currentIndex >= productosEnOferta.length - itemsVisible}>&#10095;</button>
               </div>
-              <button className="carousel-arrow next" onClick={nextSlide}>&#10095;</button>
-            </div>
+            )}
             <Link to="/catalogo" id="vercatalogo">Ver catálogo</Link>
           </div>
         </section>
@@ -257,7 +279,7 @@ export default function Index() {
                 navigate(`/catalogo?categoria=${category}`);
               }
             }}>
-              {categoriasData.slice(0, 9).map(categoria => (
+              {categorias.slice(0, 9).map(categoria => (
                 <div className="categoria-card" key={categoria.id}>
                   <div className="categoria-icon">
                     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

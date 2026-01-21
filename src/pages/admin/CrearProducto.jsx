@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ProductoService from "../../services/ProductoService";
+import CategoriaService from "../../services/CategoriaService";
+import MarcaService from "../../services/MarcaService";
 import { uploadFileToS3 } from '../../services/UploadService';
 import Header from '../../organisms/Header';
 import Footer from '../../organisms/Footer';
 import "../../styles/administrar.css";
-import categoriasData from '../../categorias.json';
-import marcasData from '../../marcas.json';
 
 const CrearProducto = () => {
   const [nombre, setNombre] = useState("");
   const [precio, setPrecio] = useState("");
-  const [categoria, setCategoria] = useState("");
+  const [categoriaId, setCategoriaId] = useState(""); // Cambiado a ID
   const [description, setDescription] = useState("");
   const [imagen_url, setImagenUrl] = useState("");
   const [procentaje_desc, setProcentajeDesc] = useState("");
-  const [marca, setMarca] = useState("");
+  const [marcaId, setMarcaId] = useState(""); // Cambiado a ID
   const [oem, setOem] = useState("");
-  const [idProducto, setIdProducto] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [categorias, setCategorias] = useState([]);
   const [marcas, setMarcas] = useState([]);
@@ -25,8 +24,14 @@ const CrearProducto = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setCategorias(categoriasData.map(c => c.nombre));
-    setMarcas(marcasData.map(m => m.nombre));
+    // Cargar categorías y marcas desde los servicios
+    CategoriaService.getCategorias()
+      .then(res => setCategorias(res.data))
+      .catch(err => console.error("Error al cargar categorías:", err));
+    
+    MarcaService.getMarcas()
+      .then(res => setMarcas(res.data))
+      .catch(err => console.error("Error al cargar marcas:", err));
   }, []);
 
   const handleImagenChange = async (e) => {
@@ -47,15 +52,15 @@ const CrearProducto = () => {
   const saveProducto = async (e) => {
     e.preventDefault();
 
+    // El backend espera los IDs de marca y categoría
     const producto = {
-      id_producto: idProducto,
       nombre,
       precio: parseFloat(precio),
-      categoria,
+      categoriaId: parseInt(categoriaId),
       description,
-      imagen_url: imagen_url,
-      procentaje_desc: parseFloat(procentaje_desc),
-      marca,
+      imagen_url,
+      procentaje_desc: parseFloat(procentaje_desc) || 0, // Asegurar que sea un número
+      marcaId: parseInt(marcaId),
       oem,
     };
 
@@ -77,14 +82,6 @@ const CrearProducto = () => {
     <div className="admin-container">
       <h1>Agregar Producto</h1>
       <form onSubmit={saveProducto} className="crear-producto-form">
-        <div className="form-group">
-          <label>ID Producto:</label>
-          <input
-            type="text"
-            value={idProducto}
-            onChange={(e) => setIdProducto(e.target.value)}
-          />
-        </div>
         <div className="form-group">
           <label>OEM (Opcional):</label>
           <input
@@ -130,23 +127,23 @@ const CrearProducto = () => {
         <div className="form-group">
           <label>Categoría:</label>
           <select
-            value={categoria}
-            onChange={(e) => setCategoria(e.target.value)}
+            value={categoriaId}
+            onChange={(e) => setCategoriaId(e.target.value)}
             required
           >
             <option value="">Seleccione una categoría</option>
-            {categorias.map(c => <option key={c} value={c}>{c}</option>)}
+            {categorias.map(c => <option key={c.id} value={c.id}>{c.nombre}</option>)}
           </select>
         </div>
         <div className="form-group">
           <label>Marca:</label>
           <select
-            value={marca}
-            onChange={(e) => setMarca(e.target.value)}
+            value={marcaId}
+            onChange={(e) => setMarcaId(e.target.value)}
             required
           >
             <option value="">Seleccione una marca</option>
-            {marcas.map(m => <option key={m} value={m}>{m}</option>)}
+            {marcas.map(m => <option key={m.id} value={m.id}>{m.nombre}</option>)}
           </select>
         </div>
       

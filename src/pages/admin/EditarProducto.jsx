@@ -1,53 +1,72 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import ProductoService from "../../services/ProductoService";
-import { uploadFileToS3 } from '../../services/UploadService';
+import CategoriaService from "../../services/CategoriaService";
+import MarcaService from "../../services/MarcaService";
+import { uploadFileToS3 } from "../../services/UploadService";
 import "../../styles/administrar.css";
-import categoriasData from '../../categorias.json';
-import marcasData from '../../marcas.json';
 
 const EditarProducto = () => {
+  // Estados para los campos del formulario
   const [nombre, setNombre] = useState("");
   const [precio, setPrecio] = useState("");
-  const [categoria, setCategoria] = useState("");
+  const [categoriaId, setCategoriaId] = useState(""); // Usaremos ID
   const [description, setDescription] = useState("");
-  const [stock, setStock] = useState("");
   const [imagen_url, setImagenUrl] = useState("");
   const [procentaje_desc, setProcentajeDesc] = useState("");
-  const [marca, setMarca] = useState("");
+  const [marcaId, setMarcaId] = useState(""); // Usaremos ID
   const [oem, setOem] = useState("");
-  const [idProducto, setIdProducto] = useState("");
+  
+  // Estados para la UI y datos de soporte
   const [isUploading, setIsUploading] = useState(false);
   const [categorias, setCategorias] = useState([]);
   const [marcas, setMarcas] = useState([]);
-
+  
   const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    setCategorias(categoriasData.map(c => c.nombre));
-    setMarcas(marcasData.map(m => m.nombre));
-    if (id) {
-      ProductoService.getProductoById(id).then((response) => {
-        const producto = response.data;
+    // Cargar Marcas y Categorías y el producto a editar
+    const cargarDatos = async () => {
+      try {
+        const [marcasRes, categoriasRes, productoRes] = await Promise.all([
+          MarcaService.getMarcas(),
+          CategoriaService.getCategorias(),
+          ProductoService.getProductoById(id)
+        ]);
+
+        setMarcas(marcasRes.data);
+        setCategorias(categoriasRes.data);
+
+        const producto = productoRes.data;
+        
+        // Poblamos el formulario con los datos del producto
         setNombre(producto.nombre);
         setPrecio(producto.precio);
-        setCategoria(producto.categoria);
-        setDescription(producto.description);
-        setStock(producto.stock);
-        setImagenUrl(producto.imagen_url);
-        setProcentajeDesc(producto.procentaje_desc);
-        setMarca(producto.marca);
-        setOem(producto.oem);
-        setIdProducto(producto.id_producto);
-      }).catch(err => {
-        console.error("Error fetching product:", err);
+        setDescription(producto.description || "");
+        setImagenUrl(producto.imagen_url || "");
+        setProcentajeDesc(producto.procentaje_desc || "");
+        setOem(producto.oem || "");
+        
+        // Asignamos los IDs de marca y categoría
+        // La API devuelve el objeto completo, accedemos a su 'id'
+        setMarcaId(producto.marca.id);
+        setCategoriaId(producto.categoria.id);
+
+      } catch (err) {
+        console.error("Error al cargar datos para edición:", err);
+        alert("No se pudieron cargar los datos del producto.");
         navigate('/admin/ver-productos');
-      });
+      }
+    };
+
+    if (id) {
+      cargarDatos();
     } else {
       navigate('/admin/ver-productos');
     }
   }, [id, navigate]);
+
 
   const handleImagenChange = async (e) => {
     const file = e.target.files[0];
@@ -67,27 +86,26 @@ const EditarProducto = () => {
   const updateProducto = async (e) => {
     e.preventDefault();
 
-    const producto = {
-      id_producto: idProducto,
+    const productoActualizado = {
       nombre,
       precio: parseFloat(precio),
-      categoria,
       description,
-      stock: parseInt(stock, 10),
-      imagen_url: imagen_url,
-      procentaje_desc: parseFloat(procentaje_desc),
-      marca,
+      imagen_url,
+      procentaje_desc: parseFloat(procentaje_desc) || 0,
       oem,
+      marcaId: parseInt(marcaId),
+      categoriaId: parseInt(categoriaId),
     };
 
-    ProductoService.updateProducto(id, producto)
+    ProductoService.updateProducto(id, productoActualizado)
       .then(() => {
+        alert("Producto actualizado con éxito.");
         navigate("/admin/ver-productos");
       })
       .catch((error) => {
-        console.error("Error al guardar el producto:", error);
+        console.error("Error al actualizar el producto:", error);
         alert(
-          "Hubo un error al guardar el producto. Revisa la consola para más detalles."
+          "Hubo un error al actualizar el producto. Revisa la consola para más detalles."
         );
       });
   };
@@ -97,11 +115,11 @@ const EditarProducto = () => {
       <h2>Editar Producto</h2>
       <form onSubmit={updateProducto}>
         <div>
-          <label>ID Producto:</label>
+          <label>OEM:</label>
           <input
             type="text"
-            value={idProducto}
-            onChange={(e) => setIdProducto(e.target.value)}
+            value={oem}
+            onChange={(e) => setOem(e.target.value)}
           />
         </div>
         <div>
@@ -131,15 +149,6 @@ const EditarProducto = () => {
           />
         </div>
         <div>
-          <label>Stock:</label>
-          <input
-            type="number"
-            value={stock}
-            onChange={(e) => setStock(e.target.value)}
-            required
-          />
-        </div>
-        <div>
           <label>Porcentaje Descuento:</label>
           <input
             type="number"
@@ -150,32 +159,24 @@ const EditarProducto = () => {
         <div>
           <label>Categoría:</label>
           <select
-            value={categoria}
-            onChange={(e) => setCategoria(e.target.value)}
+            value={categoriaId}
+            onChange={(e) => setCategoriaId(e.target.value)}
             required
           >
             <option value="">Seleccione una categoría</option>
-            {categorias.map(c => <option key={c} value={c}>{c}</option>)}
+            {categorias.map(c => <option key={c.id} value={c.id}>{c.nombre}</option>)}
           </select>
         </div>
         <div>
           <label>Marca:</label>
           <select
-            value={marca}
-            onChange={(e) => setMarca(e.target.value)}
+            value={marcaId}
+            onChange={(e) => setMarcaId(e.target.value)}
             required
           >
             <option value="">Seleccione una marca</option>
-            {marcas.map(m => <option key={m} value={m}>{m}</option>)}
+            {marcas.map(m => <option key={m.id} value={m.id}>{m.nombre}</option>)}
           </select>
-        </div>
-        <div>
-          <label>OEM:</label>
-          <input
-            type="text"
-            value={oem}
-            onChange={(e) => setOem(e.target.value)}
-          />
         </div>
         <div>
           <label>Imagen:</label>

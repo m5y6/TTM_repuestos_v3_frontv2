@@ -4,11 +4,10 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 import { CotizacionContext } from "../context/CotizacionContext";
-import { AuthContext } from '../context/AuthContext'; // Importar AuthContext
-// import ProductoService from '../services/ProductoService';
-import productosData from '../productos.json'; // Importar el JSON local
-import categoriasData from '../categorias.json';
-import marcasData from '../marcas.json';
+import { AuthContext } from '../context/AuthContext';
+import ProductoService from '../services/ProductoService';
+import CategoriaService from '../services/CategoriaService';
+import MarcaService from '../services/MarcaService';
 import '../styles/Catalogo.css';
 import Footer from '../organisms/Footer';
 import Header from '../organisms/Header';
@@ -123,8 +122,8 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
     const [isMarcaExpanded, setIsMarcaExpanded] = useState(false);
     const [paginaActual, setPaginaActual] = useState(1);
     const [notificacion, setNotificacion] = useState('');
-    const [categoriasDisponibles, setCategoriasDisponibles] = useState(categoriasData);
-    const [marcasDisponibles, setMarcasDisponibles] = useState(marcasData);
+    const [categoriasDisponibles, setCategoriasDisponibles] = useState([]);
+    const [marcasDisponibles, setMarcasDisponibles] = useState([]);
     const [isMobileFiltroAbierto, setIsMobileFiltroAbierto] = useState(false);
     
     // 2. Referencias
@@ -133,7 +132,6 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
 
     // 3. Hooks de Efecto
     useEffect(() => {
-        // Mapa para agrupar categorías generales con las específicas de los productos
         const categoriaRelaciones = {
             'electrico': ['Eléctrica', 'Baterias'],
             'seguridad': ['Artículos de seguridad'],
@@ -147,26 +145,34 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
         const params = new URLSearchParams(location.search);
         const categoriaUrl = params.get('categoria');
         
-        const productosApi = productosData.map(p => ({
-            ...p,
-            imagen: p.imagen_url || '/img/placeholder.jpg'
-        }));
-        
-        setProductos(productosApi);
-        setLoading(false);
-
-        if (categoriaUrl) {
-            // Normalizamos la categoría de la URL (quitamos tildes, a minúsculas)
-            const categoriaNormalizada = categoriaUrl.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-            
-            // Buscamos en el mapa de relaciones; si no, usamos la categoría tal cual
-            const categoriasParaFiltrar = categoriaRelaciones[categoriaNormalizada] || [categoriaUrl];
-
-            setFiltros(prev => ({
-                ...prev,
-                categorias: categoriasParaFiltrar
+        setLoading(true);
+        Promise.all([
+            ProductoService.getAllProductos(),
+            CategoriaService.getCategorias(),
+            MarcaService.getMarcas()
+        ]).then(([productosRes, categoriasRes, marcasRes]) => {
+            const productosApi = productosRes.data.map(p => ({
+                ...p,
+                imagen: p.imagen_url || '/img/placeholder.jpg',
+                categoria: p.categoria.nombre,
+                marca: p.marca.nombre
             }));
-        }
+
+            setProductos(productosApi);
+            setCategoriasDisponibles(categoriasRes.data);
+            setMarcasDisponibles(marcasRes.data);
+            setLoading(false);
+
+            if (categoriaUrl) {
+                const categoriaNormalizada = categoriaUrl.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                const categoriasParaFiltrar = categoriaRelaciones[categoriaNormalizada] || [categoriaUrl];
+                setFiltros(prev => ({ ...prev, categorias: categoriasParaFiltrar }));
+            }
+        }).catch(err => {
+            console.error("Error al cargar los datos:", err);
+            setError("No se pudieron cargar los productos. Intente más tarde.");
+            setLoading(false);
+        });
     }, [location.search]);
 
     useEffect(() => {

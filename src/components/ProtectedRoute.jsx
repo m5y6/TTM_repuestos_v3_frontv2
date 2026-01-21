@@ -10,7 +10,14 @@ const ProtectedRoute = () => {
         return <div>Loading...</div>;
     }
 
-    return user ? <Outlet /> : <Navigate to="/login" />;
+    if (!user) {
+        return <Navigate to="/login" />;
+    }
+
+    // Check if the user has the required role
+    const hasRequiredRole = user.usuario && user.usuario.rol && (user.usuario.rol.nombre === 'ADMIN' || user.usuario.rol.nombre === 'EMPLEADO');
+
+    return hasRequiredRole ? <Outlet /> : <Navigate to="/" />;
 };
 
 export default ProtectedRoute;

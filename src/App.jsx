@@ -7,7 +7,6 @@ import Administrar from './pages/Administrar'
 import { AuthProvider } from './context/AuthContext.jsx'
 import { CotizacionProvider } from './context/CotizacionContext.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
-import AdminRoute from './components/AdminRoute.jsx'
 import GlobalNotification from './components/GlobalNotification.jsx'
 import AdminLayout from './pages/admin/AdminLayout.jsx'
 import VerProductos from './pages/admin/VerProductos.jsx'
@@ -38,9 +37,9 @@ function App () {
 
           <Route
             element={
-              <AdminRoute>
+              <ProtectedRoute>
                 <AdminLayout />
-              </AdminRoute>
+              </ProtectedRoute>
             }
           >
             <Route path='/administrar' element={<Administrar />} />

@@ -1,36 +1,50 @@
-import users from '../adminUser.json';
+import axios from 'axios';
+import api from './api'; // Importamos la instancia de axios configurada
+
+const API_URL = 'http://localhost:8080/auth';
 
 class AuthService {
   login(email, password) {
-    return new Promise((resolve, reject) => {
-      const user = users.find(u => u.email === email && u.password === password);
+    return axios.post(`${API_URL}/login`, { email, password })
+      .then(response => {
+        if (response.data.token) {
+          // Almacenamos todo el objeto de usuario, que incluye el token
+          localStorage.setItem('user', JSON.stringify(response.data));
+        }
+        return response;
+      });
+  }
 
-      if (user) {
-        // Mocking the API response
-        resolve({
-          data: {
-            nombre: user.email.split('@')[0], // Or a name property if you add one
-            email: user.email,
-            rol: user.rol === 'admin' ? 1 : 2, // Assuming 1 for admin, 2 for employee
-            token: `fake-${user.rol}-jwt-token-for-ttm-repuestos`
-          }
-        });
-      } else {
-        // Mocking an axios error for incorrect credentials
-        reject({
-          response: {
-            status: 401,
-            data: {
-              message: 'Credenciales incorrectas'
-            }
-          }
-        });
-      }
-    });
+  logout() {
+    localStorage.removeItem('user');
   }
 
   register(userData) {
-    return Promise.reject(new Error('El registro de nuevos usuarios está deshabilitado.'));
+    // El registro devuelve un token, así que lo manejamos igual que el login
+    return axios.post(`${API_URL}/register`, userData)
+      .then(response => {
+        if (response.data.token) {
+          localStorage.setItem('user', JSON.stringify(response.data));
+        }
+        return response;
+      });
+  }
+
+  getAllUsers() {
+    return api.get(`${API_URL}/usuarios`);
+  }
+
+  updateUserRole(userId, rolId) {
+    return api.put(`${API_URL}/usuarios/${userId}/rol?rolId=${rolId}`);
+  }
+
+  deleteUser(userId) {
+    return api.delete(`${API_URL}/usuarios/${userId}`);
+  }
+
+  getCurrentUser() {
+    const userStr = localStorage.getItem('user');
+    return userStr ? JSON.parse(userStr) : null;
   }
 }
 

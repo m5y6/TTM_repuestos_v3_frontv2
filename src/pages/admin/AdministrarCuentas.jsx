@@ -2,26 +2,29 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../../organisms/Header';
 import Footer from '../../organisms/Footer';
-import usersData from '../../adminUser.json';
+import AuthService from '../../services/AuthService'; // Importar el servicio
 import '../../styles/administrar.css';
 
 const AdministrarCuentas = () => {
     const [users, setUsers] = useState([]);
     const [editingUserId, setEditingUserId] = useState(null);
-    const [editingUserRol, setEditingUserRol] = useState('');
+    const [editingUserRolId, setEditingUserRolId] = useState('');
 
     useEffect(() => {
-        // Asignar un ID único a cada usuario para la gestión del estado
-        const usersWithId = usersData.map((user, index) => ({
-            ...user,
-            id: index + 1 
-        }));
-        setUsers(usersWithId);
+        // Cargar usuarios desde el servicio
+        AuthService.getAllUsers()
+            .then(response => {
+                setUsers(response.data);
+            })
+            .catch(error => {
+                console.error("Error al cargar los usuarios:", error);
+                alert('No se pudo cargar la lista de usuarios. Verifique la consola.');
+            });
     }, []);
 
     const handleEditClick = (user) => {
         setEditingUserId(user.id);
-        setEditingUserRol(user.rol);
+        setEditingUserRolId(user.rol.id); // Asumimos que el usuario tiene un objeto rol con id
     };
 
     const handleCancelClick = () => {
@@ -29,19 +32,32 @@ const AdministrarCuentas = () => {
     };
 
     const handleSaveClick = (userId) => {
-        // Aquí iría la lógica para guardar el rol del usuario.
-        // Por ahora, solo actualizaremos el estado local.
-        const updatedUsers = users.map(user =>
-            user.id === userId ? { ...user, rol: editingUserRol } : user
-        );
-        setUsers(updatedUsers);
-        setEditingUserId(null);
+        AuthService.updateUserRole(userId, editingUserRolId)
+            .then(() => {
+                // Actualizamos el estado local para reflejar el cambio
+                setUsers(users.map(user =>
+                    user.id === userId ? { ...user, rol: { id: editingUserRolId, nombre: editingUserRolId === 1 ? 'ADMIN' : 'USER' } } : user // Esto es un mock, idealmente la API devolvería el usuario actualizado
+                ));
+                setEditingUserId(null);
+                alert("Rol actualizado con éxito");
+            })
+            .catch(error => {
+                console.error("Error al actualizar el rol:", error);
+                alert("No se pudo actualizar el rol.");
+            });
     };
 
     const handleDeleteUser = (userId) => {
         if (window.confirm('¿Estás seguro de que quieres eliminar este usuario?')) {
-            const filteredUsers = users.filter(user => user.id !== userId);
-            setUsers(filteredUsers);
+            AuthService.deleteUser(userId)
+                .then(() => {
+                    setUsers(users.filter(user => user.id !== userId));
+                    alert("Usuario eliminado con éxito.");
+                })
+                .catch(error => {
+                    console.error("Error al eliminar el usuario:", error);
+                    alert("No se pudo eliminar el usuario.");
+                });
         }
     };
     
@@ -57,6 +73,7 @@ const AdministrarCuentas = () => {
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>Nombre</th>
                                 <th>Email</th>
                                 <th>Rol</th>
                                 <th>Acciones</th>
@@ -66,18 +83,20 @@ const AdministrarCuentas = () => {
                             {users.map((user) => (
                                 <tr key={user.id}>
                                     <td>{user.id}</td>
+                                    <td>{user.nombre}</td>
                                     <td>{user.email}</td>
                                     <td>
                                         {editingUserId === user.id ? (
                                             <select 
-                                                value={editingUserRol} 
-                                                onChange={(e) => setEditingUserRol(e.target.value)}
+                                                value={editingUserRolId} 
+                                                onChange={(e) => setEditingUserRolId(parseInt(e.target.value))}
                                             >
-                                                <option value="empleado">Empleado</option>
-                                                <option value="admin">Administrador</option>
+                                                <option value="2">Empleado</option>
+                                                <option value="1">Administrador</option>
                                             </select>
                                         ) : (
-                                            user.rol
+                                            // Asumimos que la API devuelve el nombre del rol en user.rol.nombre
+                                            user.rol?.nombre || 'No asignado'
                                         )}
                                     </td>
                                     <td className="acciones-cell">

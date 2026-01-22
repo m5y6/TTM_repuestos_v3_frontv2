@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const api = axios.create();
+const api = axios.create({
+  baseURL: 'http://localhost:8080',
+});
 
 // Interceptor para añadir el token de autenticación a las cabeceras
 api.interceptors.request.use(

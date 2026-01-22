@@ -128,9 +128,30 @@ const VerProductos = () => {
     };
 
     const handleSaveClick = (id) => {
-        // Al guardar, enviamos los IDs correctos
-        const { id_producto, nombre, precio, procentaje_desc, oem, categoriaId, marcaId, imagen_url, description } = editingProductData;
-        const productoParaActualizar = { id_producto, nombre, precio, procentaje_desc, oem, categoriaId, marcaId, imagen_url, description };
+        // Opción A (Recomendada por el backend): Enviar solo los IDs
+        const {
+            nombre,
+            precio,
+            porcentaje_descuento,
+            oem,
+            categoriaId,
+            marcaId,
+            imagen_url,
+            description,
+            id_producto
+        } = editingProductData;
+
+        const productoParaActualizar = {
+            id_producto,
+            nombre,
+            precio: Number(precio),
+            porcentaje_descuento: Number(porcentaje_descuento) || 0,
+            oem,
+            categoriaId, // Enviar el ID de la categoría
+            marcaId,     // Enviar el ID de la marca
+            imagen_url,
+            description
+        };
 
         ProductoService.updateProducto(id, productoParaActualizar)
             .then(() => {
@@ -139,6 +160,7 @@ const VerProductos = () => {
                     if (p.id === id) {
                         const catNombre = categorias.find(c => c.id == categoriaId)?.nombre || '';
                         const marNombre = marcas.find(m => m.id == marcaId)?.nombre || '';
+                        // Mantenemos la estructura completa en el estado local del frontend
                         return { ...editingProductData, categoria: catNombre, marca: marNombre };
                     }
                     return p;
@@ -232,9 +254,9 @@ const VerProductos = () => {
                                                 />
                                                 {isUploadingImage && <p>Subiendo...</p>}
                                             </td>
-                                            <td><input type="text" name="nombre" value={editingProductData.nombre} onChange={handleEditFormChange} /></td>
-                                            <td><input type="number" name="precio" value={editingProductData.precio} onChange={handleEditFormChange} /></td>
-                                            <td><input type="number" name="procentaje_desc" value={editingProductData.procentaje_desc} onChange={handleEditFormChange} /></td>
+                                            <td><input type="text" name="nombre" value={editingProductData.nombre || ''} onChange={handleEditFormChange} /></td>
+                                            <td><input type="number" name="precio" value={editingProductData.precio || ''} onChange={handleEditFormChange} /></td>
+                                            <td><input type="number" name="porcentaje_descuento" value={editingProductData.porcentaje_descuento || ''} onChange={handleEditFormChange} /></td>
                                             <td>
                                                 <select name="categoriaId" value={editingProductData.categoriaId} onChange={handleEditFormChange}>
                                                     {categorias.map(c => <option key={c.id} value={c.id}>{c.nombre}</option>)}
@@ -245,7 +267,7 @@ const VerProductos = () => {
                                                     {marcas.map(m => <option key={m.id} value={m.id}>{m.nombre}</option>)}
                                                 </select>
                                             </td>
-                                            <td><input type="text" name="oem" value={editingProductData.oem} onChange={handleEditFormChange} /></td>
+                                            <td><input type="text" name="oem" value={editingProductData.oem || ''} onChange={handleEditFormChange} /></td>
                                             <td className="acciones-cell">
                                                 <button onClick={() => handleSaveClick(producto.id)} className="btn-guardar">✔️</button>
                                                 <button onClick={handleCancelClick} className="btn-cancelar">❌</button>
@@ -263,12 +285,12 @@ const VerProductos = () => {
                                             </td>
                                             <td>{producto.nombre}</td>
                                             <td>{`$${Number(producto.precio).toLocaleString('es-CL')}`}</td>
-                                            <td>{`${producto.procentaje_desc || 0}%`}</td>
+                                            <td>{`${producto.porcentaje_descuento || 0}%`}</td>
                                             <td>{producto.categoria}</td>
                                             <td>{producto.marca}</td>
                                             <td>{producto.oem}</td>
                                             <td className="acciones-cell">
-                                                <Link to={`/admin/editar-producto/${producto.id}`} className="btn-editar">✏️</Link>
+                                                <button onClick={() => handleEditClick(producto)} className="btn-editar">✏️</button>
                                                 <button onClick={() => deleteProducto(producto.id)} className="btn-eliminar">🗑️</button>
                                             </td>
                                         </>

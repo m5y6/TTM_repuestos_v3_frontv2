@@ -1,13 +1,11 @@
 import api from './api';
 
-const API_URL = 'http://localhost:8080/api/historial';
-
 class HistorialService {
   /**
    * Obtiene todo el historial de cambios.
    */
   getHistorial() {
-    return api.get(API_URL);
+    return api.get('/api/historial');
   }
 
   /**
@@ -15,7 +13,7 @@ class HistorialService {
    * @param {string} nombreEntidad 
    */
   getHistorialPorEntidad(nombreEntidad) {
-    return api.get(`${API_URL}/entidad/${nombreEntidad}`);
+    return api.get(`/api/historial/entidad/${nombreEntidad}`);
   }
 
   /**
@@ -23,7 +21,7 @@ class HistorialService {
    * @param {string} nombreAccion 
    */
   getHistorialPorAccion(nombreAccion) {
-    return api.get(`${API_URL}/accion/${nombreAccion}`);
+    return api.get(`/api/historial/accion/${nombreAccion}`);
   }
 }
 

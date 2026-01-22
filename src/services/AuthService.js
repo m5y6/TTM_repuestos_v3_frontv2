@@ -1,11 +1,8 @@
-import axios from 'axios';
 import api from './api'; // Importamos la instancia de axios configurada
-
-const API_URL = 'http://localhost:8080/auth';
 
 class AuthService {
   login(email, password) {
-    return axios.post(`${API_URL}/login`, { email, password })
+    return api.post('/auth/login', { email, password })
       .then(response => {
         if (response.data.token) {
           // Almacenamos todo el objeto de usuario, que incluye el token
@@ -21,7 +18,7 @@ class AuthService {
 
   register(userData) {
     // El registro devuelve un token, así que lo manejamos igual que el login
-    return axios.post(`${API_URL}/register`, userData)
+    return api.post('/auth/register', userData)
       .then(response => {
         if (response.data.token) {
           localStorage.setItem('user', JSON.stringify(response.data));
@@ -31,15 +28,15 @@ class AuthService {
   }
 
   getAllUsers() {
-    return api.get(`${API_URL}/usuarios`);
+    return api.get('/auth/usuarios');
   }
 
   updateUserRole(userId, rolId) {
-    return api.put(`${API_URL}/usuarios/${userId}/rol?rolId=${rolId}`);
+    return api.put(`/auth/usuarios/${userId}/rol?rolId=${rolId}`);
   }
 
   deleteUser(userId) {
-    return api.delete(`${API_URL}/usuarios/${userId}`);
+    return api.delete(`/auth/usuarios/${userId}`);
   }
 
   getCurrentUser() {

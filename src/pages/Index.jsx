@@ -41,7 +41,7 @@ const ProductCard = React.forwardRef(({ producto, handleAddToCotizacion }, ref) 
     <div className="producto" ref={ref}>
       <a href="#">
         <div className="producto-imagen-container">
-          {producto.procentaje_desc > 0 && <div className="descuento-insignia">{producto.procentaje_desc}% OFF</div>}
+          {producto.porcentaje_descuento > 0 && <div className="descuento-insignia">{producto.porcentaje_descuento}% OFF</div>}
           <img src={producto.imagen_url} alt={producto.nombre} className="producto-imagen" />
         </div>
         <div className="producto-info">
@@ -53,10 +53,10 @@ const ProductCard = React.forwardRef(({ producto, handleAddToCotizacion }, ref) 
         </div>
         <div className="producto-price-actions">
             <div className="precio">
-                {producto.procentaje_desc > 0 ? (
+                {producto.porcentaje_descuento > 0 ? (
                     <>
                         <span className="precio-original">{formatearPrecio(producto.precio)}</span>
-                        <span className="precio-descuento">{formatearPrecio(producto.precio * (1 - producto.procentaje_desc / 100))}</span>
+                        <span className="precio-descuento">{formatearPrecio(producto.precio * (1 - producto.porcentaje_descuento / 100))}</span>
                     </>
                 ) : (
                     formatearPrecio(producto.precio)
@@ -97,7 +97,7 @@ export default function Index() {
       ProductoService.getAllProductos(),
       CategoriaService.getCategorias(),
     ]).then(([productosRes, categoriasRes]) => {
-      const ofertas = productosRes.data.filter(p => p.procentaje_desc > 0).slice(0, 10);
+      const ofertas = productosRes.data.filter(p => p.porcentaje_descuento > 0).slice(0, 10);
       setProductosEnOferta(ofertas);
       
       setCategorias(categoriasRes.data);

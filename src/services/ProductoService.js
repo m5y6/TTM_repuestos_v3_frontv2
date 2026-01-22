@@ -1,28 +1,26 @@
 import api from "./api"; // Usamos la instancia central de axios
 
-const API_URL = "http://localhost:8080/api/productos";
-
 class ProductosService {
   getAllProductos() {
-    return api.get(API_URL);
+    return api.get("/api/productos");
   }
 
   getProductoById(id) {
-    return api.get(`${API_URL}/${id}`);
+    return api.get(`/api/productos/${id}`);
   }
 
   createProducto(producto) {
     // La subida de la imagen debe manejarse antes de llamar a esta función.
     // El backend espera un campo 'imagen_url' con el link a la imagen.
-    return api.post(API_URL, producto);
+    return api.post("/api/productos", producto);
   }
 
   updateProducto(id, producto) {
-    return api.put(`${API_URL}/${id}`, producto);
+    return api.put(`/api/productos/${id}`, producto);
   }
 
   deleteProducto(id) {
-    return api.delete(`${API_URL}/${id}`);
+    return api.delete(`/api/productos/${id}`);
   }
 }
 

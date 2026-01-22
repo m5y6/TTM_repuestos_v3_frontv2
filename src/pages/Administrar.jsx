@@ -14,46 +14,46 @@ const Administrar = () => {
             description: 'Gestiona los usuarios y sus roles en el sistema.',
             link: '/admin/administrar-cuentas',
             icon: 'fas fa-users-cog',
-            roles: [1] // Admin
+            roles: ['ADMIN'] // Admin
         },
         {
             title: 'Dashboard de Cotizaciones',
             description: 'Visualiza y gestiona las cotizaciones realizadas.',
             link: '/admin/dashboard-cotizaciones',
             icon: 'fas fa-chart-bar',
-            roles: [1] // Admin
+            roles: ['ADMIN'] // Admin
         },
         {
             title: 'Ver Productos',
             description: 'Consulta, edita y elimina productos del catálogo.',
             link: '/admin/ver-productos',
             icon: 'fas fa-box-open',
-            roles: [1, 2] // Admin and Employee
+            roles: ['ADMIN', 'EMPLEADO'] // Admin and Employee
         },
         {
             title: 'Administrar Categorías',
             description: 'Gestiona las categorías de productos.',
             link: '/admin/administrar-categorias',
             icon: 'fas fa-tags',
-            roles: [1] // Admin
+            roles: ['ADMIN'] // Admin
         },
         {
             title: 'Administrar Marcas',
             description: 'Gestiona las marcas de productos.',
             link: '/admin/administrar-marcas',
             icon: 'fas fa-copyright',
-            roles: [1] // Admin
+            roles: ['ADMIN'] // Admin
         },
         {
             title: 'Historial',
             description: 'Revisa el historial de cambios en el sistema.',
             link: '/historial',
             icon: 'fas fa-history',
-            roles: [1] // Admin
+            roles: ['ADMIN'] // Admin
         },
     ];
 
-    const adminSections = allAdminSections.filter(section => user && section.roles.includes(user.rol));
+    const adminSections = allAdminSections.filter(section => user && user.usuario && user.usuario.rol && section.roles.includes(user.usuario.rol.nombre));
 
     return (
         <>

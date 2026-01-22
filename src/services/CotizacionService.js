@@ -1,7 +1,5 @@
 import api from './api';
 
-const API_URL = 'http://localhost:8080/api/cotizaciones';
-
 class CotizacionService {
     /**
      * Guarda una lista de productos que componen una cotización (carrito).
@@ -9,7 +7,7 @@ class CotizacionService {
      * @returns {Promise}
      */
     saveCotizacion(productos) {
-        return api.post(API_URL, productos);
+        return api.post('/api/cotizaciones', productos);
     }
 
     /**
@@ -17,7 +15,7 @@ class CotizacionService {
      * @returns {Promise}
      */
     getAllCotizaciones() {
-        return api.get(API_URL);
+        return api.get('/api/cotizaciones');
     }
 
     /**
@@ -27,7 +25,7 @@ class CotizacionService {
      * @returns {Promise}
      */
     getCotizacionesPorRango(inicio, fin) {
-        return api.get(`${API_URL}/rango`, { params: { inicio, fin } });
+        return api.get('/api/cotizaciones/rango', { params: { inicio, fin } });
     }
 }
 

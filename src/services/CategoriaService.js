@@ -1,22 +1,20 @@
 import api from './api';
 
-const API_URL = 'http://localhost:8080/api/categorias';
-
 class CategoriaService {
     getCategorias() {
-        return api.get(API_URL);
+        return api.get('/api/categorias');
     }
 
     createCategoria(categoria) {
-        return api.post(API_URL, categoria);
+        return api.post('/api/categorias', categoria);
     }
 
     updateCategoria(id, updatedCategoria) {
-        return api.put(`${API_URL}/${id}`, updatedCategoria);
+        return api.put(`/api/categorias/${id}`, updatedCategoria);
     }
 
     deleteCategoria(id) {
-        return api.delete(`${API_URL}/${id}`);
+        return api.delete(`/api/categorias/${id}`);
     }
 }
 

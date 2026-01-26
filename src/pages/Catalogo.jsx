@@ -133,9 +133,10 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
     // 3. Hooks de Efecto
     useEffect(() => {
         const categoriaRelaciones = {
-            'electrico': ['Eléctrica', 'Baterias'],
+            'electrico': ['Eléctrica', 'Baterias', 'Eléctrico'],
             'seguridad': ['Artículos de seguridad'],
-            'articulo de seguridad': ['Artículos de seguridad'],
+            'articulos de seguridad': ['articulo de seguridad'],
+            'articulo de seguridad': ['articulo de seguridad'],
             'agricola': ['Insumos agrícolas'],
             'insumos agricolas': ['Insumos agrícolas'],
             'servicios': ['Servicios mecánicos'],

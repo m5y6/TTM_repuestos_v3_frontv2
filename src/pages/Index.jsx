@@ -213,6 +213,39 @@ export default function Index() {
     setCurrentIndex(prevIndex => Math.min(prevIndex + scrollAmount, productosEnOferta.length - itemsVisible));
   };
 
+  const categoriasDeseadas = [
+    "Motor", 
+    "Frenos", 
+    "Suspensión", 
+    "Neumáticos", 
+    "Eléctrico", 
+    "Filtros", 
+    "articulo de seguridad", 
+    "insumos agrícolas", 
+    "servicios mecánicos"
+  ];
+
+  const descripcionesCategorias = {
+    "Motor": "Repuestos para motor y sistema de combustión",
+    "Frenos": "Pastillas, discos y sistema de frenado",
+    "Suspensión": "Amortiguadores",
+    "Neumáticos": "Neumáticos para todo tipo de vehículos",
+    "Eléctrico": "Baterías, alternadores y componentes eléctricos",
+    "Filtros": "Filtros de aceite, aire y combustible",
+    "articulo de seguridad": "Chalecos, conos y extintores",
+    "insumos agrícolas": "Repuestos para maquinaria agrícola",
+    "servicios mecánicos": "Mantenimiento y reparación de vehículos"
+  };
+
+  const nuevasCategoriasCuarta = [
+    "Lubricantes",
+    "Filtros",
+    "Válvulas",
+    "Servicios",
+    "Seguridad",
+    "Agrícola"
+  ];
+
   return (
     <>
       <Header/>
@@ -222,15 +255,19 @@ export default function Index() {
             <section className="cuarta" onClick={(e) => {
         if (e.target.tagName === 'A') {
           e.preventDefault();
-          const category = e.target.textContent.toLowerCase();
-          navigate(`/catalogo?categoria=${category}`);
+          let category = e.target.textContent;
+          if (category.toLowerCase() === 'seguridad') {
+            navigate(`/catalogo?categoria=articulo de seguridad`);
+          } else {
+            navigate(`/catalogo?categoria=${category.toLowerCase()}`);
+          }
         }
       }}>
         <div className="categorias-linea">
-          {categorias.slice(0, 6).map((categoria, index) => (
-            <React.Fragment key={categoria.id}>
-              <a href={`#${categoria.nombre.toLowerCase()}`}>{categoria.nombre}</a>
-              {index < 5 && <span>|</span>}
+          {nuevasCategoriasCuarta.map((categoria, index) => (
+            <React.Fragment key={categoria}>
+              <a href={`#${categoria.toLowerCase()}`}>{categoria}</a>
+              {index < nuevasCategoriasCuarta.length - 1 && <span>|</span>}
             </React.Fragment>
           ))}
         </div>
@@ -275,12 +312,14 @@ export default function Index() {
             <div className="categorias-grid" onClick={(e) => {
               const card = e.target.closest('.categoria-card');
               if (card) {
-                const category = card.querySelector('h3').textContent.toLowerCase();
-                navigate(`/catalogo?categoria=${category}`);
+                const categoryName = card.dataset.categoryName;
+                if (categoryName) {
+                  navigate(`/catalogo?categoria=${encodeURIComponent(categoryName)}`);
+                }
               }
             }}>
-              {categorias.slice(0, 9).map(categoria => (
-                <div className="categoria-card" key={categoria.id}>
+              {categorias.filter(categoria => categoriasDeseadas.includes(categoria.nombre)).map(categoria => (
+                <div className="categoria-card" key={categoria.id} data-category-name={categoria.nombre}>
                   <div className="categoria-icon">
                     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M12 1.6 a3.2 3.2 0 0 0 -3.2 3.2v1.6H6.4a1.6 1.6 0 0 0 -1.6 1.6v6.4a1.6 1.6 0 0 0 1.6 1.6h11.2a1.6 1.6 0 0 0 1.6 -1.6V8a1.6 1.6 0 0 0 -1.6 -1.6h-2.4V4.8A3.2 3.2 0 0 0 12 1.6z"/>
@@ -291,7 +330,7 @@ export default function Index() {
                     </svg>
                   </div>
                   <h3>{categoria.nombre}</h3>
-                  <p>Descripción de {categoria.nombre}</p>
+                  <p>{descripcionesCategorias[categoria.nombre]}</p>
                 </div>
               ))}
             </div>

@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css"; 
@@ -103,6 +103,7 @@ const ProductoCard = ({ producto, handleAddToCotizacion, formatearPrecio }) => {
 
 const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = false }) => {
     const location = useLocation();
+    const navigate = useNavigate();
     const { addToCart } = useContext(CotizacionContext);
     const { user, showNotification } = useContext(AuthContext); // Obtener user y showNotification
     
@@ -168,13 +169,17 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
                 const categoriaNormalizada = categoriaUrl.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
                 const categoriasParaFiltrar = categoriaRelaciones[categoriaNormalizada] || [categoriaUrl];
                 setFiltros(prev => ({ ...prev, categorias: categoriasParaFiltrar }));
+
+                const newParams = new URLSearchParams(location.search);
+                newParams.delete('categoria');
+                navigate({ search: newParams.toString() }, { replace: true });
             }
         }).catch(err => {
             console.error("Error al cargar los datos:", err);
             setError("No se pudieron cargar los productos. Intente más tarde.");
             setLoading(false);
         });
-    }, [location.search]);
+    }, [location.search, navigate]);
 
     useEffect(() => {
         aplicarFiltros();

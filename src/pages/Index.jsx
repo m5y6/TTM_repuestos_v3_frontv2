@@ -5,6 +5,15 @@ import Header from '../organisms/Header';
 import Footer from '../organisms/Footer';
 import ShoppingCartIcon from '../assets/icons/ShoppingCartIcon';
 import SealIcon from '../assets/icons/SealIcon';
+import MotorIcon from '../assets/icons/MotorIcon';
+import FrenosIcon from '../assets/icons/FrenosIcon';
+import SuspensionIcon from '../assets/icons/SuspensionIcon';
+import NeumaticosIcon from '../assets/icons/NeumaticosIcon';
+import ElectricoIcon from '../assets/icons/ElectricoIcon';
+import FiltrosIcon from '../assets/icons/FiltrosIcon';
+import ArticuloSeguridadIcon from '../assets/icons/ArticuloSeguridadIcon';
+import InsumosAgricolasIcon from '../assets/icons/InsumosAgricolasIcon';
+import ServiciosMecanicosIcon from '../assets/icons/ServiciosMecanicosIcon';
 import ProductoService from '../services/ProductoService';
 import CategoriaService from '../services/CategoriaService';
 import { CotizacionContext } from "../context/CotizacionContext";
@@ -246,6 +255,18 @@ export default function Index() {
     "Agrícola"
   ];
 
+  const categoryIcons = {
+    "Motor": <MotorIcon />,
+    "Frenos": <FrenosIcon />,
+    "Suspensión": <SuspensionIcon />,
+    "Neumáticos": <NeumaticosIcon />,
+    "Eléctrico": <ElectricoIcon />,
+    "Filtros": <FiltrosIcon />,
+    "articulo de seguridad": <ArticuloSeguridadIcon />,
+    "insumos agrícolas": <InsumosAgricolasIcon />,
+    "servicios mecánicos": <ServiciosMecanicosIcon />
+  };
+
   return (
     <>
       <Header/>
@@ -321,13 +342,7 @@ export default function Index() {
               {categorias.filter(categoria => categoriasDeseadas.includes(categoria.nombre)).map(categoria => (
                 <div className="categoria-card" key={categoria.id} data-category-name={categoria.nombre}>
                   <div className="categoria-icon">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M12 1.6 a3.2 3.2 0 0 0 -3.2 3.2v1.6H6.4a1.6 1.6 0 0 0 -1.6 1.6v6.4a1.6 1.6 0 0 0 1.6 1.6h11.2a1.6 1.6 0 0 0 1.6 -1.6V8a1.6 1.6 0 0 0 -1.6 -1.6h-2.4V4.8A3.2 3.2 0 0 0 12 1.6z"/>
-                      <path d="M4.8 14.4h14.4"/>
-                      <path d="M8 17.6h8"/>
-                      <path d="M9.6 4.8V3.2"/>
-                      <path d="M14.4 4.8V3.2"/>
-                    </svg>
+                    {categoryIcons[categoria.nombre]}
                   </div>
                   <h3>{categoria.nombre}</h3>
                   <p>{descripcionesCategorias[categoria.nombre]}</p>

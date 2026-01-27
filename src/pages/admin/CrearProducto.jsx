@@ -14,7 +14,7 @@ const CrearProducto = () => {
   const [categoriaId, setCategoriaId] = useState(""); // Cambiado a ID
   const [description, setDescription] = useState("");
   const [imagen_url, setImagenUrl] = useState("");
-  const [procentaje_desc, setProcentajeDesc] = useState("");
+  const [porcentaje_descuento, setPorcentajeDescuento] = useState("");
   const [marcaId, setMarcaId] = useState(""); // Cambiado a ID
   const [oem, setOem] = useState("");
   const [isUploading, setIsUploading] = useState(false);
@@ -59,7 +59,7 @@ const CrearProducto = () => {
       categoriaId: parseInt(categoriaId),
       description,
       imagen_url,
-      procentaje_desc: parseFloat(procentaje_desc) || 0, // Asegurar que sea un número
+      porcentaje_descuento: parseFloat(porcentaje_descuento) || 0, // Asegurar que sea un número
       marcaId: parseInt(marcaId),
       oem,
     };
@@ -120,8 +120,8 @@ const CrearProducto = () => {
           <label>Porcentaje Descuento (opcional) (0-100%):</label>
           <input
             type="number"
-            value={procentaje_desc}
-            onChange={(e) => setProcentajeDesc(e.target.value)}
+            value={porcentaje_descuento}
+            onChange={(e) => setPorcentajeDescuento(e.target.value)}
           />
         </div>
         <div className="form-group">

@@ -16,6 +16,10 @@ class MarcaService {
     deleteMarca(id) {
         return api.delete(`/api/marcas/${id}`);
     }
+
+    updateOrdenMarcas(marcasOrdenadas) {
+        return api.put('/api/marcas/orden', marcasOrdenadas);
+    }
 }
 
 export default new MarcaService();

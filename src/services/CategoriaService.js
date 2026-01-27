@@ -16,6 +16,10 @@ class CategoriaService {
     deleteCategoria(id) {
         return api.delete(`/api/categorias/${id}`);
     }
+
+    updateOrdenCategorias(categoriasOrdenadas) {
+        return api.put('/api/categorias/orden', categoriasOrdenadas);
+    }
 }
 
 export default new CategoriaService();

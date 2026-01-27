@@ -229,9 +229,9 @@ export default function Index() {
     "Neumáticos", 
     "Eléctrico", 
     "Filtros", 
-    "articulo de seguridad", 
-    "insumos agrícolas", 
-    "servicios mecánicos"
+    "Articulo de seguridad", 
+    "Insumos agrícolas", 
+    "Servicios mecánicos"
   ];
 
   const descripcionesCategorias = {
@@ -241,9 +241,9 @@ export default function Index() {
     "Neumáticos": "Neumáticos para todo tipo de vehículos",
     "Eléctrico": "Baterías, alternadores y componentes eléctricos",
     "Filtros": "Filtros de aceite, aire y combustible",
-    "articulo de seguridad": "Chalecos, conos y extintores",
-    "insumos agrícolas": "Repuestos para maquinaria agrícola",
-    "servicios mecánicos": "Mantenimiento y reparación de vehículos"
+    "Articulo de seguridad": "Chalecos, conos y extintores",
+    "Insumos agrícolas": "Repuestos para maquinaria agrícola",
+    "Servicios mecánicos": "Mantenimiento y reparación de vehículos"
   };
 
   const nuevasCategoriasCuarta = [
@@ -262,9 +262,9 @@ export default function Index() {
     "Neumáticos": <NeumaticosIcon />,
     "Eléctrico": <ElectricoIcon />,
     "Filtros": <FiltrosIcon />,
-    "articulo de seguridad": <ArticuloSeguridadIcon />,
-    "insumos agrícolas": <InsumosAgricolasIcon />,
-    "servicios mecánicos": <ServiciosMecanicosIcon />
+    "Articulo de seguridad": <ArticuloSeguridadIcon />,
+    "Insumos agrícolas": <InsumosAgricolasIcon />,
+    "Servicios mecánicos": <ServiciosMecanicosIcon />
   };
 
   return (

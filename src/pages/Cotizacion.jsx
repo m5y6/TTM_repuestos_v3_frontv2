@@ -66,8 +66,15 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
     const generarPdfDesdePlantilla = async () => {
         setIsGeneratingPdf(true);
         try {
-            // Guardar la cotización en localStorage
-            await CotizacionService.saveCotizacion(cartItems);
+            // Transformar los datos al formato que el backend espera
+            const cotizacionParaGuardar = cartItems.map(item => ({
+                productoId: item.producto.id, // Enviar solo el ID del producto
+                cantidad: item.cantidad,
+                precio: item.producto.precio // Opcional, si el backend lo necesita para verificar
+            }));
+
+            // Guardar la cotización en la base de datos
+            await CotizacionService.saveCotizacion(cotizacionParaGuardar);
             
             const { PDFDocument, rgb, StandardFonts } = window.PDFLib;
 

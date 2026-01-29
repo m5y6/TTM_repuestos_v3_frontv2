@@ -390,16 +390,21 @@ table {
     white-space: nowrap;
 }
 
-.tabla-fija th:nth-child(1) { width: 5%; } /* ID */
-.tabla-fija th:nth-child(2) { width: 10%; } /* ID Producto */
-.tabla-fija th:nth-child(3) { width: 10%; } /* Imagen */
-.tabla-fija th:nth-child(4) { width: 20%; } /* Nombre */
-.tabla-fija th:nth-child(5) { width: 10%; } /* Precio */
-.tabla-fija th:nth-child(6) { width: 10%; } /* Descuento */
-.tabla-fija th:nth-child(7) { width: 10%; } /* Categoría */
-.tabla-fija th:nth-child(8) { width: 10%; } /* Marca */
-.tabla-fija th:nth-child(9) { width: 10%; } /* OEM */
-.tabla-fija th:nth-child(10) { width: 15%; } /* Acciones */
+/* 
+La nueva columna de "Código Producto" se añadió en la 2da posición.
+Ajustamos todos los anchos para darle espacio.
+*/
+.tabla-fija th:nth-child(1) { width: 5%; }  /* ID */
+.tabla-fija th:nth-child(2) { width: 8%; }  /* Código Producto */
+.tabla-fija th:nth-child(3) { width: 5%; }  /* Imagen */
+.tabla-fija th:nth-child(4) { width: 15%; } /* Nombre */
+.tabla-fija th:nth-child(5) { width: 8%; }  /* Precio */
+.tabla-fija th:nth-child(6) { width: 8%; }  /* Descuento */
+.tabla-fija th:nth-child(7) { width: 20%; } /* Descripción */
+.tabla-fija th:nth-child(8) { width: 10%; } /* Categoría */
+.tabla-fija th:nth-child(9) { width: 10%; } /* Marca */
+.tabla-fija th:nth-child(10) { width: 8%; } /* OEM */
+.tabla-fija th:nth-child(11) { width: 6%; } /* Acciones */
 
 .tabla-fija input, .tabla-fija select {
     width: 90%;

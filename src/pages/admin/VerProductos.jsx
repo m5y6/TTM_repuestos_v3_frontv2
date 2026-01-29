@@ -14,7 +14,8 @@ const VerProductos = () => {
     const [filtros, setFiltros] = useState({
         busqueda: '',
         categoria: '', // Almacenará el nombre de la categoría para el filtro
-        marca: ''      // Almacenará el nombre de la marca para el filtro
+        marca: '',      // Almacenará el nombre de la marca para el filtro
+        precio: ''     // Nuevo: para ordenar por precio ('asc', 'desc', '')
     });
     const [categorias, setCategorias] = useState([]);
     const [marcas, setMarcas] = useState([]);
@@ -61,6 +62,7 @@ const VerProductos = () => {
         const normalizeString = (str) =>
             str ? str.toString().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim() : "";
 
+        // Filtrado por búsqueda, categoría y marca
         if (filtros.busqueda.trim() !== '') {
             const termino = normalizeString(filtros.busqueda);
             resultado = resultado.filter(producto =>
@@ -76,6 +78,13 @@ const VerProductos = () => {
 
         if (filtros.marca) {
             resultado = resultado.filter(p => p.marca === filtros.marca);
+        }
+
+        // Ordenamiento por precio
+        if (filtros.precio === 'asc') {
+            resultado.sort((a, b) => a.precio - b.precio);
+        } else if (filtros.precio === 'desc') {
+            resultado.sort((a, b) => b.precio - a.precio);
         }
 
         setProductosFiltrados(resultado);
@@ -138,11 +147,11 @@ const VerProductos = () => {
             marcaId,
             imagen_url,
             description,
-            id_producto
+            codigo_producto
         } = editingProductData;
 
         const productoParaActualizar = {
-            id_producto,
+            codigo_producto,
             nombre,
             precio: Number(precio),
             porcentaje_descuento: Number(porcentaje_descuento) || 0,
@@ -211,6 +220,11 @@ const VerProductos = () => {
                         {/* El filtro usa nombres, así que el select también */}
                         {categorias.map(c => <option key={c.id} value={c.nombre}>{c.nombre}</option>)}
                     </select>
+                    <select name="precio" value={filtros.precio} onChange={handleFiltroChange}>
+                        <option value="">Ordenar por precio</option>
+                        <option value="asc">Menor a mayor</option>
+                        <option value="desc">Mayor a menor</option>
+                    </select>
                     <select name="marca" value={filtros.marca} onChange={handleFiltroChange}>
                         <option value="">Todas las marcas</option>
                         {/* El filtro usa nombres, así que el select también */}
@@ -223,10 +237,12 @@ const VerProductos = () => {
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>Código Producto</th>
                                 <th>Imagen</th>
                                 <th>Nombre</th>
                                 <th>Precio</th>
                                 <th>Descuento</th>
+                                <th>Descripción</th>
                                 <th>Categoría</th>
                                 <th>Marca</th>
                                 <th>OEM</th>
@@ -239,6 +255,7 @@ const VerProductos = () => {
                                     {editingProductId === producto.id ? (
                                         <>
                                             <td>{producto.id}</td>
+                                            <td><input type="text" name="codigo_producto" value={editingProductData.codigo_producto || ''} onChange={handleEditFormChange} /></td>
                                             <td onClick={() => fileInputRef.current && fileInputRef.current.click()} style={{ cursor: 'pointer' }}>
                                                 <img
                                                     src={editingProductData.imagen}
@@ -257,6 +274,7 @@ const VerProductos = () => {
                                             <td><input type="text" name="nombre" value={editingProductData.nombre || ''} onChange={handleEditFormChange} /></td>
                                             <td><input type="number" name="precio" value={editingProductData.precio || ''} onChange={handleEditFormChange} /></td>
                                             <td><input type="number" name="porcentaje_descuento" value={editingProductData.porcentaje_descuento || ''} onChange={handleEditFormChange} /></td>
+                                            <td><input type="text" name="description" value={editingProductData.description || ''} onChange={handleEditFormChange} /></td>
                                             <td>
                                                 <select name="categoriaId" value={editingProductData.categoriaId} onChange={handleEditFormChange}>
                                                     {categorias.map(c => <option key={c.id} value={c.id}>{c.nombre}</option>)}
@@ -276,6 +294,7 @@ const VerProductos = () => {
                                     ) : (
                                         <>
                                             <td>{producto.id}</td>
+                                            <td>{producto.codigo_producto}</td>
                                             <td>
                                                 <img
                                                     src={producto.imagen}
@@ -286,6 +305,7 @@ const VerProductos = () => {
                                             <td>{producto.nombre}</td>
                                             <td>{`$${Number(producto.precio).toLocaleString('es-CL')}`}</td>
                                             <td>{`${producto.porcentaje_descuento || 0}%`}</td>
+                                            <td>{producto.description}</td>
                                             <td>{producto.categoria}</td>
                                             <td>{producto.marca}</td>
                                             <td>{producto.oem}</td>

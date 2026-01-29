@@ -16,6 +16,7 @@ const EditarProducto = () => {
   const [procentaje_desc, setProcentajeDesc] = useState("");
   const [marcaId, setMarcaId] = useState(""); // Usaremos ID
   const [oem, setOem] = useState("");
+  const [codigo_producto, setCodigoProducto] = useState("");
   
   // Estados para la UI y datos de soporte
   const [isUploading, setIsUploading] = useState(false);
@@ -47,6 +48,7 @@ const EditarProducto = () => {
         setImagenUrl(producto.imagen_url || "");
         setProcentajeDesc(producto.procentaje_desc || "");
         setOem(producto.oem || "");
+        setCodigoProducto(producto.codigo_producto || "");
         
         // Asignamos los IDs de marca y categoría
         // La API devuelve el objeto completo, accedemos a su 'id'
@@ -93,6 +95,7 @@ const EditarProducto = () => {
       imagen_url,
       procentaje_desc: parseFloat(procentaje_desc) || 0,
       oem,
+      codigo_producto,
       marcaId: parseInt(marcaId),
       categoriaId: parseInt(categoriaId),
     };
@@ -120,6 +123,14 @@ const EditarProducto = () => {
             type="text"
             value={oem}
             onChange={(e) => setOem(e.target.value)}
+          />
+        </div>
+        <div>
+          <label>Código producto:</label>
+          <input
+            type="text"
+            value={codigo_producto}
+            onChange={(e) => setCodigoProducto(e.target.value)}
           />
         </div>
         <div>

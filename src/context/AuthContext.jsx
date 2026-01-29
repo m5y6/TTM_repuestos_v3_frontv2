@@ -11,17 +11,34 @@ export const AuthProvider = ({ children }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        const handleLogout = () => {
+            localStorage.removeItem('user');
+            localStorage.removeItem('token');
+            setUser(null);
+            navigate('/login');
+            showNotification("Tu sesión ha expirado. Por favor, inicia sesión de nuevo.");
+        };
+
         // Check for user in localStorage on initial load
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
             setUser(JSON.parse(storedUser));
         }
         setLoading(false);
-    }, []);
+
+        // Listener para el evento de logout
+        window.addEventListener('logout-event', handleLogout);
+
+        // Cleanup
+        return () => {
+            window.removeEventListener('logout-event', handleLogout);
+        };
+    }, [navigate]);
 
     const showNotification = (message) => {
         setNotification({ msg: message, visible: true });
     };
+
 
     const hideNotification = () => {
         setNotification({ msg: '', visible: false });

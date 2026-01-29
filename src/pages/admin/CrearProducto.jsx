@@ -17,6 +17,7 @@ const CrearProducto = () => {
   const [porcentaje_descuento, setPorcentajeDescuento] = useState("");
   const [marcaId, setMarcaId] = useState(""); // Cambiado a ID
   const [oem, setOem] = useState("");
+  const [codigo_producto, setCodigoProducto] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [categorias, setCategorias] = useState([]);
   const [marcas, setMarcas] = useState([]);
@@ -62,6 +63,7 @@ const CrearProducto = () => {
       porcentaje_descuento: parseFloat(porcentaje_descuento) || 0, // Asegurar que sea un número
       marcaId: parseInt(marcaId),
       oem,
+      codigo_producto: codigo_producto, 
     };
 
     ProductoService.createProducto(producto)
@@ -88,6 +90,14 @@ const CrearProducto = () => {
             type="text"
             value={oem}
             onChange={(e) => setOem(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <label>Código Producto (Opcional):</label>
+          <input
+            type="text"
+            value={codigo_producto}
+            onChange={(e) => setCodigoProducto(e.target.value)}
           />
         </div>
         <div className="form-group">

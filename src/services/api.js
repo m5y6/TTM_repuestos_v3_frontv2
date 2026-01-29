@@ -16,16 +16,23 @@ api.interceptors.request.use(
         config.headers['Authorization'] = `Bearer ${token}`;
       }
     }
-
-    // No establecer Content-Type manualmente para FormData
-    // Axios lo hará automáticamente con el boundary correcto
-    if (config.data instanceof FormData) {
-      delete config.headers['Content-Type'];
-    }
     
     return config;
   },
   (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Interceptor para manejar errores, como el 401
+api.interceptors.response.use(
+  (response) => response, // Si la respuesta es exitosa, la devuelve sin cambios
+  (error) => {
+    // Si el error es 401 (No autorizado) y no es en la página de login
+    if (error.response && error.response.status === 401 && window.location.pathname !== '/login') {
+      // Disparamos un evento personalizado para que el AuthContext pueda reaccionar
+      window.dispatchEvent(new Event('logout-event'));
+    }
     return Promise.reject(error);
   }
 );

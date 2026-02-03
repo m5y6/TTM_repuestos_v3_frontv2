@@ -39,7 +39,7 @@ export const CotizacionProvider = ({ children }) => {
                     id: product.id, // Using product id as cart item id
                     producto: product,
                     cantidad: quantity,
-                    descuento: product.procentaje_desc || 0
+                    descuento: product.porcentaje_descuento || 0
                 };
                 return [...prevItems, newItem];
             }

@@ -52,9 +52,11 @@ const ProductoCard = ({ producto, handleAddToCotizacion, formatearPrecio }) => {
                 <div className="producto-info">
                     <div className="producto-header">
                         <h3 className="producto-nombre">{producto.nombre}</h3>
-                        <button onClick={toggleDescriptionModal} className="btn-info-descripcion" title="Ver descripción">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                        </button>
+                        {producto.descripcion && (
+                            <button onClick={toggleDescriptionModal} className="btn-info-descripcion" title="Ver descripción">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
+                            </button>
+                        )}
                     </div>
                     <p className="producto-marca">{producto.marca}</p>
                     <p className="producto-descripcion">{producto.descripcion}</p>
@@ -140,8 +142,8 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
             'articulo de seguridad': ['articulo de seguridad'],
             'agricola': ['Insumos agrícolas'],
             'insumos agricolas': ['Insumos agrícolas'],
-            'servicios': ['Servicios mecánicos'],
-            'servicios mecanicos': ['Servicios mecánicos']
+            'servicios': ['Servicios'],
+            'servicios mecanicos': ['Servicios']
         };
 
         const params = new URLSearchParams(location.search);
@@ -157,7 +159,8 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
                 ...p,
                 imagen: p.imagen_url || '/img/placeholder.jpg',
                 categoria: p.categoria.nombre,
-                marca: p.marca.nombre
+                marca: p.marca.nombre,
+                descripcion: p.description // Corregido para que coincida con la API
             }));
 
             setProductos(productosApi);

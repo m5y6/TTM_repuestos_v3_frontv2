@@ -727,7 +727,6 @@ body {
 }
 
 .btn-info-descripcion {
-    display: none; /* Oculto en desktop por defecto */
     background: none;
     border: none;
     cursor: pointer;
@@ -1212,6 +1211,16 @@ body {
         min-height: 0;
     }
 
+    .producto-header {
+        position: relative;
+    }
+
+    .btn-info-descripcion {
+        position: absolute;
+        top: -4px; /* Ajuste para alinear verticalmente */
+        right: 0;
+    }
+
     .producto-precio {
         font-size: 1.1rem;
     }
@@ -1277,15 +1286,6 @@ body {
         font-size: 1.1rem;
     }
 
-    .btn-info-descripcion {
-        display: block; /* Se muestra en móvil */
-    }
-    
-    .social-link {
-        font-size: 0.9rem;
-        padding: 8px 12px;
-    }
-    
     .horarios p, .sucursal p {
         font-size: 0.9rem;
     }

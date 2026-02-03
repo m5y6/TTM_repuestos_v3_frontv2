@@ -130,7 +130,7 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
                 const precioTotalItem = precioUnitario * cantidad;
                 const descuentoStr = item.descuento ? `${item.descuento}%` : '0%';
 
-                currentPage.drawText(producto.id_producto || 'N/A', { x: idProductoX, y: currentY, size: 10 });
+                currentPage.drawText(producto.codigo_producto || 'N/A', { x: idProductoX, y: currentY, size: 10 });
                 currentPage.drawText(String(cantidad), { x: quantityX, y: currentY, size: 10 });
                 currentPage.drawText(producto.nombre, { x: nameX, y: currentY, size: 10 });
                 currentPage.drawText(formatearPrecio(precioUnitario), { x: unitPriceX, y: currentY, size: 10 });
@@ -212,8 +212,8 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
             const precioFinal = conDescuento ? Math.round(precioUnitario * (1 - item.descuento / 100)) : precioUnitario;
 
             mensaje += `- *${item.producto.nombre.trim()}*\n`;
-            if (item.producto.id_producto) {
-                mensaje += `  ID Producto: ${item.producto.id_producto}\n`;
+            if (item.producto.codigo_producto) {
+                mensaje += `  ID Producto: ${item.producto.codigo_producto}\n`;
             }
             mensaje += `  Cantidad: ${item.cantidad}\n`;
 

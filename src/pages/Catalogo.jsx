@@ -273,7 +273,9 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
                 normalizeString(producto.nombre).includes(termino) ||
                 (producto.descripcion && normalizeString(producto.descripcion).includes(termino)) ||
                 normalizeString(producto.categoria).includes(termino) ||
-                (producto.oem && normalizeString(producto.oem).includes(termino))
+                (producto.oem && normalizeString(producto.oem).includes(termino)) ||
+                (producto.id && String(producto.id).includes(termino)) ||
+                (producto.codigo_producto && normalizeString(producto.codigo_producto).includes(termino))
             );
         }
         if (filtros.categorias.length > 0) {

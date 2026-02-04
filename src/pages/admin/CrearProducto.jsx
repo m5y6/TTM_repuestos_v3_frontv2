@@ -110,7 +110,7 @@ const CrearProducto = () => {
           />
         </div>
         <div className="form-group">
-          <label>Descripción:</label>
+          <label>Descripción:(Opcional)</label>
           <input
             type="text"
             value={description}

@@ -1,8 +1,8 @@
-/* General container */
-div {
+/* General container styling */
+.main-container {
     padding: 0px;
     font-family: sans-serif;
-  }
+}
   
   /* Form styling */
   form {
@@ -409,4 +409,31 @@ Ajustamos todos los anchos para darle espacio.
 .tabla-fija input, .tabla-fija select {
     width: 90%;
     box-sizing: border-box;
+}
+
+/* Product table specific styles */
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.product-table th,
+.product-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.product-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.product-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.product-table tbody tr:hover {
+    background-color: #f1f1f1;
 }

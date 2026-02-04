@@ -22,6 +22,20 @@ class ProductosService {
   deleteProducto(id) {
     return api.delete(`/api/productos/${id}`);
   }
+
+  async getMasVendidos(periodo = 'todos') {
+    try {
+      const params = {};
+      if (periodo !== 'todos') {
+        params.periodo = periodo;
+      }
+      const response = await api.get('/api/productos/mas-vendidos', { params });
+      return response.data || [];
+    } catch (error) {
+      console.error("Error al obtener los productos más vendidos:", error);
+      return [];
+    }
+  }
 }
 
 export default new ProductosService();

@@ -14,8 +14,12 @@ class CotizacionService {
      * Lista todas las cotizaciones guardadas (histórico).
      * @returns {Promise}
      */
-    getAllCotizaciones() {
-        return api.get('/api/cotizaciones');
+    getAllCotizaciones(periodo = 'todos') {
+        const params = {};
+        if (periodo !== 'todos') {
+            params.periodo = periodo;
+        }
+        return api.get('/api/cotizaciones', { params });
     }
 
     /**

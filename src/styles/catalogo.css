@@ -1197,6 +1197,19 @@ body {
 
 /* Pantallas muy pequeñas (Móvil Pequeño) */
 @media (max-width: 480px) {
+    .descripcion-modal-content {
+        padding: 20px;
+        max-width: 90%;
+    }
+
+    .descripcion-modal-content h3 {
+        font-size: 1.5rem;
+    }
+
+    .descripcion-modal-content p {
+        font-size: 0.9rem;
+    }
+
     .productos-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 10px;

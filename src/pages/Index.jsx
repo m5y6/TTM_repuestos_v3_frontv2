@@ -1,6 +1,8 @@
 import React, { useRef, useState, useEffect, useContext } from 'react';
+import ReactDOM from 'react-dom'; // Importar ReactDOM para usar Portals
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/App.css'; 
+import '../styles/Catalogo.css'; // Importar estilos para el modal
 import Header from '../organisms/Header';
 import Footer from '../organisms/Footer';
 import ShoppingCartIcon from '../assets/icons/ShoppingCartIcon';
@@ -25,6 +27,13 @@ const ProductCard = React.forwardRef(({ producto, handleAddToCotizacion }, ref) 
     return null;
   }
   const [quantity, setQuantity] = useState(1);
+  const [showDescriptionModal, setShowDescriptionModal] = useState(false);
+
+  const toggleDescriptionModal = (e) => {
+    e.stopPropagation(); 
+    e.preventDefault(); 
+    setShowDescriptionModal(!showDescriptionModal);
+  };
 
   const increaseQuantity = () => setQuantity(prev => (prev === '' ? 1 : parseInt(prev, 10) + 1));
   const decreaseQuantity = () => setQuantity(prev => (prev > 1 ? parseInt(prev, 10) - 1 : 1));
@@ -47,48 +56,65 @@ const ProductCard = React.forwardRef(({ producto, handleAddToCotizacion }, ref) 
   };
 
   return (
-    <div className="producto" ref={ref}>
-      <a href="#">
-        <div className="producto-imagen-container">
-          {producto.porcentaje_descuento > 0 && <div className="descuento-insignia">{producto.porcentaje_descuento}% OFF</div>}
-          <img src={producto.imagen_url} alt={producto.nombre} className="producto-imagen" />
-        </div>
-        <div className="producto-info">
-          <div className="producto-details">
-            <span className="producto-code">ID TTM: {producto.id}</span>
-            {producto.oem && <span className="producto-oem">OEM: {producto.oem}</span>}
-            <span className="producto-title">{producto.nombre}</span>
+    <>
+      <div className="producto" ref={ref}>
+        <a href="#">
+          <div className="producto-imagen-container">
+            {producto.porcentaje_descuento > 0 && <div className="descuento-insignia">{producto.porcentaje_descuento}% OFF</div>}
+            <img src={producto.imagen_url} alt={producto.nombre} className="producto-imagen" onError={(e) => { e.target.src = '/img/logo3vfinalv2.png'; }} />
           </div>
-        </div>
-        <div className="producto-price-actions">
-            <div className="precio">
-                {producto.porcentaje_descuento > 0 ? (
-                    <>
-                        <span className="precio-original">{formatearPrecio(producto.precio)}</span>
-                        <span className="precio-descuento">{formatearPrecio(producto.precio * (1 - producto.porcentaje_descuento / 100))}</span>
-                    </>
-                ) : (
-                    formatearPrecio(producto.precio)
-                )}
+          <div className="producto-info">
+            <div className="producto-details">
+              <span className="producto-code">ID TTM: {producto.id}</span>
+              {producto.oem && <span className="producto-oem">OEM: {producto.oem}</span>}
+              <span className="producto-title">{producto.nombre}</span>
+              {producto.description && (
+                <button onClick={toggleDescriptionModal} className="btn-info-descripcion" title="Ver descripción">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
+                </button>
+              )}
             </div>
-          
+          </div>
+          <div className="producto-price-actions">
+              <div className="precio">
+                  {producto.porcentaje_descuento > 0 ? (
+                      <>
+                          <span className="precio-original">{formatearPrecio(producto.precio)}</span>
+                          <span className="precio-descuento">{formatearPrecio(producto.precio * (1 - producto.porcentaje_descuento / 100))}</span>
+                      </>
+                  ) : (
+                      formatearPrecio(producto.precio)
+                  )}
+              </div>
+            
+          </div>
+        </a>
+        <div className="producto-footer">
+          <div className="quantity-selector">
+            <button className="sub" onClick={decreaseQuantity}>-</button>
+            <input 
+              type="number" 
+              value={quantity} 
+              onChange={handleQuantityChange}
+              onBlur={handleBlur}
+              min="1"
+            />
+            <button className="add" onClick={increaseQuantity}>+</button>
+          </div>
+          <button className="cart-btn" onClick={() => handleAddToCotizacion(producto, quantity)}><ShoppingCartIcon /></button>
         </div>
-      </a>
-      <div className="producto-footer">
-        <div className="quantity-selector">
-          <button className="sub" onClick={decreaseQuantity}>-</button>
-          <input 
-            type="number" 
-            value={quantity} 
-            onChange={handleQuantityChange}
-            onBlur={handleBlur}
-            min="1"
-          />
-          <button className="add" onClick={increaseQuantity}>+</button>
-        </div>
-        <button className="cart-btn" onClick={() => handleAddToCotizacion(producto, quantity)}><ShoppingCartIcon /></button>
       </div>
-    </div>
+      {showDescriptionModal && ReactDOM.createPortal(
+        <div className="descripcion-modal-overlay" onClick={toggleDescriptionModal}>
+            <div className="descripcion-modal-content" onClick={(e) => e.stopPropagation()}>
+                <button className="descripcion-modal-close" onClick={toggleDescriptionModal}>&times;</button>
+                <h3>{producto.nombre}</h3>
+                <p>{producto.description || 'No hay descripción disponible.'}</p>
+            </div>
+        </div>,
+        document.getElementById('modal-root')
+      )}
+    </>
   );
 });
 
@@ -106,7 +132,10 @@ export default function Index() {
       ProductoService.getAllProductos(),
       CategoriaService.getCategorias(),
     ]).then(([productosRes, categoriasRes]) => {
-      const ofertas = productosRes.data.filter(p => p.porcentaje_descuento > 0).slice(0, 10);
+      const ofertas = productosRes.data
+        .filter(p => p.porcentaje_descuento > 0)
+        .map(p => ({ ...p, description: p.description })) // Aseguramos que la descripción esté presente
+        .slice(0, 10);
       setProductosEnOferta(ofertas);
       
       setCategorias(categoriasRes.data);
@@ -231,7 +260,7 @@ export default function Index() {
     "Filtros", 
     "Articulo de seguridad", 
     "Insumos agrícolas", 
-    "Servicios mecánicos"
+    "Servicios"
   ];
 
   const descripcionesCategorias = {
@@ -243,7 +272,7 @@ export default function Index() {
     "Filtros": "Filtros de aceite, aire y combustible",
     "Articulo de seguridad": "Chalecos, conos y extintores",
     "Insumos agrícolas": "Repuestos para maquinaria agrícola",
-    "Servicios mecánicos": "Mantenimiento y reparación de vehículos"
+    "Servicios": "Mantenimiento y reparación de vehículos"
   };
 
   const nuevasCategoriasCuarta = [
@@ -264,7 +293,7 @@ export default function Index() {
     "Filtros": <FiltrosIcon />,
     "Articulo de seguridad": <ArticuloSeguridadIcon />,
     "Insumos agrícolas": <InsumosAgricolasIcon />,
-    "Servicios mecánicos": <ServiciosMecanicosIcon />
+    "Servicios": <ServiciosMecanicosIcon />
   };
 
   return (

@@ -49,7 +49,7 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
             subtotal += precioOriginal;
             totalItems += item.cantidad;
             if (item.descuento) {
-                descuentoProductos += precioOriginal * (item.descuento / 100);
+                descuentoProductos += Math.round(precioOriginal * (item.descuento / 100));
             }
         });
         const subtotalConDescuento = subtotal - descuentoProductos;
@@ -328,7 +328,7 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
                         >
                             <div className="item-imagen">
                                 {item.descuento > 0 && <div className="descuento-insignia">{item.descuento}% OFF</div>}
-                                <img src={item.producto.imagen} alt={item.producto.nombre} />
+                                <img src={item.producto.imagen} alt={item.producto.nombre} onError={(e) => { e.target.src = '/img/logo3vfinalv2.png'; }} />
                             </div>
                             <div className="item-info">
                                 <div className="item-header">
@@ -347,7 +347,7 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
                                             {formatearPrecio(item.producto.precio * item.cantidad)}
                                         </span>
                                         <span className="precio-descuento">
-                                            {formatearPrecio(item.producto.precio * (1 - item.descuento / 100) * item.cantidad)}
+                                            {formatearPrecio(Math.round(item.producto.precio * (1 - item.descuento / 100) * item.cantidad))}
                                         </span>
                                     </>
                                 ) : (
@@ -399,7 +399,7 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
 
                     {resumen.descuentoProductos > 0 && (
                         <div className="linea-resumen descuento-linea">
-                            <span>Descuentos de productos:</span>
+                            <span>Descuento total productos:</span>
                             <span id="descuento-productos" style={{ color: '#e74c3c' }}>
                                 -{formatearPrecio(resumen.descuentoProductos)}
                             </span>

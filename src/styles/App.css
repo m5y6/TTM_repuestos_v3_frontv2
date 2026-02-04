@@ -437,6 +437,7 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
+    position: relative; /* Añadido para posicionar el botón */
 }
 
 .producto-oem {
@@ -829,4 +830,20 @@
 
 
 
+}
+
+/* Media query para el modal responsivo en móvil */
+@media (max-width: 480px) {
+    .descripcion-modal-content {
+        padding: 20px;
+        max-width: 90%;
+    }
+
+    .descripcion-modal-content h3 {
+        font-size: 1.5rem;
+    }
+
+    .descripcion-modal-content p {
+        font-size: 0.9rem;
+    }
 }

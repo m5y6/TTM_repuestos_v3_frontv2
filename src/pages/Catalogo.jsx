@@ -46,7 +46,7 @@ const ProductoCard = ({ producto, handleAddToCotizacion, formatearPrecio }) => {
                     <img 
                         src={producto.imagen} 
                         alt={producto.nombre} 
-                        onError={(e) => { e.target.src = '/img/placeholder.jpg'; }}
+                        onError={(e) => { e.target.src = '/img/logo3vfinalv2.png'; }}
                     />
                 </div>
                 <div className="producto-info">
@@ -65,7 +65,7 @@ const ProductoCard = ({ producto, handleAddToCotizacion, formatearPrecio }) => {
                         {producto.porcentaje_descuento > 0 ? (
                             <>
                                 <span className="precio-original">{formatearPrecio(producto.precio)}</span>
-                                <span className="precio-descuento">{formatearPrecio(producto.precio * (1 - producto.porcentaje_descuento / 100))}</span>
+                                <span className="precio-descuento">{formatearPrecio(Math.round(producto.precio * (1 - producto.porcentaje_descuento / 100)))}</span>
                             </>
                         ) : (
                             formatearPrecio(producto.precio)

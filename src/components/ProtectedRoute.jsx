@@ -15,7 +15,7 @@ const ProtectedRoute = () => {
     }
 
     // Check if the user has the required role
-    const hasRequiredRole = user.usuario && user.usuario.rol && (user.usuario.rol.nombre === 'ADMIN' || user.usuario.rol.nombre === 'EMPLEADO' || user.usuario.rol.nombre === 'USER');
+    const hasRequiredRole = user.usuario && user.usuario.rol && (user.usuario.rol.nombre === 'ADMIN' || user.usuario.rol.nombre === 'USER');
 
     return hasRequiredRole ? <Outlet /> : <Navigate to="/" />;
 };

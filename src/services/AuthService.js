@@ -39,6 +39,10 @@ class AuthService {
     return api.delete(`/auth/usuarios/${userId}`);
   }
 
+  createUser(userData) {
+    return api.post('/auth/register', userData);
+  }
+
   getCurrentUser() {
     const userStr = localStorage.getItem('user');
     return userStr ? JSON.parse(userStr) : null;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import ProductoService from '../../services/ProductoService';
 import CategoriaService from '../../services/CategoriaService'; // Importar
@@ -7,8 +7,11 @@ import Header from '../../organisms/Header';
 import Footer from '../../organisms/Footer';
 import { uploadFileToS3 } from '../../services/UploadService';
 import '../../styles/administrar.css';
+import { AuthContext } from '../../context/AuthContext';
 
 const VerProductos = () => {
+    const { user } = useContext(AuthContext);
+    const isAdmin = user && user.usuario && user.usuario.rol && user.usuario.rol.nombre === 'ADMIN';
     const [productos, setProductos] = useState([]);
     const [productosFiltrados, setProductosFiltrados] = useState([]);
     const [filtros, setFiltros] = useState({
@@ -204,7 +207,7 @@ const VerProductos = () => {
             <Header />
             <div className="admin-container ver-productos-container">
                 <h1>Productos</h1>
-                <Link to="/admin/crear-producto" className="btn-agregar">Agregar Producto</Link>
+                {isAdmin && <Link to="/admin/crear-producto" className="btn-agregar">Agregar Producto</Link>}
                 
                 <div className="filtros-container" style={{display: 'flex', gap: '1rem', margin: '1rem 0'}}>
                     <input
@@ -246,7 +249,7 @@ const VerProductos = () => {
                                 <th>Categoría</th>
                                 <th>Marca</th>
                                 <th>OEM</th>
-                                <th>Acciones</th>
+                                {isAdmin && <th>Acciones</th>}
                             </tr>
                         </thead>
                         <tbody>
@@ -309,10 +312,12 @@ const VerProductos = () => {
                                             <td>{producto.categoria}</td>
                                             <td>{producto.marca}</td>
                                             <td>{producto.oem}</td>
-                                            <td className="acciones-cell">
-                                                <button onClick={() => handleEditClick(producto)} className="btn-editar">✏️</button>
-                                                <button onClick={() => deleteProducto(producto.id)} className="btn-eliminar">🗑️</button>
-                                            </td>
+                                            {isAdmin &&
+                                              <td className="acciones-cell">
+                                                  <button onClick={() => handleEditClick(producto)} className="btn-editar">✏️</button>
+                                                  <button onClick={() => deleteProducto(producto.id)} className="btn-eliminar">🗑️</button>
+                                              </td>
+                                            }
                                         </>
                                     )}
                                 </tr>

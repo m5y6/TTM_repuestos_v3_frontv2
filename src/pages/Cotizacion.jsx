@@ -213,12 +213,12 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
 
             mensaje += `- *${item.producto.nombre.trim()}*\n`;
             if (item.producto.codigo_producto) {
-                mensaje += `  ID Producto: ${item.producto.codigo_producto}\n`;
+                mensaje += `  Código Producto: ${item.producto.codigo_producto}\n`;
             }
             mensaje += `  Cantidad: ${item.cantidad}\n`;
 
             if (conDescuento) {
-                mensaje += `  Precio con Descuento: ${formatearPrecio(precioFinal)}\n`;
+                mensaje += `  Precio final con Descuento de (${item.descuento}%): ${formatearPrecio(precioFinal)}\n`;
             } else {
                 mensaje += `  Precio: ${formatearPrecio(precioUnitario)}\n`;
             }

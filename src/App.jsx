@@ -1,3 +1,4 @@
+import React from 'react';
 import { Route, Routes } from 'react-router-dom'
 import Index from './pages/Index'
 import Login from './pages/Login'
@@ -6,7 +7,9 @@ import Cotizacion from './pages/Cotizacion'
 import Administrar from './pages/Administrar'
 import { AuthProvider } from './context/AuthContext.jsx'
 import { CotizacionProvider } from './context/CotizacionContext.jsx'
+import { AuthContext } from './context/AuthContext.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
+import AdminRoute from './components/AdminRoute.jsx'
 import GlobalNotification from './components/GlobalNotification.jsx'
 import AdminLayout from './pages/admin/AdminLayout.jsx'
 import VerProductos from './pages/admin/VerProductos.jsx'
@@ -23,6 +26,7 @@ import ScrollToTop from './components/ScrollToTop.jsx'
 import Historial from './pages/Historial.jsx'
 
 function App () {
+  const { user } = React.useContext(AuthContext);
   return (
     <AuthProvider>
       <CotizacionProvider>
@@ -44,25 +48,27 @@ function App () {
           >
             <Route path='/administrar' element={<Administrar />} />
             <Route path='/admin/ver-productos' element={<VerProductos />} />
-            <Route
-              path='/admin/editar-producto/:id'
-              element={<EditarProducto />}
-            />
-            <Route path='/admin/crear-producto' element={<CrearProducto />} />
-            <Route path='/admin/crear-usuario' element={<CrearUsuario />} />
-            <Route
-              path='/admin/administrar-cuentas'
-              element={<AdministrarCuentas />}
-            />
-            <Route
-              path='/admin/dashboard-cotizaciones'
-              element={<DashboardCotizaciones />}
-            />
-            <Route path='/admin/administrar-categorias' element={<AdministrarCategorias />} />
-            <Route path='/admin/crear-categoria' element={<CrearCategoria />} />
-            <Route path='/admin/administrar-marcas' element={<AdministrarMarcas />} />
-            <Route path='/admin/crear-marca' element={<CrearMarca />} />
-            <Route path='/historial' element={<Historial />} />
+            <Route element={<AdminRoute user={user} />}>
+              <Route
+                path='/admin/editar-producto/:id'
+                element={<EditarProducto />}
+              />
+              <Route path='/admin/crear-producto' element={<CrearProducto />} />
+              <Route path='/admin/crear-usuario' element={<CrearUsuario />} />
+              <Route
+                path='/admin/administrar-cuentas'
+                element={<AdministrarCuentas />}
+              />
+              <Route
+                path='/admin/dashboard-cotizaciones'
+                element={<DashboardCotizaciones />}
+              />
+              <Route path='/admin/administrar-categorias' element={<AdministrarCategorias />} />
+              <Route path='/admin/crear-categoria' element={<CrearCategoria />} />
+              <Route path='/admin/administrar-marcas' element={<AdministrarMarcas />} />
+              <Route path='/admin/crear-marca' element={<CrearMarca />} />
+              <Route path='/historial' element={<Historial />} />
+            </Route>
           </Route>
         </Routes>
       </CotizacionProvider>

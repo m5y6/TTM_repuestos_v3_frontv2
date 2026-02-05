@@ -28,7 +28,7 @@ const Administrar = () => {
             description: 'Consulta, edita y elimina productos del catálogo.',
             link: '/admin/ver-productos',
             icon: 'fas fa-box-open',
-            roles: ['ADMIN', 'EMPLEADO'] // Admin and Employee
+            roles: ['ADMIN', 'EMPLEADO', 'USER'] // Admin and Employee
         },
         {
             title: 'Administrar Categorías',

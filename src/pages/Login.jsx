@@ -8,8 +8,7 @@ const Login = () => {
     // Estados para el formulario
     const [formData, setFormData] = useState({
         email: '',
-        password: '',
-        remember: false
+        password: ''
     });
 
     const [errores, setErrores] = useState({
@@ -171,25 +170,11 @@ const Login = () => {
                         {errores.password && <small className="error-text">{errores.password}</small>}
                     </div>
 
-                    <div className="login-options">
-                        <div className="remember-me">
-                            <input 
-                                type="checkbox" 
-                                id="remember" 
-                                name="remember"
-                                checked={formData.remember}
-                                onChange={handleChange}
-                            />
-                            <label htmlFor="remember">Recordarme</label>
-                        </div>
-                        <a href="#" className="forgot-password">¿Olvidaste tu contraseña?</a>
-                    </div>
+
 
                     <button type="submit" className="btn-login">Iniciar Sesión</button>
 
-                    <div className="register-link">
-                        <p>¿No tienes una cuenta? <Link to="/registro">Regístrate aquí</Link></p>
-                    </div>
+                    
                 </form>
             </div>
         </div>

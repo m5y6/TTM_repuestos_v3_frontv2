@@ -85,7 +85,7 @@ const CrearProducto = () => {
       <h1>Agregar Producto</h1>
       <form onSubmit={saveProducto} className="crear-producto-form">
         <div className="form-group">
-          <label>OEM (Opcional):</label>
+          <label>OEM (Opcional | 22 caracteres máximo):</label>
           <input
             type="text"
             value={oem}
@@ -94,7 +94,7 @@ const CrearProducto = () => {
           />
         </div>
         <div className="form-group">
-          <label>Código Producto (Opcional):</label>
+          <label>Código Producto (Opcional | 10 caracteres máximo):</label>
           <input
             type="text"
             value={codigo_producto}
@@ -112,20 +112,22 @@ const CrearProducto = () => {
           />
         </div>
         <div className="form-group">
-          <label>Nombre:</label>
+          <label>Nombre (25 caracteres máximo):</label>
           <input
             type="text"
             value={nombre}
             onChange={(e) => setNombre(e.target.value)}
             required
+            maxLength="25"
           />
         </div>
         <div className="form-group">
-          <label>Descripción:(Opcional)</label>
+          <label>Descripción (Opcional | 30 caracteres máximo):</label>
           <input
             type="text"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            maxLength="30"
           />
         </div>
         <div className="form-group">

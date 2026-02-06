@@ -395,7 +395,7 @@ La nueva columna de "Código Producto" se añadió en la 2da posición.
 Ajustamos todos los anchos para darle espacio.
 */
 .tabla-fija th:nth-child(1) { width: 4%; }  /* ID */
-.tabla-fija th:nth-child(2) { width: 11%; }  /* Código Producto */
+.tabla-fija th:nth-child(2) { width: 14%; }  /* Código Producto */
 .tabla-fija th:nth-child(3) { width: 7%; }  /* Imagen */
 .tabla-fija th:nth-child(4) { width: 13%; } /* Nombre */
 .tabla-fija th:nth-child(5) { width: 8%; }  /* Precio */
@@ -404,7 +404,7 @@ Ajustamos todos los anchos para darle espacio.
 .tabla-fija th:nth-child(8) { width: 10%; } /* Categoría */
 .tabla-fija th:nth-child(9) { width: 10%; } /* Marca */
 .tabla-fija th:nth-child(10) { width: 8%; } /* OEM */
-.tabla-fija th:nth-child(11) { width: 8%; } /* Acciones */
+.tabla-fija th:nth-child(11) { width: 9%; } /* Acciones */
 
 .tabla-fija input, .tabla-fija select {
     width: 90%;

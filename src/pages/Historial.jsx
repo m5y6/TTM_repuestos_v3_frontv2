@@ -75,6 +75,42 @@ const Historial = () => {
     setModalData(null);
   };
 
+  const renderDetalleValor = (key, value) => {
+    // Caso especial para 'marca', 'categoria' y 'rol': mostrar solo el nombre si es un objeto con esa propiedad.
+    if ((key === 'marca' || key === 'categoria' || key === 'rol') && typeof value === 'object' && value !== null && value.nombre) {
+      return <span>{value.nombre}</span>;
+    }
+
+    if (value === null || value === undefined || value === '') return <span className="detalle-empty">-</span>;
+
+    if (typeof value === 'object') {
+      if (Array.isArray(value)) {
+        return (
+          <div className="detalle-objeto">
+            {value.length === 0 ? <span className="detalle-empty">[]</span> : value.map((v, i) => (
+              <div key={i} className="detalle-subfila">{renderDetalleValor(null, v)}</div> // No pasamos key para sub-items
+            ))}
+          </div>
+        );
+      }
+
+      // Objeto normal: mostrar sus campos internos
+      return (
+        <div className="detalle-objeto">
+          {Object.entries(value).map(([k, v]) => (
+            <div key={k} className="detalle-subfila">
+              <span className="detalle-clave-sub">{k}:</span>
+              <span className="detalle-valor-sub">{typeof v === 'object' ? JSON.stringify(v) : String(v)}</span>
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    // Primitivo
+    return <span>{String(value)}</span>;
+  };
+
   // Función para formatear la fecha y hora sin conversiones de zona horaria
   const formatDateTime = (fecha, hora) => {
     if (!fecha) {
@@ -177,10 +213,12 @@ const Historial = () => {
             <button className="modal-close" onClick={closeModal}>&times;</button>
             <h2>Detalles del Cambio</h2>
             <div className="detalle-contenido">
-              {Object.entries(modalData).map(([key, value]) => (
+              {Object.entries(modalData)
+                .filter(([key]) => key !== 'marcaId' && key !== 'categoriaId')
+                .map(([key, value]) => (
                 <div key={key} className="detalle-fila">
                   <span className="detalle-clave">{key}:</span>
-                  <span className="detalle-valor">{String(value)}</span>
+                  <span className="detalle-valor">{renderDetalleValor(key, value)}</span>
                 </div>
               ))}
             </div>

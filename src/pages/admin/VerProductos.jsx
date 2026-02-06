@@ -240,15 +240,15 @@ const VerProductos = () => {
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Código Producto</th>
+                                <th>Código Producto(Opc)</th>
                                 <th>Imagen</th>
                                 <th>Nombre</th>
                                 <th>Precio</th>
                                 <th>Descuento</th>
-                                <th>Descripción</th>
+                                <th>Descripción(Opc)</th>
                                 <th>Categoría</th>
                                 <th>Marca</th>
-                                <th>OEM</th>
+                                <th>OEM(Opc)</th>
                                 {isAdmin && <th>Acciones</th>}
                             </tr>
                         </thead>

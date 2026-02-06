@@ -90,6 +90,7 @@ const CrearProducto = () => {
             type="text"
             value={oem}
             onChange={(e) => setOem(e.target.value)}
+            maxLength="22"
           />
         </div>
         <div className="form-group">
@@ -97,7 +98,17 @@ const CrearProducto = () => {
           <input
             type="text"
             value={codigo_producto}
-            onChange={(e) => setCodigoProducto(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value.toUpperCase();
+              if (value.length === 3 && codigo_producto.length < 3) {
+                setCodigoProducto(value + "-");
+              } else {
+                setCodigoProducto(value);
+              }
+            }}
+            maxLength="10"
+            pattern="[A-Z0-9]{3}-[A-Z0-9]{1,6}"
+            title="El formato debe ser de 3 letras/números, un guión, y de 1 a 6 letras/números (ej. ART-122222)."
           />
         </div>
         <div className="form-group">

@@ -146,7 +146,7 @@ table {
   background-color: #f9f9f9;
   border: 2px solid white;
   border-radius: 15px;
-  padding: 2rem;
+  padding: 2rem 0px;
   margin: 2rem auto;
   max-width: 800px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -403,7 +403,7 @@ Ajustamos todos los anchos para darle espacio.
 .tabla-fija th:nth-child(7) { width: 15%; } /* Descripción */
 .tabla-fija th:nth-child(8) { width: 10%; } /* Categoría */
 .tabla-fija th:nth-child(9) { width: 10%; } /* Marca */
-.tabla-fija th:nth-child(10) { width: 8%; } /* OEM */
+.tabla-fija th:nth-child(10) { width: 12%; } /* OEM */
 .tabla-fija th:nth-child(11) { width: 9%; } /* Acciones */
 
 .tabla-fija input, .tabla-fija select {

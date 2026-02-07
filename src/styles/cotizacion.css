@@ -167,7 +167,7 @@ body {
     text-align: center;
 }
 
-.btn-eliminar {
+.carrito-item .btn-eliminar {
     background: #ff6b6b;
     color: white;
     border: none;
@@ -601,6 +601,7 @@ footer {
 
     .carrito-items {
         order: 3; /* 3. Items */
+        width: 100%;
     }
 }
 
@@ -624,6 +625,13 @@ footer {
     /* Y se muestra el botón de información */
     .btn-info-cotizacion {
         display: block;
+        margin-left: -5px; /* Lo mueve a la izquierda */
+    }
+
+    .btn-info-cotizacion svg {
+        width: 27px;   /* Aumenta el tamaño */
+        height: 27px;  /* Aumenta el tamaño */
+        margin-right: 2px;
     }
 
     .carrito-item {
@@ -675,13 +683,15 @@ footer {
         min-width: 25px;
     }
     
-    .btn-eliminar {
+    .carrito-item .btn-eliminar {
         grid-area: eliminar;
         justify-self: end; /* Alineación a la derecha */
-        align-self: center;
-        width: 25px;
-        height: 25px;
+        align-self: start;
+        width: 35px;
+        height: 35px;
         font-size: 1rem;
+        margin-top: -20px;
+        margin-right: -3px;
     }
     
     /* === RESUMEN Y CÓDIGO === */

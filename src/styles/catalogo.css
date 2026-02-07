@@ -643,6 +643,7 @@ body {
     color: #999;
     flex-shrink: 0;
     transition: color 0.2s ease;
+    display: none; /* Oculto por defecto en desktop */
 }
 
 .btn-info-descripcion:hover {
@@ -650,8 +651,8 @@ body {
 }
 
 .btn-info-descripcion svg {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
 }
 
 /* =========================================
@@ -740,10 +741,7 @@ body {
     color: #5a8756;
 }
 
-.btn-info-descripcion svg {
-    width: 20px;
-    height: 20px;
-}
+
 
 /* =========================================
    7. MODALES Y NOTIFICACIONES
@@ -1054,6 +1052,9 @@ body {
     
     .producto-descripcion {
         display: none;
+    }
+    .btn-info-descripcion {
+        display: block;
     }
 
     .producto-acciones {

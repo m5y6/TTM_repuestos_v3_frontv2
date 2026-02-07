@@ -129,7 +129,7 @@
 
 .home-page .producto img {
     width: 100%;
-    height: 250px;
+    height: 110%;
     object-fit: cover;
     border-radius: 10px;
     margin-bottom: 15px;

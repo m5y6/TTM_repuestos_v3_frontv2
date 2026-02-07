@@ -1230,7 +1230,7 @@ body {
 
     .btn-info-descripcion {
         position: absolute;
-        top: -4px; /* Ajuste para alinear verticalmente */
+        top: 31px; /* Ajuste para alinear verticalmente */
         right: 0;
     }
 

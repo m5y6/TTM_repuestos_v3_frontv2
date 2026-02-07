@@ -328,7 +328,7 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
                         >
                             <div className="item-imagen">
                                 {item.descuento > 0 && <div className="descuento-insignia">{item.descuento}% OFF</div>}
-                                <img src={item.producto.imagen} alt={item.producto.nombre} onError={(e) => { e.target.src = '/img/logo3vfinalv2.png'; }} />
+                                <img src={item.producto.imagen} alt={item.producto.nombre} onError={(e) => { e.target.src = 'https://ttmrepuestos.s3.amazonaws.com/imagenes-publicas/logo3vfinalv2.png'; }} />
                             </div>
                             <div className="item-info">
                                 <div className="item-header">

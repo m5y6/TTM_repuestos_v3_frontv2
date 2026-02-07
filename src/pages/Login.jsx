@@ -122,7 +122,7 @@ const Login = () => {
         <div className="login-body">
             <section className="contacto-section">
                 <div style={{ marginBottom: '2rem' }}>
-                    <img className="logo-contacto" src="img/logo3vfinalv2.png" alt="logo" />
+                    <img className="logo-contacto" src="https://ttmrepuestos.s3.amazonaws.com/imagenes-publicas/logo3vfinalv2.png" alt="logo" />
                     <h3>CONTACTO</h3>
                     <p>📱 Whatsapp: +56 9 3058 7091</p>
                     <p>☎ Llamadas: 22 8327645</p>

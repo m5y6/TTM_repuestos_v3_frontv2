@@ -46,7 +46,7 @@ const ProductoCard = ({ producto, handleAddToCotizacion, formatearPrecio }) => {
                     <img 
                         src={producto.imagen} 
                         alt={producto.nombre} 
-                        onError={(e) => { e.target.src = '/img/logo3vfinalv2.png'; }}
+                        onError={(e) => { e.target.src = 'https://ttmrepuestos.s3.amazonaws.com/imagenes-publicas/logo3vfinalv2.png'; }}
                     />
                 </div>
                 <div className="producto-info">
@@ -190,29 +190,26 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
 
     // 4. Funciones
     const heroImages = [
-        '/img/carousel/1.png',
-        '/img/carousel/2.png',
-        '/img/carousel/3.png',
-        '/img/carousel/4.png',
-        '/img/carousel/5.png',
-        '/img/carousel/6.png',
-        '/img/carousel/7.png',
-        '/img/carousel/8.png',
-        '/img/carousel/9.png',
-        '/img/carousel/10.png',
-        '/img/carousel/11.png',
-        '/img/carousel/12.png',
-        '/img/carousel/13.png',
-        '/img/carousel/14.png',
-        '/img/carousel/15.png',
-        '/img/carousel/16.png',
-        '/img/carousel/17.png',
-        '/img/carousel/18.png',
-        '/img/carousel/19.png',
-        '/img/carousel/20.png',
-        '/img/carousel/21.png',
-        '/img/carousel/22.png',
-        '/img/carousel/23.png',
+        'https://ttmrepuestos.s3.amazonaws.com/imagenes-publicas/1.png',
+        'https://ttmrepuestos.s3.amazonaws.com/imagenes-publicas/2.png',
+        'https://ttmrepuestos.s3.amazonaws.com/imagenes-publicas/3.png',
+        'https://ttmrepuestos.s3.amazonaws.com/imagenes-publicas/4.png',
+        'https://ttmrepuestos.s3.amazonaws.com/imagenes-publicas/6.png',
+        'https://ttmrepuestos.s3.amazonaws.com/imagenes-publicas/7.png',
+        'https://ttmrepuestos.s3.amazonaws.com/imagenes-publicas/8.png',
+        'https://ttmrepuestos.s3.amazonaws.com/imagenes-publicas/9.png',
+        'https://ttmrepuestos.s3.amazonaws.com/imagenes-publicas/11.png',
+        'https://ttmrepuestos.s3.amazonaws.com/imagenes-publicas/12.png',
+        'https://ttmrepuestos.s3.amazonaws.com/imagenes-publicas/13.png',
+        'https://ttmrepuestos.s3.amazonaws.com/imagenes-publicas/14.png',
+        'https://ttmrepuestos.s3.amazonaws.com/imagenes-publicas/16.png',
+        'https://ttmrepuestos.s3.amazonaws.com/imagenes-publicas/17.png',
+        'https://ttmrepuestos.s3.amazonaws.com/imagenes-publicas/18.png',
+        'https://ttmrepuestos.s3.amazonaws.com/imagenes-publicas/19.png',
+        'https://ttmrepuestos.s3.amazonaws.com/imagenes-publicas/21.png',
+        'https://ttmrepuestos.s3.amazonaws.com/imagenes-publicas/22.png',
+        'https://ttmrepuestos.s3.amazonaws.com/imagenes-publicas/23.png',
+        
     ];
 
     const sliderSettings = {

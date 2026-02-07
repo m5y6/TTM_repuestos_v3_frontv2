@@ -31,7 +31,7 @@ export default function Header() {
     <>
       <header className="primera" id="mainHeader">
         <Link to="/" id="logo">
-          <img src="/img/logo3vfinalv2.png" alt="logo" />
+          <img src="https://ttmrepuestos.s3.amazonaws.com/imagenes-publicas/logo3vfinalv2.png" alt="logo" />
         </Link>
 
         <div className="header-search">

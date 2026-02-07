@@ -61,7 +61,7 @@ const ProductCard = React.forwardRef(({ producto, handleAddToCotizacion }, ref) 
         <a href="#">
           <div className="producto-imagen-container">
             {producto.porcentaje_descuento > 0 && <div className="descuento-insignia">{producto.porcentaje_descuento}% OFF</div>}
-            <img src={producto.imagen_url} alt={producto.nombre} className="producto-imagen" onError={(e) => { e.target.src = '/img/logo3vfinalv2.png'; }} />
+            <img src={producto.imagen_url} alt={producto.nombre} className="producto-imagen" onError={(e) => { e.target.src = 'https://ttmrepuestos.s3.amazonaws.com/imagenes-publicas/logo3vfinalv2.png'; }} />
           </div>
           <div className="producto-info">
             <div className="producto-details">
@@ -326,7 +326,7 @@ export default function Index() {
         <section className="segunda">
           <div id="galeria">
             <div className="contenedor-imagen">
-              <img className="imagen" src="/img/camiones.jpg" alt="Camión Volvo en carretera" />
+              <img className="imagen" src="https://ttmrepuestos.s3.amazonaws.com/imagenes-publicas/camiones.jpg" alt="Camión Volvo en carretera" />
               <h2 className="titulo" translate="no">Truck & Trailer Melipilla</h2>
               
             </div>

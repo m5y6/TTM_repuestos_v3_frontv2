@@ -3,7 +3,7 @@
 /* === ESTILOS PARA LA PÁGINA DE INICIO DE SESIÓN (LOGIN.HTML) === */
 .login-body {
     min-height: 100vh;
-    background-image: url(/img/volvo.png);
+    background-image: url(https://ttmrepuestos.s3.amazonaws.com/imagenes-publicas/camiones.jpg);
     background-size: cover;
     background-position: center;
     background-attachment: fixed;

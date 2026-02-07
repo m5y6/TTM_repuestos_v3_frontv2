@@ -81,7 +81,7 @@ const CrearProducto = () => {
   return (
     <>
     <Header />
-    <div className="admin-container">
+    <div className="admin-container crear-producto-container">
       <h1>Agregar Producto</h1>
       <form onSubmit={saveProducto} className="crear-producto-form">
         <div className="form-group">
@@ -118,7 +118,7 @@ const CrearProducto = () => {
             value={nombre}
             onChange={(e) => setNombre(e.target.value)}
             required
-            maxLength="25"
+            maxLength="20"
           />
         </div>
         <div className="form-group">

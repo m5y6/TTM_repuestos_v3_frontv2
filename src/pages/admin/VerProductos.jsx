@@ -258,7 +258,7 @@ const VerProductos = () => {
                                     {editingProductId === producto.id ? (
                                         <>
                                             <td>{producto.id}</td>
-                                            <td><input type="text" name="codigo_producto" value={editingProductData.codigo_producto || ''} onChange={handleEditFormChange} /></td>
+                                            <td><input type="text" name="codigo_producto" value={editingProductData.codigo_producto || ''} onChange={handleEditFormChange} maxLength="10" /></td>
                                             <td onClick={() => fileInputRef.current && fileInputRef.current.click()} style={{ cursor: 'pointer' }}>
                                                 <img
                                                     src={editingProductData.imagen}
@@ -274,10 +274,10 @@ const VerProductos = () => {
                                                 />
                                                 {isUploadingImage && <p>Subiendo...</p>}
                                             </td>
-                                            <td><input type="text" name="nombre" value={editingProductData.nombre || ''} onChange={handleEditFormChange} /></td>
+                                            <td><input type="text" name="nombre" value={editingProductData.nombre || ''} onChange={handleEditFormChange} maxLength="20" /></td>
                                             <td><input type="number" name="precio" value={editingProductData.precio || ''} onChange={handleEditFormChange} /></td>
                                             <td><input type="number" name="porcentaje_descuento" value={editingProductData.porcentaje_descuento || ''} onChange={handleEditFormChange} /></td>
-                                            <td><input type="text" name="description" value={editingProductData.description || ''} onChange={handleEditFormChange} /></td>
+                                            <td><input type="text" name="description" value={editingProductData.description || ''} onChange={handleEditFormChange} maxLength="30" /></td>
                                             <td>
                                                 <select name="categoriaId" value={editingProductData.categoriaId} onChange={handleEditFormChange}>
                                                     {categorias.map(c => <option key={c.id} value={c.id}>{c.nombre}</option>)}
@@ -288,7 +288,7 @@ const VerProductos = () => {
                                                     {marcas.map(m => <option key={m.id} value={m.id}>{m.nombre}</option>)}
                                                 </select>
                                             </td>
-                                            <td><input type="text" name="oem" value={editingProductData.oem || ''} onChange={handleEditFormChange} /></td>
+                                            <td><input type="text" name="oem" value={editingProductData.oem || ''} onChange={handleEditFormChange} maxLength="22" /></td>
                                             <td className="acciones-cell">
                                                 <button onClick={() => handleSaveClick(producto.id)} className="btn-guardar">✔️</button>
                                                 <button onClick={handleCancelClick} className="btn-cancelar">❌</button>

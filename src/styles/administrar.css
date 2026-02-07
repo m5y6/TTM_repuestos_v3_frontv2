@@ -179,6 +179,7 @@ table {
 .btn-agregar {
   display: inline-block;
   margin-bottom: 1rem;
+  margin-left: 1rem;
   padding: 0.6rem 1.2rem;
   background-color: #28a745;
   color: white;
@@ -322,12 +323,30 @@ table {
   }
 }
 
+
+/* Estilos para el contenedor del formulario */
+.crear-producto-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.crear-producto-container h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
 /* Estilos para el formulario de crear producto */
 .crear-producto-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1px; /* Reducido para menos espacio */
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
 }
+
 
 .form-group {
   display: flex;
@@ -345,6 +364,14 @@ table {
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 
 .form-actions {
@@ -354,19 +381,23 @@ table {
 }
 
 .crear-producto-form .btn-guardar {
-  background-color: #28a745;
+  background-color: #007bff;
   color: white;
   padding: 0.75rem 1.5rem;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
-  width: auto; /* Ancho automático para que se ajuste al contenido */
-  height: auto; /* Altura automática */
-  font-size: 1rem; /* Tamaño de fuente normal */
+  transition: background-color 0.3s, transform 0.3s;
+  width: auto;
+  height: auto;
+  font-size: 1rem;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  border: none;
 }
 
 .crear-producto-form .btn-guardar:hover {
-  background-color: #218838;
+  background-color: #0056b3;
+  transform: translateY(-2px);
 }
 
 .image-preview {

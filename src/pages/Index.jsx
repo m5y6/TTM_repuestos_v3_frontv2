@@ -271,7 +271,7 @@ export default function Index() {
     "Eléctrico": "Baterías, alternadores y componentes eléctricos",
     "Filtros": "Filtros de aceite, aire y combustible",
     "Articulo de seguridad": "Chalecos, conos y extintores",
-    "Insumos agrícolas": "Repuestos para maquinaria agrícola",
+    "Insumos agrícolas": "Repuestos y accesorios para insumos de maquinaria agrícola",
     "Servicios": "Mantenimiento y reparación de vehículos"
   };
 

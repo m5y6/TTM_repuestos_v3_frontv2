@@ -95,7 +95,7 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
             const dateY = height - 252; 
 
             // Coordenadas para la tabla de items
-            const idProductoX = 40;
+            const idProductoX = 35;
             const quantityX = 122;
             const nameX = 159;
             const unitPriceX = 409;

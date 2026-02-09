@@ -13,7 +13,7 @@ import AdminRoute from './components/AdminRoute.jsx'
 import GlobalNotification from './components/GlobalNotification.jsx'
 import AdminLayout from './pages/admin/AdminLayout.jsx'
 import VerProductos from './pages/admin/VerProductos.jsx'
-import EditarProducto from './pages/admin/EditarProducto.jsx'
+
 import CrearProducto from './pages/admin/CrearProducto.jsx'
 import CrearUsuario from './pages/admin/CrearUsuario.jsx'
 import AdministrarCuentas from './pages/admin/AdministrarCuentas.jsx'
@@ -49,10 +49,7 @@ function App () {
             <Route path='/administrar' element={<Administrar />} />
             <Route path='/admin/ver-productos' element={<VerProductos />} />
             <Route element={<AdminRoute user={user} />}>
-              <Route
-                path='/admin/editar-producto/:id'
-                element={<EditarProducto />}
-              />
+
               <Route path='/admin/crear-producto' element={<CrearProducto />} />
               <Route path='/admin/crear-usuario' element={<CrearUsuario />} />
               <Route

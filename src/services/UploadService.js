@@ -1,3 +1,4 @@
+import api from './api';
 import axios from 'axios';
 
 // La URL base de nuestra API desplegada.
@@ -17,8 +18,8 @@ export const uploadFileToS3 = async (file) => {
   try {
     // --- PASO 1: Obtener la URL prefirmada de nuestro backend ---
     console.log("Pidiendo URL prefirmada al backend...");
-    const response = await axios.post(`${API_BASE_URL}/uploads/generate-presigned-url`, {
-      fileName: file.name
+    const response = await api.post(`api/uploads/generate-presigned-url`, {
+      contentType: file.type
     });
 
     const { url: presignedUrl } = response.data;

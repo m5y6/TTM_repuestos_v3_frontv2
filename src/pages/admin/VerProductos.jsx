@@ -7,6 +7,7 @@ import Header from '../../organisms/Header';
 import Footer from '../../organisms/Footer';
 import { uploadFileToS3 } from '../../services/UploadService';
 import '../../styles/administrar.css';
+import '../../styles/VerProductos.css'; // Importar los nuevos estilos
 import { AuthContext } from '../../context/AuthContext';
 
 const VerProductos = () => {
@@ -258,13 +259,19 @@ const VerProductos = () => {
                                     {editingProductId === producto.id ? (
                                         <>
                                             <td>{producto.id}</td>
-                                            <td><input type="text" name="codigo_producto" value={editingProductData.codigo_producto || ''} onChange={handleEditFormChange} maxLength="10" /></td>
-                                            <td onClick={() => fileInputRef.current && fileInputRef.current.click()} style={{ cursor: 'pointer' }}>
-                                                <img
-                                                    src={editingProductData.imagen}
-                                                    alt={editingProductData.nombre}
-                                                    style={{ width: "50px", height: "50px", objectFit: "cover" }}
-                                                />
+                                            <td className="edit-mode-cell">
+                                                <input type="text" name="codigo_producto" value={editingProductData.codigo_producto || ''} onChange={handleEditFormChange} maxLength="10" />
+                                                <div className={`char-counter ${editingProductData.codigo_producto?.length > 10 ? 'limit-exceeded' : ''}`}>{editingProductData.codigo_producto?.length || 0}/10</div>
+                                            </td>
+                                            <td className="edit-mode-cell" onClick={() => fileInputRef.current && fileInputRef.current.click()} style={{ cursor: 'pointer' }}>
+                                                <div className="image-edit-container">
+                                                    <img
+                                                        src={editingProductData.imagen}
+                                                        alt={editingProductData.nombre}
+                                                        style={{ width: "50px", height: "50px", objectFit: "cover" }}
+                                                    />
+                                                    <div className="edit-icon-overlay">✏️</div>
+                                                </div>
                                                 <input
                                                     type="file"
                                                     ref={fileInputRef}
@@ -274,21 +281,38 @@ const VerProductos = () => {
                                                 />
                                                 {isUploadingImage && <p>Subiendo...</p>}
                                             </td>
-                                            <td><input type="text" name="nombre" value={editingProductData.nombre || ''} onChange={handleEditFormChange} maxLength="20" /></td>
-                                            <td><input type="number" name="precio" value={editingProductData.precio || ''} onChange={handleEditFormChange} /></td>
-                                            <td><input type="number" name="porcentaje_descuento" value={editingProductData.porcentaje_descuento || ''} onChange={handleEditFormChange} /></td>
-                                            <td><input type="text" name="description" value={editingProductData.description || ''} onChange={handleEditFormChange} maxLength="30" /></td>
-                                            <td>
+                                            <td className="edit-mode-cell">
+                                                <input type="text" name="nombre" value={editingProductData.nombre || ''} onChange={handleEditFormChange} maxLength="20" className={editingProductData.nombre?.length > 20 ? 'char-limit-exceeded' : ''} />
+                                                <div className={`char-counter ${editingProductData.nombre?.length > 20 ? 'limit-exceeded' : ''}`}>{editingProductData.nombre?.length || 0}/20</div>
+                                            </td>
+                                            <td className="edit-mode-cell">
+                                                <input type="number" name="precio" value={editingProductData.precio || ''} onChange={handleEditFormChange} />
+                                                <div className="char-counter">&nbsp;</div>
+                                            </td>
+                                            <td className="edit-mode-cell">
+                                                <input type="number" name="porcentaje_descuento" value={editingProductData.porcentaje_descuento || ''} onChange={handleEditFormChange} />
+                                                <div className="char-counter">&nbsp;</div>
+                                            </td>
+                                            <td className="edit-mode-cell">
+                                                <input type="text" name="description" value={editingProductData.description || ''} onChange={handleEditFormChange} maxLength="30" className={editingProductData.description?.length > 30 ? 'char-limit-exceeded' : ''} />
+                                                <div className={`char-counter ${editingProductData.description?.length > 30 ? 'limit-exceeded' : ''}`}>{editingProductData.description?.length || 0}/30</div>
+                                            </td>
+                                            <td className="edit-mode-cell">
                                                 <select name="categoriaId" value={editingProductData.categoriaId} onChange={handleEditFormChange}>
                                                     {categorias.map(c => <option key={c.id} value={c.id}>{c.nombre}</option>)}
                                                 </select>
+                                                <div className="char-counter">&nbsp;</div>
                                             </td>
-                                            <td>
+                                            <td className="edit-mode-cell">
                                                 <select name="marcaId" value={editingProductData.marcaId} onChange={handleEditFormChange}>
                                                     {marcas.map(m => <option key={m.id} value={m.id}>{m.nombre}</option>)}
                                                 </select>
+                                                <div className="char-counter">&nbsp;</div>
                                             </td>
-                                            <td><input type="text" name="oem" value={editingProductData.oem || ''} onChange={handleEditFormChange} maxLength="22" /></td>
+                                            <td className="edit-mode-cell">
+                                                <input type="text" name="oem" value={editingProductData.oem || ''} onChange={handleEditFormChange} maxLength="22" className={editingProductData.oem?.length > 22 ? 'char-limit-exceeded' : ''} />
+                                                <div className={`char-counter ${editingProductData.oem?.length > 22 ? 'limit-exceeded' : ''}`}>{editingProductData.oem?.length || 0}/22</div>
+                                            </td>
                                             <td className="acciones-cell">
                                                 <button onClick={() => handleSaveClick(producto.id)} className="btn-guardar">✔️</button>
                                                 <button onClick={handleCancelClick} className="btn-cancelar">❌</button>

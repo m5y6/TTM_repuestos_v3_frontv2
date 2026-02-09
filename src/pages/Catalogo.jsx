@@ -164,8 +164,12 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
             }));
 
             setProductos(productosApi);
-            setCategoriasDisponibles(categoriasRes.data);
-            setMarcasDisponibles(marcasRes.data);
+            setCategoriasDisponibles(categoriasRes.data.filter(c => 
+                c.nombre && !['sin categoria', 'sin categoría'].includes(c.nombre.toLowerCase())
+            ));
+            setMarcasDisponibles(marcasRes.data.filter(m => 
+                m.nombre && m.nombre.toLowerCase() !== 'sin marca'
+            ));
             setLoading(false);
 
             if (categoriaUrl) {
@@ -245,19 +249,6 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
     const aplicarFiltros = () => {
         const normalizeString = (str) => 
             str ? str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim() : "";
-
-        // Si no hay filtros aplicados, muestra todos los productos.
-        if (
-            filtros.busqueda.trim() === '' &&
-            filtros.categorias.length === 0 &&
-            filtros.marcas.length === 0 &&
-            filtros.precioMin === '' &&
-            filtros.precioMax === ''
-        ) {
-            setProductosFiltrados([...productos]);
-            setPaginaActual(1);
-            return;
-        }
 
         let resultado = [...productos];
         

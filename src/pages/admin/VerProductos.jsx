@@ -131,6 +131,10 @@ const VerProductos = () => {
     };
 
     const handleCancelClick = () => {
+        // Si se generó una URL de vista previa, la revocamos para liberar memoria
+        if (editingProductData.imageFile && editingProductData.imagen.startsWith('blob:')) {
+            URL.revokeObjectURL(editingProductData.imagen);
+        }
         setEditingProductId(null);
         setEditingProductData({});
     };
@@ -140,66 +144,81 @@ const VerProductos = () => {
         setEditingProductData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleSaveClick = (id) => {
-        // Opción A (Recomendada por el backend): Enviar solo los IDs
-        const {
-            nombre,
-            precio,
-            porcentaje_descuento,
-            oem,
-            categoriaId,
-            marcaId,
-            imagen_url,
-            description,
-            codigo_producto
-        } = editingProductData;
+    const handleSaveClick = async (id) => {
+        setIsUploadingImage(true); // Usamos el estado para indicar "guardando"
 
-        const productoParaActualizar = {
-            codigo_producto,
-            nombre,
-            precio: Number(precio),
-            porcentaje_descuento: Number(porcentaje_descuento) || 0,
-            oem,
-            categoriaId, // Enviar el ID de la categoría
-            marcaId,     // Enviar el ID de la marca
-            imagen_url,
-            description
-        };
+        try {
+            let finalImageUrl = editingProductData.imagen_url;
 
-        ProductoService.updateProducto(id, productoParaActualizar)
-            .then(() => {
-                // Actualizamos la lista local para reflejar el cambio visualmente
-                const updatedProductos = productos.map(p => {
-                    if (p.id === id) {
-                        const catNombre = categorias.find(c => c.id == categoriaId)?.nombre || '';
-                        const marNombre = marcas.find(m => m.id == marcaId)?.nombre || '';
-                        // Mantenemos la estructura completa en el estado local del frontend
-                        return { ...editingProductData, categoria: catNombre, marca: marNombre };
-                    }
-                    return p;
-                });
-                setProductos(updatedProductos);
-                setEditingProductId(null);
-                alert("Producto actualizado con éxito.");
-            })
-            .catch(error => {
-                console.error("Error updating producto:", error);
-                alert("Error al actualizar el producto.");
+            // 1. Si hay un archivo nuevo, subirlo
+            if (editingProductData.imageFile) {
+                finalImageUrl = await uploadFileToS3(editingProductData.imageFile);
+            }
+
+            // 2. Preparar los datos del producto para la API
+            const {
+                nombre,
+                precio,
+                porcentaje_descuento,
+                oem,
+                categoriaId,
+                marcaId,
+                description,
+                codigo_producto
+            } = editingProductData;
+
+            const productoParaActualizar = {
+                codigo_producto,
+                nombre,
+                precio: Number(precio),
+                porcentaje_descuento: Number(porcentaje_descuento) || 0,
+                oem,
+                categoriaId,
+                marcaId,
+                imagen_url: finalImageUrl,
+                description
+            };
+
+            // 3. Actualizar el producto en el backend
+            await ProductoService.updateProducto(id, productoParaActualizar);
+
+            // 4. Actualizar el estado local en el frontend
+            const updatedProductos = productos.map(p => {
+                if (p.id === id) {
+                    const catNombre = categorias.find(c => c.id == categoriaId)?.nombre || '';
+                    const marNombre = marcas.find(m => m.id == marcaId)?.nombre || '';
+                    return {
+                        ...editingProductData,
+                        imagen: finalImageUrl, // Vista previa y dato
+                        imagen_url: finalImageUrl,
+                        categoria: catNombre,
+                        marca: marNombre,
+                        imageFile: null // Limpiar el archivo en estado
+                    };
+                }
+                return p;
             });
+            setProductos(updatedProductos);
+            setEditingProductId(null);
+            alert("Producto actualizado con éxito.");
+
+        } catch (error) {
+            console.error("Error updating producto:", error);
+            alert("Error al actualizar el producto. Por favor, revise la consola.");
+        } finally {
+            setIsUploadingImage(false);
+        }
     };
 
-    const handleImageChange = async (e) => {
+    const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            setIsUploadingImage(true);
-            try {
-                const imageUrl = await uploadFileToS3(file);
-                setEditingProductData(prev => ({ ...prev, imagen: imageUrl, imagen_url: imageUrl }));
-            } catch (error) {
-                alert("Falló la subida de la imagen. Por favor, inténtalo de nuevo.");
-            } finally {
-                setIsUploadingImage(false);
-            }
+            // Guardamos el archivo para subirlo después y creamos una URL local para la vista previa
+            setEditingProductData(prev => ({
+                ...prev,
+                imagen: URL.createObjectURL(file), // Para vista previa
+                imageFile: file // El archivo real para subir
+            }));
         }
     };
 
@@ -279,7 +298,6 @@ const VerProductos = () => {
                                                     style={{ display: 'none' }}
                                                     accept="image/png, image/jpeg"
                                                 />
-                                                {isUploadingImage && <p>Subiendo...</p>}
                                             </td>
                                             <td className="edit-mode-cell">
                                                 <input type="text" name="nombre" value={editingProductData.nombre || ''} onChange={handleEditFormChange} maxLength="20" className={editingProductData.nombre?.length > 20 ? 'char-limit-exceeded' : ''} />
@@ -314,8 +332,10 @@ const VerProductos = () => {
                                                 <div className={`char-counter ${editingProductData.oem?.length > 22 ? 'limit-exceeded' : ''}`}>{editingProductData.oem?.length || 0}/22</div>
                                             </td>
                                             <td className="acciones-cell">
-                                                <button onClick={() => handleSaveClick(producto.id)} className="btn-guardar">✔️</button>
-                                                <button onClick={handleCancelClick} className="btn-cancelar">❌</button>
+                                                <button onClick={() => handleSaveClick(producto.id)} className="btn-guardar" disabled={isUploadingImage}>
+                                                    ✔️
+                                                </button>
+                                                <button onClick={handleCancelClick} className="btn-cancelar" disabled={isUploadingImage}>❌</button>
                                             </td>
                                         </>
                                     ) : (

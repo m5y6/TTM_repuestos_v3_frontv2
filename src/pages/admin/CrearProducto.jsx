@@ -18,7 +18,8 @@ const CrearProducto = () => {
   const [marcaId, setMarcaId] = useState(""); // Cambiado a ID
   const [oem, setOem] = useState("");
   const [codigo_producto, setCodigoProducto] = useState("");
-  const [isUploading, setIsUploading] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [imagen, setImagen] = useState({ preview: "", file: null }); // Para preview y archivo
   const [categorias, setCategorias] = useState([]);
   const [marcas, setMarcas] = useState([]);
 
@@ -35,47 +36,56 @@ const CrearProducto = () => {
       .catch(err => console.error("Error al cargar marcas:", err));
   }, []);
 
-  const handleImagenChange = async (e) => {
+  const handleImagenChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setIsUploading(true);
-      try {
-        const imageUrl = await uploadFileToS3(file);
-        setImagenUrl(imageUrl);
-      } catch (error) {
-        alert("Falló la subida de la imagen. Por favor, inténtalo de nuevo.");
-      } finally {
-        setIsUploading(false);
-      }
+      setImagen({
+        preview: URL.createObjectURL(file),
+        file: file,
+      });
     }
   };
 
   const saveProducto = async (e) => {
     e.preventDefault();
+    setIsSaving(true);
 
-    // El backend espera los IDs de marca y categoría
-    const producto = {
-      nombre,
-      precio: parseFloat(precio),
-      categoriaId: parseInt(categoriaId),
-      description,
-      imagen_url,
-      porcentaje_descuento: parseFloat(porcentaje_descuento) || 0, // Asegurar que sea un número
-      marcaId: parseInt(marcaId),
-      oem,
-      codigo_producto: codigo_producto, 
-    };
+    try {
+      let finalImageUrl = '';
+      // 1. Subir la imagen si existe
+      if (imagen.file) {
+        finalImageUrl = await uploadFileToS3(imagen.file);
+      }
 
-    ProductoService.createProducto(producto)
-      .then(() => {
-        navigate("/admin/ver-productos");
-      })
-      .catch((error) => {
-        console.error("Error al guardar el producto:", error);
-        alert(
-          "Hubo un error al guardar el producto. Revisa la consola para más detalles."
-        );
-      });
+      // 2. Preparar los datos del producto
+      const producto = {
+        nombre,
+        precio: parseFloat(precio),
+        categoriaId: parseInt(categoriaId),
+        description,
+        imagen_url: finalImageUrl,
+        porcentaje_descuento: parseFloat(porcentaje_descuento) || 0,
+        marcaId: parseInt(marcaId),
+        oem,
+        codigo_producto,
+      };
+
+      // 3. Crear el producto
+      await ProductoService.createProducto(producto);
+      
+      // Liberar el objeto URL de la vista previa
+      if (imagen.preview) {
+        URL.revokeObjectURL(imagen.preview);
+      }
+
+      navigate("/admin/ver-productos");
+
+    } catch (error) {
+      console.error("Error al guardar el producto:", error);
+      alert("Hubo un error al guardar el producto. Revisa la consola.");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -177,16 +187,18 @@ const CrearProducto = () => {
             accept="image/png, image/jpeg"
             onChange={handleImagenChange}
           />
-          {isUploading && <p>Subiendo imagen...</p>}
-          {imagen_url && !isUploading && (
+          {isSaving && <p>Guardando producto...</p>}
+          {imagen.preview && !isSaving && (
             <div className="image-preview">
               <p>Vista previa:</p>
-              <img src={imagen_url} alt="Vista previa del producto" style={{ maxWidth: '200px', maxHeight: '200px' }} />
+              <img src={imagen.preview} alt="Vista previa del producto" style={{ maxWidth: '200px', maxHeight: '200px' }} />
             </div>
           )}
         </div>
         <div className="form-actions">
-          <button type="submit" className="btn-guardar" disabled={isUploading}>Guardar</button>
+          <button type="submit" className="btn-guardar" disabled={isSaving}>
+            {isSaving ? 'Guardando...' : 'Guardar'}
+          </button>
         </div>
       </form>
     </div>

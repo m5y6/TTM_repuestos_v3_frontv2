@@ -88,6 +88,25 @@ body {
     opacity: 1;
 }
 
+/* Ajustes para el carrusel en dispositivos móviles */
+@media (max-width: 768px) {
+    .catalogo-hero,
+    .hero-slide {
+        height: 240px; /* Un poco más grande */
+        border-bottom-width: 0px;
+    }
+
+    .catalogo-hero h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10rem; /* Sube las imágenes un poco más */
+    }
+
+    .hero-image {
+        object-fit: contain;
+    }
+}
+
+
 /* =========================================
    3. BUSCADOR (MODIFICADO PARA PC)
    ========================================= */
@@ -1230,9 +1249,9 @@ body {
     }
 
     .btn-info-descripcion {
-        position: absolute;
-        top: 31px; /* Ajuste para alinear verticalmente */
-        right: 0;
+        position: static;
+        margin-top: 5px;
+        align-self: center;
     }
 
     .producto-precio {

@@ -4,6 +4,7 @@ import Header from '../../organisms/Header';
 import Footer from '../../organisms/Footer';
 import AuthService from '../../services/AuthService'; // Importar el servicio
 import '../../styles/administrar.css';
+import '../../styles/VerProductos.css';
 
 const AdministrarCuentas = () => {
     const [users, setUsers] = useState([]);
@@ -85,7 +86,7 @@ const AdministrarCuentas = () => {
                                     <td>{user.id}</td>
                                     <td>{user.nombre}</td>
                                     <td>{user.email}</td>
-                                    <td>
+                                    <td className={editingUserId === user.id ? "edit-mode-cell" : ""}>
                                         {editingUserId === user.id ? (
                                             <select 
                                                 value={editingUserRolId} 

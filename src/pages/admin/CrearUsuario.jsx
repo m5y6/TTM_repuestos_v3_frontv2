@@ -4,6 +4,7 @@ import Header from '../../organisms/Header';
 import Footer from '../../organisms/Footer';
 import AuthService from '../../services/AuthService';
 import '../../styles/administrar.css';
+import '../../styles/VerProductos.css';
 
 const CrearUsuario = () => {
     const [email, setEmail] = useState('');
@@ -82,7 +83,7 @@ const CrearUsuario = () => {
     return (
         <>
             <Header />
-            <div className="admin-container">
+            <div className="admin-container crear-producto-container">
                 <h1>Crear Usuario</h1>
                 <form onSubmit={handleSubmit} className="crear-producto-form">
                     <div className="form-group">
@@ -92,7 +93,11 @@ const CrearUsuario = () => {
                             value={nombre}
                             onChange={(e) => setNombre(e.target.value)}
                             required
+                            maxLength="50"
                         />
+                        <div className="char-counter">
+                            {nombre.length}/50
+                        </div>
                     </div>
                     <div className="form-group">
                         <label>Email:</label>
@@ -102,7 +107,11 @@ const CrearUsuario = () => {
                             onChange={handleEmailChange}
                             onBlur={handleEmailChange} // Validar también cuando se pierde el foco
                             required
+                            maxLength="100"
                         />
+                        <div className="char-counter">
+                            {email.length}/100
+                        </div>
                         {emailError && <small className="error-text" style={{ color: 'red' }}>{emailError}</small>}
                     </div>
                     <div className="form-group">
@@ -112,7 +121,11 @@ const CrearUsuario = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
+                            maxLength="100"
                         />
+                        <div className="char-counter">
+                            {password.length}/100
+                        </div>
                     </div>
                     <div className="form-group">
                         <label>Rol:</label>

@@ -20,6 +20,7 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import '../../styles/administrar.css';
+import '../../styles/VerProductos.css';
 
 const SortableItem = ({ id, marca, index, editingMarcaId, handleEditClick, handleSaveClick, handleDeleteClick, handleCancelClick, editingMarcaNombre, setEditingMarcaNombre }) => {
     const {
@@ -43,13 +44,19 @@ const SortableItem = ({ id, marca, index, editingMarcaId, handleEditClick, handl
                 </button>
             </td>
             <td>{marca.id}</td>
-            <td>
+            <td className={editingMarcaId === marca.id ? "edit-mode-cell" : ""}>
                 {editingMarcaId === marca.id ? (
-                    <input
-                        type="text"
-                        value={editingMarcaNombre}
-                        onChange={(e) => setEditingMarcaNombre(e.target.value)}
-                    />
+                    <>
+                        <input
+                            type="text"
+                            value={editingMarcaNombre}
+                            onChange={(e) => setEditingMarcaNombre(e.target.value)}
+                            maxLength="30"
+                        />
+                        <div className="char-counter">
+                            {editingMarcaNombre.length}/30
+                        </div>
+                    </>
                 ) : (
                     marca.nombre
                 )}

@@ -7,6 +7,7 @@ import { uploadFileToS3 } from '../../services/UploadService';
 import Header from '../../organisms/Header';
 import Footer from '../../organisms/Footer';
 import "../../styles/administrar.css";
+import '../../styles/VerProductos.css';
 
 const CrearProducto = () => {
   const [nombre, setNombre] = useState("");
@@ -22,6 +23,7 @@ const CrearProducto = () => {
   const [imagen, setImagen] = useState({ preview: "", file: null }); // Para preview y archivo
   const [categorias, setCategorias] = useState([]);
   const [marcas, setMarcas] = useState([]);
+  const [imagenError, setImagenError] = useState("");
 
   const navigate = useNavigate();
 
@@ -38,7 +40,15 @@ const CrearProducto = () => {
 
   const handleImagenChange = (e) => {
     const file = e.target.files[0];
+    setImagenError("");
     if (file) {
+      if (file.size > 10 * 1024 * 1024) { // 10 MB
+        setImagenError("El archivo excede el peso permitido de 10 MB.");
+        setImagen({ preview: "", file: null });
+        e.target.value = ""; // Limpiar el input
+        return;
+      }
+
       setImagen({
         preview: URL.createObjectURL(file),
         file: file,
@@ -95,16 +105,19 @@ const CrearProducto = () => {
       <h1>Agregar Producto</h1>
       <form onSubmit={saveProducto} className="crear-producto-form">
         <div className="form-group">
-          <label>OEM (Opcional | 22 caracteres máximo):</label>
+          <label>OEM (Opcional):</label>
           <input
             type="text"
             value={oem}
             onChange={(e) => setOem(e.target.value)}
             maxLength="22"
           />
+          <div className="char-counter">
+            {oem.length}/22
+          </div>
         </div>
         <div className="form-group">
-          <label>Código Producto (Opcional | 10 caracteres máximo):</label>
+          <label>Código Producto (Opcional):</label>
           <input
             type="text"
             value={codigo_producto}
@@ -120,9 +133,12 @@ const CrearProducto = () => {
             pattern="[A-Z0-9]{3}-[A-Z0-9]{1,6}"
             title="El formato debe ser de 3 letras/números, un guión, y de 1 a 6 letras/números (ej. ART-122222)."
           />
+          <div className="char-counter">
+            {codigo_producto.length}/10
+          </div>
         </div>
         <div className="form-group">
-          <label>Nombre (25 caracteres máximo):</label>
+          <label>Nombre:</label>
           <input
             type="text"
             value={nombre}
@@ -130,15 +146,21 @@ const CrearProducto = () => {
             required
             maxLength="20"
           />
+          <div className="char-counter">
+            {nombre.length}/20
+          </div>
         </div>
         <div className="form-group">
-          <label>Descripción (Opcional | 30 caracteres máximo):</label>
+          <label>Descripción (Opcional):</label>
           <input
             type="text"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             maxLength="30"
           />
+          <div className="char-counter">
+            {description.length}/30
+          </div>
         </div>
         <div className="form-group">
           <label>Precio:</label>
@@ -187,6 +209,7 @@ const CrearProducto = () => {
             accept="image/png, image/jpeg"
             onChange={handleImagenChange}
           />
+          {imagenError && <small style={{ color: 'red', display: 'block', marginTop: '5px' }}>{imagenError}</small>}
           {isSaving && <p>Guardando producto...</p>}
           {imagen.preview && !isSaving && (
             <div className="image-preview">

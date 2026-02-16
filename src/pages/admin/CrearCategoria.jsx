@@ -4,6 +4,7 @@ import CategoriaService from '../../services/CategoriaService';
 import Header from '../../organisms/Header';
 import Footer from '../../organisms/Footer';
 import '../../styles/administrar.css';
+import '../../styles/VerProductos.css';
 
 const CrearCategoria = () => {
     const [nombre, setNombre] = useState('');
@@ -19,7 +20,7 @@ const CrearCategoria = () => {
     return (
         <>
             <Header />
-            <div className="admin-container">
+            <div className="admin-container crear-producto-container">
                 <h1>Crear Categoría</h1>
                 <form onSubmit={handleSubmit} className="crear-producto-form">
                     <div className="form-group">
@@ -29,7 +30,11 @@ const CrearCategoria = () => {
                             value={nombre}
                             onChange={(e) => setNombre(e.target.value)}
                             required
+                            maxLength="30"
                         />
+                        <div className="char-counter">
+                            {nombre.length}/30
+                        </div>
                     </div>
                     <div className="form-actions">
                         <button type="submit" className="btn-guardar">Guardar</button>

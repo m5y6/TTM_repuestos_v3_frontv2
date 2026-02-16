@@ -28,6 +28,7 @@ const VerProductos = () => {
     const [editingProductId, setEditingProductId] = useState(null);
     const [editingProductData, setEditingProductData] = useState({});
     const [isUploadingImage, setIsUploadingImage] = useState(false);
+    const [imageUploadError, setImageUploadError] = useState("");
     const fileInputRef = useRef(null);
 
     useEffect(() => {
@@ -118,6 +119,7 @@ const VerProductos = () => {
 
     // Handlers for inline editing
     const handleEditClick = (producto) => {
+        setImageUploadError("");
         setEditingProductId(producto.id);
         // En `editingProductData` guardamos los IDs para los selects
         const categoriaOriginal = categorias.find(c => c.nombre === producto.categoria);
@@ -137,6 +139,7 @@ const VerProductos = () => {
         }
         setEditingProductId(null);
         setEditingProductData({});
+        setImageUploadError("");
     };
 
     const handleEditFormChange = (e) => {
@@ -212,7 +215,13 @@ const VerProductos = () => {
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
+        setImageUploadError("");
         if (file) {
+            if (file.size > 10 * 1024 * 1024) { // 10 MB
+                setImageUploadError("El archivo excede el peso permitido de 10 MB.");
+                e.target.value = "";
+                return;
+            }
             // Guardamos el archivo para subirlo después y creamos una URL local para la vista previa
             setEditingProductData(prev => ({
                 ...prev,
@@ -298,6 +307,7 @@ const VerProductos = () => {
                                                     style={{ display: 'none' }}
                                                     accept="image/png, image/jpeg"
                                                 />
+                                                {imageUploadError && <div style={{ color: 'red', fontSize: '0.7rem', marginTop: '5px' }}>{imageUploadError}</div>}
                                             </td>
                                             <td className="edit-mode-cell">
                                                 <input type="text" name="nombre" value={editingProductData.nombre || ''} onChange={handleEditFormChange} maxLength="20" className={editingProductData.nombre?.length > 20 ? 'char-limit-exceeded' : ''} />

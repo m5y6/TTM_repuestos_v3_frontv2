@@ -4,6 +4,7 @@ import MarcaService from '../../services/MarcaService';
 import Header from '../../organisms/Header';
 import Footer from '../../organisms/Footer';
 import '../../styles/administrar.css';
+import '../../styles/VerProductos.css';
 
 const CrearMarca = () => {
     const [nombre, setNombre] = useState('');
@@ -19,17 +20,21 @@ const CrearMarca = () => {
     return (
         <>
             <Header />
-            <div className="admin-container">
+            <div className="admin-container crear-producto-container">
                 <h1>Crear Marca</h1>
                 <form onSubmit={handleSubmit} className="crear-producto-form">
                     <div className="form-group">
-                        <label>Nombre de la Marca:</label>
+                        <label>Nombre de la Marca :</label>
                         <input
                             type="text"
                             value={nombre}
                             onChange={(e) => setNombre(e.target.value)}
                             required
+                            maxLength="30"
                         />
+                        <div className="char-counter">
+                            {nombre.length}/30
+                        </div>
                     </div>
                     <div className="form-actions">
                         <button type="submit" className="btn-guardar">Guardar</button>

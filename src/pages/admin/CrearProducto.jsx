@@ -24,6 +24,7 @@ const CrearProducto = () => {
   const [categorias, setCategorias] = useState([]);
   const [marcas, setMarcas] = useState([]);
   const [imagenError, setImagenError] = useState("");
+  const [codigoError, setCodigoError] = useState("");
 
   const navigate = useNavigate();
 
@@ -56,8 +57,43 @@ const CrearProducto = () => {
     }
   };
 
+const handleCodigoChange = async (e) => {
+    const value = e.target.value.toUpperCase();
+    
+    if (value.length === 3 && codigo_producto.length < 3) {
+      setCodigoProducto(value + "-");
+    } else {
+      setCodigoProducto(value);
+    }
+
+    if (value.trim() !== "") {
+      try {
+        await ProductoService.verificarCodigoProducto(value);
+        // Si el código ya existe, la API devolverá una respuesta exitosa (ej. 200 OK)
+        setCodigoError("Este código de producto ya está en uso.");
+      } catch (error) {
+        // Si el código no existe, la API debería devolver un error (ej. 404 Not Found)
+        if (error.response && error.response.status === 404) {
+          setCodigoError(""); // El código está disponible
+        } else {
+          // Otro tipo de error
+          console.error("Error al verificar el código:", error);
+          setCodigoError("No se pudo verificar el código.");
+        }
+      }
+    } else {
+      setCodigoError(""); // Limpiar error si el campo está vacío
+    }
+  };
+
   const saveProducto = async (e) => {
     e.preventDefault();
+
+    if (codigoError) {
+      alert("No se puede guardar el producto. El código de producto ya está en uso.");
+      return;
+    }
+
     setIsSaving(true);
 
     try {
@@ -121,18 +157,13 @@ const CrearProducto = () => {
           <input
             type="text"
             value={codigo_producto}
-            onChange={(e) => {
-              const value = e.target.value.toUpperCase();
-              if (value.length === 3 && codigo_producto.length < 3) {
-                setCodigoProducto(value + "-");
-              } else {
-                setCodigoProducto(value);
-              }
-            }}
+            onChange={handleCodigoChange}
+            onBlur={handleCodigoChange} // También verificar al salir del campo
             maxLength="10"
             pattern="[A-Z0-9]{3}-[A-Z0-9]{1,6}"
             title="El formato debe ser de 3 letras/números, un guión, y de 1 a 6 letras/números (ej. ART-122222)."
           />
+          {codigoError && <small style={{ color: 'red' }}>{codigoError}</small>}
           <div className="char-counter">
             {codigo_producto.length}/10
           </div>
@@ -219,7 +250,7 @@ const CrearProducto = () => {
           )}
         </div>
         <div className="form-actions">
-          <button type="submit" className="btn-guardar" disabled={isSaving}>
+          <button type="submit" className="btn-guardar" disabled={isSaving || codigoError}>
             {isSaving ? 'Guardando...' : 'Guardar'}
           </button>
         </div>

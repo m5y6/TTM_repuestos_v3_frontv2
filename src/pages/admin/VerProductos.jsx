@@ -29,6 +29,7 @@ const VerProductos = () => {
     const [editingProductData, setEditingProductData] = useState({});
     const [isUploadingImage, setIsUploadingImage] = useState(false);
     const [imageUploadError, setImageUploadError] = useState("");
+    const [codigoError, setCodigoError] = useState("");
     const fileInputRef = useRef(null);
 
     useEffect(() => {
@@ -140,6 +141,7 @@ const VerProductos = () => {
         setEditingProductId(null);
         setEditingProductData({});
         setImageUploadError("");
+        setCodigoError("");
     };
 
     const handleEditFormChange = (e) => {
@@ -147,7 +149,41 @@ const VerProductos = () => {
         setEditingProductData(prev => ({ ...prev, [name]: value }));
     };
 
+    const handleCodigoChange = async (e) => {
+      const { value } = e.target;
+      setEditingProductData(prev => ({ ...prev, codigo_producto: value.toUpperCase() }));
+  
+      if (value.trim() !== "") {
+        try {
+          const res = await ProductoService.verificarCodigoProducto(value);
+          // Si el código existe, la API devuelve el producto.
+          // Comprobamos si el ID del producto encontrado es diferente al que estamos editando.
+          if (res.data && res.data.id !== editingProductId) {
+            setCodigoError("Este código de producto ya está en uso por otro producto.");
+          } else {
+            setCodigoError(""); // El código es del producto actual o está libre
+          }
+        } catch (error) {
+          // Si el código no existe, la API debería devolver un error (ej. 404 Not Found)
+          if (error.response && error.response.status === 404) {
+            setCodigoError(""); // El código está disponible
+          } else {
+            // Otro tipo de error
+            console.error("Error al verificar el código:", error);
+            setCodigoError("No se pudo verificar el código.");
+          }
+        }
+      } else {
+        setCodigoError(""); // Limpiar error si el campo está vacío
+      }
+    };
+
     const handleSaveClick = async (id) => {
+        if (codigoError) {
+          alert("No se puede guardar. El código de producto ya está en uso.");
+          return;
+        }
+
         setIsUploadingImage(true); // Usamos el estado para indicar "guardando"
 
         try {
@@ -288,7 +324,8 @@ const VerProductos = () => {
                                         <>
                                             <td>{producto.id}</td>
                                             <td className="edit-mode-cell">
-                                                <input type="text" name="codigo_producto" value={editingProductData.codigo_producto || ''} onChange={handleEditFormChange} maxLength="10" />
+                                                <input type="text" name="codigo_producto" value={editingProductData.codigo_producto || ''} onChange={handleCodigoChange} onBlur={handleCodigoChange} maxLength="10" />
+                                                {codigoError && <div style={{ color: 'red', fontSize: '0.7rem' }}>{codigoError}</div>}
                                                 <div className={`char-counter ${editingProductData.codigo_producto?.length > 10 ? 'limit-exceeded' : ''}`}>{editingProductData.codigo_producto?.length || 0}/10</div>
                                             </td>
                                             <td className="edit-mode-cell" onClick={() => fileInputRef.current && fileInputRef.current.click()} style={{ cursor: 'pointer' }}>
@@ -342,7 +379,7 @@ const VerProductos = () => {
                                                 <div className={`char-counter ${editingProductData.oem?.length > 22 ? 'limit-exceeded' : ''}`}>{editingProductData.oem?.length || 0}/22</div>
                                             </td>
                                             <td className="acciones-cell">
-                                                <button onClick={() => handleSaveClick(producto.id)} className="btn-guardar" disabled={isUploadingImage}>
+                                                <button onClick={() => handleSaveClick(producto.id)} className="btn-guardar" disabled={isUploadingImage || codigoError}>
                                                     ✔️
                                                 </button>
                                                 <button onClick={handleCancelClick} className="btn-cancelar" disabled={isUploadingImage}>❌</button>

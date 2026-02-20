@@ -19,6 +19,10 @@ class ProductosService {
     return api.put(`/api/productos/${id}`, producto);
   }
 
+  verificarCodigoProducto(codigo_producto) {
+    return api.get(`/api/productos/verificar/${codigo_producto}`);
+  }
+
   deleteProducto(id) {
     return api.delete(`/api/productos/${id}`);
   }

@@ -17,6 +17,10 @@ class MarcaService {
         return api.delete(`/api/marcas/${id}`);
     }
 
+    verificarNombre(nombre) {
+        return api.get(`/api/marcas/verificar/${nombre}`);
+    }
+
     updateOrdenMarcas(marcasOrdenadas) {
         return api.put('/api/marcas/orden', marcasOrdenadas);
     }

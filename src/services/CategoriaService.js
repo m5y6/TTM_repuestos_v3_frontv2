@@ -17,6 +17,10 @@ class CategoriaService {
         return api.delete(`/api/categorias/${id}`);
     }
 
+    verificarNombre(nombre) {
+        return api.get(`/api/categorias/verificar/${nombre}`);
+    }
+
     updateOrdenCategorias(categoriasOrdenadas) {
         return api.put('/api/categorias/orden', categoriasOrdenadas);
     }

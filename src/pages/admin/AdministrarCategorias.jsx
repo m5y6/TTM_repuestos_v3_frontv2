@@ -22,7 +22,7 @@ import { CSS } from '@dnd-kit/utilities';
 import '../../styles/administrar.css';
 import '../../styles/VerProductos.css';
 
-const SortableItem = ({ id, categoria, index, editingCategoriaId, handleEditClick, handleSaveClick, handleDeleteClick, handleCancelClick, editingCategoriaNombre, setEditingCategoriaNombre }) => {
+const SortableItem = ({ id, categoria, index, editingCategoriaId, handleEditClick, handleSaveClick, handleDeleteClick, handleCancelClick, editingCategoriaNombre, setEditingCategoriaNombre, nombreError, validateNombre }) => {
     const {
         attributes,
         listeners,
@@ -51,8 +51,10 @@ const SortableItem = ({ id, categoria, index, editingCategoriaId, handleEditClic
                             type="text"
                             value={editingCategoriaNombre}
                             onChange={(e) => setEditingCategoriaNombre(e.target.value)}
+                            onBlur={(e) => validateNombre(e.target.value)}
                             maxLength="30"
                         />
+                        {nombreError && <small style={{ color: 'red' }}>{nombreError}</small>}
                         <div className="char-counter">
                             {editingCategoriaNombre.length}/30
                         </div>
@@ -64,7 +66,7 @@ const SortableItem = ({ id, categoria, index, editingCategoriaId, handleEditClic
             <td className="acciones-cell">
                 {editingCategoriaId === categoria.id ? (
                     <>
-                        <button onClick={() => handleSaveClick(categoria.id)} className="btn-guardar">✔️</button>
+                        <button onClick={() => handleSaveClick(categoria.id)} className="btn-guardar" disabled={!!nombreError}>✔️</button>
                         <button onClick={handleCancelClick} className="btn-cancelar">❌</button>
                     </>
                 ) : (
@@ -83,6 +85,7 @@ const AdministrarCategorias = () => {
     const [categorias, setCategorias] = useState([]);
     const [editingCategoriaId, setEditingCategoriaId] = useState(null);
     const [editingCategoriaNombre, setEditingCategoriaNombre] = useState('');
+    const [nombreError, setNombreError] = useState('');
     const sensors = useSensors(
         useSensor(PointerSensor),
         useSensor(KeyboardSensor, {
@@ -104,13 +107,44 @@ const AdministrarCategorias = () => {
     const handleEditClick = (categoria) => {
         setEditingCategoriaId(categoria.id);
         setEditingCategoriaNombre(categoria.nombre);
+        setNombreError('');
     };
 
     const handleCancelClick = () => {
         setEditingCategoriaId(null);
+        setNombreError('');
     };
 
-    const handleSaveClick = (id) => {
+    const validateNombre = async (value) => {
+        if (value.trim() === '') {
+            setNombreError("El nombre no puede estar vacío.");
+            return false;
+        }
+        try {
+            const res = await CategoriaService.verificarNombre(value);
+            if (res.data && res.data.id != editingCategoriaId) {
+                setNombreError("Este nombre de categoría ya existe.");
+                return false;
+            }
+            setNombreError("");
+            return true;
+        } catch (error) {
+            if (error.response && error.response.status === 404) {
+                setNombreError(""); // El nombre está disponible
+                return true;
+            }
+            console.error("Error al verificar el nombre:", error);
+            setNombreError("No se pudo verificar el nombre.");
+            return false;
+        }
+    };
+
+    const handleSaveClick = async (id) => {
+        const isValid = await validateNombre(editingCategoriaNombre);
+        if (!isValid) {
+            return; // El error ya es visible para el usuario
+        }
+
         CategoriaService.updateCategoria(id, { nombre: editingCategoriaNombre }).then(() => {
             fetchCategorias();
             setEditingCategoriaId(null);
@@ -193,6 +227,8 @@ const AdministrarCategorias = () => {
                                             handleCancelClick={handleCancelClick}
                                             editingCategoriaNombre={editingCategoriaNombre}
                                             setEditingCategoriaNombre={setEditingCategoriaNombre}
+                                            nombreError={nombreError}
+                                            validateNombre={validateNombre}
                                         />
                                     ))}
                                 </SortableContext>

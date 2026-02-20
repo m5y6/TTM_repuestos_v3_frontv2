@@ -8,10 +8,36 @@ import '../../styles/VerProductos.css';
 
 const CrearCategoria = () => {
     const [nombre, setNombre] = useState('');
+    const [nombreError, setNombreError] = useState('');
     const navigate = useNavigate();
+
+    const handleNombreChange = async (e) => {
+        const value = e.target.value;
+        setNombre(value);
+
+        if (value.trim() !== '') {
+            try {
+                await CategoriaService.verificarNombre(value);
+                setNombreError("Este nombre de categoría ya existe.");
+            } catch (error) {
+                if (error.response && error.response.status === 404) {
+                    setNombreError(""); // El nombre está disponible
+                } else {
+                    console.error("Error al verificar el nombre:", error);
+                    setNombreError("No se pudo verificar el nombre.");
+                }
+            }
+        } else {
+            setNombreError("");
+        }
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (nombreError) {
+            alert("El nombre de la categoría ya existe.");
+            return;
+        }
         CategoriaService.createCategoria({ nombre }).then(() => {
             navigate('/admin/administrar-categorias');
         });
@@ -28,16 +54,18 @@ const CrearCategoria = () => {
                         <input
                             type="text"
                             value={nombre}
-                            onChange={(e) => setNombre(e.target.value)}
+                            onChange={handleNombreChange}
+                            onBlur={handleNombreChange}
                             required
                             maxLength="30"
                         />
+                        {nombreError && <small style={{ color: 'red' }}>{nombreError}</small>}
                         <div className="char-counter">
                             {nombre.length}/30
                         </div>
                     </div>
                     <div className="form-actions">
-                        <button type="submit" className="btn-guardar">Guardar</button>
+                        <button type="submit" className="btn-guardar" disabled={!!nombreError}>Guardar</button>
                     </div>
                 </form>
             </div>

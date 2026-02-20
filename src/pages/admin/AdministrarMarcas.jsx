@@ -22,7 +22,7 @@ import { CSS } from '@dnd-kit/utilities';
 import '../../styles/administrar.css';
 import '../../styles/VerProductos.css';
 
-const SortableItem = ({ id, marca, index, editingMarcaId, handleEditClick, handleSaveClick, handleDeleteClick, handleCancelClick, editingMarcaNombre, setEditingMarcaNombre }) => {
+const SortableItem = ({ id, marca, index, editingMarcaId, handleEditClick, handleSaveClick, handleDeleteClick, handleCancelClick, editingMarcaNombre, setEditingMarcaNombre, nombreError, validateNombre }) => {
     const {
         attributes,
         listeners,
@@ -51,8 +51,10 @@ const SortableItem = ({ id, marca, index, editingMarcaId, handleEditClick, handl
                             type="text"
                             value={editingMarcaNombre}
                             onChange={(e) => setEditingMarcaNombre(e.target.value)}
+                            onBlur={(e) => validateNombre(e.target.value)}
                             maxLength="30"
                         />
+                        {nombreError && <small style={{ color: 'red' }}>{nombreError}</small>}
                         <div className="char-counter">
                             {editingMarcaNombre.length}/30
                         </div>
@@ -64,7 +66,7 @@ const SortableItem = ({ id, marca, index, editingMarcaId, handleEditClick, handl
             <td className="acciones-cell">
                 {editingMarcaId === marca.id ? (
                     <>
-                        <button onClick={() => handleSaveClick(marca.id)} className="btn-guardar">✔️</button>
+                        <button onClick={() => handleSaveClick(marca.id)} className="btn-guardar" disabled={!!nombreError}>✔️</button>
                         <button onClick={handleCancelClick} className="btn-cancelar">❌</button>
                     </>
                 ) : (
@@ -82,6 +84,7 @@ const AdministrarMarcas = () => {
     const [marcas, setMarcas] = useState([]);
     const [editingMarcaId, setEditingMarcaId] = useState(null);
     const [editingMarcaNombre, setEditingMarcaNombre] = useState('');
+    const [nombreError, setNombreError] = useState('');
     const sensors = useSensors(
         useSensor(PointerSensor),
         useSensor(KeyboardSensor, {
@@ -103,13 +106,44 @@ const AdministrarMarcas = () => {
     const handleEditClick = (marca) => {
         setEditingMarcaId(marca.id);
         setEditingMarcaNombre(marca.nombre);
+        setNombreError('');
     };
 
     const handleCancelClick = () => {
         setEditingMarcaId(null);
+        setNombreError('');
     };
 
-    const handleSaveClick = (id) => {
+    const validateNombre = async (value) => {
+        if (value.trim() === '') {
+            setNombreError("El nombre no puede estar vacío.");
+            return false;
+        }
+        try {
+            const res = await MarcaService.verificarNombre(value);
+            if (res.data && res.data.id != editingMarcaId) {
+                setNombreError("Este nombre de marca ya existe.");
+                return false;
+            }
+            setNombreError("");
+            return true;
+        } catch (error) {
+            if (error.response && error.response.status === 404) {
+                setNombreError(""); // El nombre está disponible
+                return true;
+            }
+            console.error("Error al verificar el nombre:", error);
+            setNombreError("No se pudo verificar el nombre.");
+            return false;
+        }
+    };
+
+    const handleSaveClick = async (id) => {
+        const isValid = await validateNombre(editingMarcaNombre);
+        if (!isValid) {
+            return; // El error ya se muestra en la UI.
+        }
+
         MarcaService.updateMarca(id, { nombre: editingMarcaNombre }).then(() => {
             fetchMarcas();
             setEditingMarcaId(null);
@@ -191,6 +225,8 @@ const AdministrarMarcas = () => {
                                             handleCancelClick={handleCancelClick}
                                             editingMarcaNombre={editingMarcaNombre}
                                             setEditingMarcaNombre={setEditingMarcaNombre}
+                                            nombreError={nombreError}
+                                            validateNombre={validateNombre}
                                         />
                                     ))}
                                 </SortableContext>

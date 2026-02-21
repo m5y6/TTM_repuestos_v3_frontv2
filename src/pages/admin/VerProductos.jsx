@@ -359,8 +359,8 @@ const VerProductos = () => {
                                                 <div className="char-counter">&nbsp;</div>
                                             </td>
                                             <td className="edit-mode-cell">
-                                                <input type="text" name="description" value={editingProductData.description || ''} onChange={handleEditFormChange} maxLength="30" className={editingProductData.description?.length > 30 ? 'char-limit-exceeded' : ''} />
-                                                <div className={`char-counter ${editingProductData.description?.length > 30 ? 'limit-exceeded' : ''}`}>{editingProductData.description?.length || 0}/30</div>
+                                                <input type="text" name="description" value={editingProductData.description || ''} onChange={handleEditFormChange} maxLength="100" className={editingProductData.description?.length > 100 ? 'char-limit-exceeded' : ''} />
+                                                <div className={`char-counter ${editingProductData.description?.length > 100 ? 'limit-exceeded' : ''}`}>{editingProductData.description?.length || 0}/100</div>
                                             </td>
                                             <td className="edit-mode-cell">
                                                 <select name="categoriaId" value={editingProductData.categoriaId} onChange={handleEditFormChange}>

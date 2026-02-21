@@ -69,9 +69,11 @@ const ProductCard = React.forwardRef(({ producto, handleAddToCotizacion }, ref) 
               {producto.oem && <span className="producto-oem">OEM: {producto.oem}</span>}
               <span className="producto-title">{producto.nombre}</span>
               {producto.description && (
-                <button onClick={toggleDescriptionModal} className="btn-info-descripcion" title="Ver descripción">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
-                </button>
+                <div className="descripcion-btn-container-index">
+                  <button onClick={toggleDescriptionModal} className="btn-info-descripcion" title="Ver descripción">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
+                  </button>
+                </div>
               )}
             </div>
           </div>
@@ -80,7 +82,7 @@ const ProductCard = React.forwardRef(({ producto, handleAddToCotizacion }, ref) 
                   {producto.porcentaje_descuento > 0 ? (
                       <>
                           <span className="precio-original">{formatearPrecio(producto.precio)}</span>
-                          <span className="precio-descuento">{formatearPrecio(producto.precio * (1 - producto.porcentaje_descuento / 100))}</span>
+                          <span className="precio-descuento">{formatearPrecio(Math.round(producto.precio * (1 - producto.porcentaje_descuento / 100)))}</span>
                       </>
                   ) : (
                       formatearPrecio(producto.precio)
@@ -109,7 +111,7 @@ const ProductCard = React.forwardRef(({ producto, handleAddToCotizacion }, ref) 
             <div className="descripcion-modal-content" onClick={(e) => e.stopPropagation()}>
                 <button className="descripcion-modal-close" onClick={toggleDescriptionModal}>&times;</button>
                 <h3>{producto.nombre}</h3>
-                <p>{producto.description || 'No hay descripción disponible.'}</p>
+                <p className="producto-descripcion-larga">{producto.description || 'No hay descripción disponible.'}</p>
             </div>
         </div>,
         document.getElementById('modal-root')

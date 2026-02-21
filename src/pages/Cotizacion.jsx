@@ -28,6 +28,7 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
     const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
     const [showWhatsAppModal, setShowWhatsAppModal] = useState(false);
     const [modalItem, setModalItem] = useState(null);
+    const [itemParaDescripcion, setItemParaDescripcion] = useState(null);
 
 
     const CODIGOS_DESCUENTO = {
@@ -338,7 +339,9 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
                                     </button>
                                 </div>
                                 <p className="item-marca">{item.producto.marca} {item.producto.oem && `- ${item.producto.oem}`}</p>
-                                <p className="item-descripcion">{item.producto.descripcion}</p>
+                                <button onClick={() => setItemParaDescripcion(item)} className="btn-mostrar-descripcion-cotizacion" title="Ver descripción">
+                                    Descripción
+                                </button>
                             </div>
                             <div className="item-precio">
                                 {item.descuento > 0 ? (
@@ -435,6 +438,16 @@ const Cotizacion = ({ sinHeaderFooter = false }) => {
                 </div>
             </div>
         </section>
+
+        {itemParaDescripcion && (
+            <div className="descripcion-modal-overlay-cotizacion" onClick={() => setItemParaDescripcion(null)}>
+                <div className="descripcion-modal-content-cotizacion" onClick={(e) => e.stopPropagation()}>
+                    <button className="descripcion-modal-close-cotizacion" onClick={() => setItemParaDescripcion(null)}>&times;</button>
+                    <h3>{itemParaDescripcion.producto.nombre}</h3>
+                    <p className="producto-descripcion-larga">{itemParaDescripcion.producto.descripcion || 'No hay descripción disponible.'}</p>
+                </div>
+            </div>
+        )}
 
         {showWhatsAppModal && (
             <div className="modal-overlay">

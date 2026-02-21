@@ -123,6 +123,18 @@
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
 }
 
+.home-page .producto-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.home-page .producto-details {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
 .home-page .producto img {
     width: 100%;
     height: 250px;
@@ -148,7 +160,7 @@
 
 .home-page .precio {
     font-family: "Oswald", sans-serif;
-    font-size: 1.8rem;
+    font-size: 0rem;
     color: #00bd65;
     font-weight: bold;
     margin: 15px 0 !important;
@@ -179,6 +191,21 @@
 /* =========================================
    MEDIA QUERIES (RESPONSIVE)
    ========================================= */
+
+/* === ESTILOS PARA PC (SOBRESCRIBIR) === */
+@media (min-width: 769px) {
+    .home-page .descripcion-btn-container-index {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-top: auto;
+        padding-top: 10px; /* Espacio para que no quede pegado al título */
+    }
+    .home-page .descripcion-btn-container-index .btn-info-descripcion {
+        align-self: center;
+        margin: 0;
+    }
+}
 
 /* === ESTILOS PARA TABLET === */
 @media (min-width: 768px) and (max-width: 1024px) {

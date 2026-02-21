@@ -187,10 +187,10 @@ const handleCodigoChange = async (e) => {
             type="text"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            maxLength="30"
+            maxLength="100"
           />
           <div className="char-counter">
-            {description.length}/30
+            {description.length}/100
           </div>
         </div>
         <div className="form-group">

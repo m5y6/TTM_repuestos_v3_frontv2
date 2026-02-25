@@ -13,6 +13,8 @@ import Footer from '../organisms/Footer';
 import Header from '../organisms/Header';
 import WhatsAppButton from '../components/WhatsAppButton';
 
+const PLACEHOLDER_IMAGE = 'https://ttmrepuestos.s3.amazonaws.com/imagenes-publicas/logo3vfinalv2.png';
+
 const ProductoCard = ({ producto, handleAddToCotizacion, formatearPrecio }) => {
     const [quantity, setQuantity] = useState(1);
     const [showDescriptionModal, setShowDescriptionModal] = useState(false);
@@ -46,7 +48,7 @@ const ProductoCard = ({ producto, handleAddToCotizacion, formatearPrecio }) => {
                     <img 
                         src={producto.imagen} 
                         alt={producto.nombre} 
-                        onError={(e) => { e.target.src = 'https://ttmrepuestos.s3.amazonaws.com/imagenes-publicas/logo3vfinalv2.png'; }}
+                        onError={(e) => { e.target.src = PLACEHOLDER_IMAGE; }}
                     />
                 </div>
                 <div className="producto-info">
@@ -133,7 +135,7 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
     
     // 2. Referencias
     const catalogoContentRef = useRef(null);
-    const productosPorPagina = 15;
+    const productosPorPagina = 20;
 
     // 3. Hooks de Efecto
     useEffect(() => {
@@ -368,7 +370,7 @@ const Catalogo = ({ productosActuales: productosActualesProp, sinHeaderFooter = 
         if (filtros.busqueda) {
             const timeoutId = setTimeout(() => {
                 aplicarFiltros();
-            }, 300);
+            }, 500);
             return () => clearTimeout(timeoutId);
         } else {
             // Para los demás filtros, aplicamos inmediatamente
@@ -590,7 +592,7 @@ const handleAddToCotizacion = (producto, quantity) => {
 
                                 {productosFiltrados.length > 0 ? (
                                     <div className="productos-grid">
-                                    {productosFiltrados.map(producto => (
+                                    {productosActuales.map(producto => (
                                         <ProductoCard 
                                             key={producto.id}
                                             producto={producto}
